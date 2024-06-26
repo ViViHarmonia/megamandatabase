@@ -25,6 +25,9 @@ const games = ref([
   { name: "Mega Man: The Power Battle", code: "MMP1" },
   { name: "Mega Man 2: The Power Fighters", code: "MMP2" },
   { name: "Mega Man Powered Up", code: "MMPU" },
+  { name: "Mega Man (Game Gear)", code: "MMGG" },
+  { name: "Mega Man 2 (Tiger)", code: "MMT2" },
+  { name: "Mega Man 3 (Tiger)", code: "MMT3" },
 ])
 const robotMasters = ref([
   { name: "Cut Man", code: "cut", games: ["MM1", "MMI", "MM8", "MMPU", "MMP1", "MMP2"], gameSl: "MM1", icon: "" },
