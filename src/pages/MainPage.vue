@@ -34,9 +34,9 @@ const robotMasters = ref([
 const specialWeapons = ref([
   { code: "cutw", name: "Rolling Cutter", icon: "" },
   { code: "elecw", name: "Thunder Beam", icon: "" },
-  { code: "icew", name: "Rolling Cutter", icon: "" },
-  { code: "bombw", name: "Rolling Cutter", icon: "" },
-  { code: "firew", name: "Rolling Cutter", icon: "" },
+  { code: "icew", name: "Ice Slasher", icon: "" },
+  { code: "bombw", name: "Hyper Bomb", icon: "" },
+  { code: "firew", name: "Fire Storm", icon: "" },
   { code: "gutsw", name: "Super Arm", icon: "" },
   { code: "tenguw1", name: "Tornado Hold", icon: "" },
   { code: "tenguw2", name: "Tengu Blade", icon: "" },
