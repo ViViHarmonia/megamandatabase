@@ -68,9 +68,9 @@ const games = ref([
 ])
 const robotMastersFltrdLst = ref([])
 const robotMasters = ref([
-  { name: "Cut Man", code: "cut", games: ["MM1", "MMI", "MM8", "MMPU", "MMP1", "MMP2"], gameSl: "MM1", icon: "", wpn: {}, wkn: {} },
-  { name: "Tengu Man", code: "tengu", games: ["MM8", "MM&B1"], gameSl: "MM8", icon: "", wpn: {}, wkn: {} },
-  { name: "Dangan Man", code: "bullet", games: ["MM&B2"], gameSl: "MM&B2", icon: "", wpn: {}, wkn: {} },
+  { name: "Cut Man", code: "cut", games: ["MM1", "MMI", "MM8", "MMPU", "MMP1", "MMP2"], gameSl: "MM1", icon: "/robots/Cutmugshot.png", wpn: {}, wkn: {} },
+  { name: "Tengu Man", code: "tengu", games: ["MM8", "MM&B1"], gameSl: "MM8", icon: "/robots/Tengumugshot.png", wpn: {}, wkn: {} },
+  { name: "Dangan Man", code: "bullet", games: ["MM&B2"], gameSl: "MM&B2", icon: "/robots/Dangamug.png", wpn: {}, wkn: {} },
 ])
 const rmTableColumns = ref([
   {
