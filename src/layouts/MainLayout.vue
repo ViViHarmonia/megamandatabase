@@ -14,6 +14,37 @@ import EssentialLink from 'components/EssentialLink.vue'
 defineOptions({
   name: 'MainLayout'
 })
+/*
+NOTES
+game list chronology
+  "MM1"
+  "MMPU"
+  "MM2"
+  "MM3"
+  "MM4"
+  "MM5"
+  "MM6"
+  "MMI"
+  "MMII"
+  "MMIII"
+  "MMIV"
+  "MMV"
+  "MM7"
+  "MM8"
+  "MM&B1"
+  "MMP1"
+  "MMP2"
+  "MM9"
+  "MM10"
+  "MM11"
+  "MM1D"
+  "MM3D"
+  "MMT2"
+  "MMT3"
+  "MMGG"
+  "MM&B2"
+
+*/
 
 const linksList = [
   {

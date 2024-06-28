@@ -2,31 +2,50 @@
   <q-card>
     <q-card-section>
       <q-table flat bordered dark class="my-sticky-header-table" hide-bottom virtual-scroll auto-width wrap-cells
-        :rows-per-page-options="[0]" :columns="rmTableColumns" :rows="robotMastersFltrdLst">
+        :rows-per-page-options="[0]" :columns="rmTableColumns" :rows="robotMastersFltrdLst"
+        card-class="bg-light-blue-6 text-white">
         <template v-slot:top>
           <q-select v-model="game" :options="games" option-label="title" option-value="code" input-debounce="0" dark
-            outlined dense />
+            outlined dense emit-value />
           <div class="radios">
             <q-radio v-model="playerSwitch" val="mega" label="Mega Man" />
             <q-radio v-model="playerSwitch" val="bass" label="Bass" />
           </div>
         </template>
+        <template v-slot:body-cell-icon="props">
+          <q-td :props="props">
+            <q-avatar rounded size="48px">
+              <img :src="props.row.icon" />
+            </q-avatar>
+          </q-td>
+        </template>
         <template v-slot:body-cell-gamelist="props">
           <q-td :props="props">
-            <q-select v-model="props.row.gameSl" :options="nameReturn(props.row.games, 1)" option-label="title"
-              option-value="code" fill-input input-debounce="0" dark map-options outlined dense
+            <q-select v-model="props.row.gameSl" :options="gameFormatName(props.row.games, 1)" option-label="title"
+              option-value="code" fill-input input-debounce="0" dark map-options outlined dense emit-value
               v-if="props.row.games.length > 1"></q-select>
-            <div v-else>{{ nameReturn(props.row.gameSl, 2) }}</div>
+            <div v-else>{{ gameFormatName(props.row.gameSl, 2) }}</div>
           </q-td>
         </template>
         <template v-slot:body-cell-weapon="props">
           <q-td :props="props">
-            <div>{{ damageDataTable(props.row.code, props.row.gameSl, playerSwitch, 3) }}</div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <q-avatar rounded size="24px">
+                <img :src="damageDataTable(props.row.code, props.row.gameSl, playerSwitch, 3).icon" />
+              </q-avatar>
+              <span>{{ damageDataTable(props.row.code, props.row.gameSl, playerSwitch, 3).name }}</span>
+            </div>
           </q-td>
         </template>
         <template v-slot:body-cell-weakness="props">
           <q-td :props="props">
-            <div>{{ damageDataTable(props.row.code, props.row.gameSl, playerSwitch, 2) }}</div>
+            <div style="display: flex; align-items: center; gap: 10px;"
+              v-for="weakness in damageDataTable(props.row.code, props.row.gameSl, playerSwitch, 2)">
+              <q-avatar rounded size="24px">
+                <img :src="weakness.icon" />
+              </q-avatar>
+              <span>{{ weakness.name }}</span>
+            </div>
           </q-td>
         </template>
       </q-table>
@@ -36,141 +55,244 @@
 </template>
 <script setup>
 import { onMounted, ref, watch } from "vue";
+import { useDamageDataTable } from 'src/composables/useDamageDataTable'
+const { damageDataTable2, specialWeapons } = useDamageDataTable()
 const game = ref("ALL")
 const games = ref([
   { title: "ALL", code: "ALL" },
   { title: "Mega Man", code: "MM1" },
+  { title: "Mega Man Powered Up", code: "MMPU" },
   { title: "Mega Man 2", code: "MM2" },
   { title: "Mega Man 3", code: "MM3" },
   { title: "Mega Man 4", code: "MM4" },
   { title: "Mega Man 5", code: "MM5" },
   { title: "Mega Man 6", code: "MM6" },
-  { title: "Mega Man 7", code: "MM7" },
-  { title: "Mega Man 8", code: "MM8" },
-  { title: "Mega Man 9", code: "MM9" },
-  { title: "Mega Man 10", code: "MM10" },
-  { title: "Mega Man 11", code: "MM11" },
   { title: "Mega Man: Dr. Wily's Revenge", code: "MMI" },
   { title: "Mega Man II", code: "MMII" },
   { title: "Mega Man III", code: "MMIII" },
   { title: "Mega Man IV", code: "MMIV" },
   { title: "Mega Man V", code: "MMV" },
+  { title: "Mega Man 7", code: "MM7" },
+  { title: "Mega Man 8", code: "MM8" },
   { title: "Mega Man & Bass", code: "MM&B1" },
-  { title: "Rockman & Forte: Mirai Kara no Chōsensha", code: "MM&B2" },
-  { title: "Mega Man (DOS)", code: "MM1D" },
-  { title: "Mega Man 3 (DOS)", code: "MM3D" },
   { title: "Mega Man: The Power Battle", code: "MMP1" },
   { title: "Mega Man 2: The Power Fighters", code: "MMP2" },
-  { title: "Mega Man Powered Up", code: "MMPU" },
-  { title: "Mega Man (Game Gear)", code: "MMGG" },
+  { title: "Mega Man 9", code: "MM9" },
+  { title: "Mega Man 10", code: "MM10" },
+  { title: "Mega Man 11", code: "MM11" },
+  { title: "Mega Man (DOS)", code: "MM1D" },
+  { title: "Mega Man 3 (DOS)", code: "MM3D" },
+  { title: "Rockman & Forte: Mirai Kara no Chōsensha", code: "MM&B2" },
   { title: "Mega Man 2 (Tiger)", code: "MMT2" },
   { title: "Mega Man 3 (Tiger)", code: "MMT3" },
+  { title: "Mega Man (Game Gear)", code: "MMGG" },
 ])
 const robotMastersFltrdLst = ref([])
 const robotMasters = ref([
-  { name: "Cut Man", code: "cut", games: ["MM1", "MMI", "MM8", "MMPU", "MMP1", "MMP2"], gameSl: "MM1", icon: "/robots/Cutmugshot.png", wpn: {}, wkn: {} },
-  { name: "Tengu Man", code: "tengu", games: ["MM8", "MM&B1"], gameSl: "MM8", icon: "/robots/Tengumugshot.png", wpn: {}, wkn: {} },
-  { name: "Dangan Man", code: "bullet", games: ["MM&B2"], gameSl: "MM&B2", icon: "/robots/Dangamug.png", wpn: {}, wkn: {} },
+  //MM1
+  { name: "Cut Man", code: "cut", games: ["MM1", "MMPU", "MMI", "MM8", "MMP1", "MMP2"], gameSl: "MM1", icon: "/robots/Cutmugshot.png" }, //mm8 is secret sega saturn boss
+  { name: "Guts Man", code: "guts", games: ["MM1", "MMPU", "MMP1", "MMP2"], gameSl: "MM1", icon: "/robots/Megamugshot.png" },
+  { name: "Ice Man", code: "ice", games: ["MM1", "MMPU", "MMI", "MMP1"], gameSl: "MM1", icon: "/robots/Megamugshot.png" },
+  { name: "Bomb Man", code: "bomb", games: ["MM1", "MMPU"], gameSl: "MM1", icon: "/robots/Megamugshot.png" },
+  { name: "Fire Man", code: "fire", games: ["MM1", "MMPU", "MMI"], gameSl: "MM1", icon: "/robots/Megamugshot.png" },
+  { name: "Elec Man", code: "elec", games: ["MM1", "MMPU", "MMI", "MMP2", "MM10"], gameSl: "MM1", icon: "/robots/Megamugshot.png" }, //mm10 is weapons archive
+  //MMPU
+  { name: "Oil Man", code: "oil", games: ["MMPU"], gameSl: "MMPU", icon: "/robots/Megamugshot.png" },
+  { name: "Time Man", code: "time", games: ["MMPU"], gameSl: "MMPU", icon: "/robots/Megamugshot.png" },
+  //MM2
+  { name: "Metal Man", code: "metal", games: ["MM2", "MM3", "MMII", "MMT2"], gameSl: "MM2", icon: "/robots/Megamugshot.png" },//mm3 doc robot
+  { name: "Air Man", code: "air", games: ["MM2", "MM3", "MMII", "MMP2", "MMT2"], gameSl: "MM2", icon: "/robots/Megamugshot.png" },//mm3 doc robot
+  { name: "Bubble Man", code: "bubble", games: ["MM2", "MM3", "MMI", "MMP2", "MMT2"], gameSl: "MM2", icon: "/robots/Megamugshot.png" },//mm3 doc robot
+  { name: "Quick Man", code: "quick", games: ["MM2", "MM3", "MMI", "MMP2", "MMT2"], gameSl: "MM2", icon: "/robots/Megamugshot.png" },//mm3 doc robot
+  { name: "Crash Man", code: "crash", games: ["MM2", "MM3", "MMII", "MMP1"], gameSl: "MM2", icon: "/robots/Megamugshot.png" },//mm3 doc robot
+  { name: "Flash Man", code: "flash", games: ["MM2", "MM3", "MMI", "MMT2"], gameSl: "MM2", icon: "/robots/Megamugshot.png" },//mm3 doc robot
+  { name: "Heat Man", code: "heat", games: ["MM2", "MM3", "MMI", "MMP1", "MMP2", "MMT2"], gameSl: "MM2", icon: "/robots/Megamugshot.png" },//mm3 doc robot
+  { name: "Wood Man", code: "wood", games: ["MM2", "MM3", "MMII", "MM8", "MMP1", "MM10"], gameSl: "MM2", icon: "/robots/Megamugshot.png" },//mm10 weapons archive, mm3 doc robot, mm8 secret sega saturn boss
+  //MM3
+  { name: "Needle Man", code: "needle", games: ["MM3", "MMII", "MMT3"], gameSl: "MM3", icon: "/robots/Megamugshot.png" },
+  { name: "Magnet Man", code: "magnet", games: ["MM3", "MMII", "MMP1", "MMT3"], gameSl: "MM3", icon: "/robots/Megamugshot.png" },
+  { name: "Gemini Man", code: "gemini", games: ["MM3", "MMIII", "MMP1", "MMP2", "MM10", "MMT3"], gameSl: "MM3", icon: "/robots/Megamugshot.png" },//mm10 is weapons archive
+  { name: "Hard Man", code: "hard", games: ["MM3", "MMII"], gameSl: "MM3", icon: "/robots/Megamugshot.png" },
+  { name: "Top Man", code: "top", games: ["MM3", "MMII"], gameSl: "MM3", icon: "/robots/Megamugshot.png" },
+  { name: "Snake Man", code: "snake", games: ["MM3", "MMIII", "MMT3"], gameSl: "MM3", icon: "/robots/Megamugshot.png" },
+  { name: "Spark Man", code: "spark", games: ["MM3", "MMIII", "MMT3"], gameSl: "MM3", icon: "/robots/Megamugshot.png" },
+  { name: "Shadow Man", code: "shadow", games: ["MM3", "MMIII", "MMP2", "MMT3"], gameSl: "MM3", icon: "/robots/Megamugshot.png" },
+  //MM4
+  { name: "Bright Man", code: "bright", games: ["MM4", "MMIV", "MMGG"], gameSl: "MM4", icon: "/robots/Megamugshot.png" },
+  { name: "Toad Man", code: "toad", games: ["MM4", "MMIV", "MMGG"], gameSl: "MM4", icon: "/robots/Megamugshot.png" },
+  { name: "Drill Man", code: "drill", games: ["MM4", "MMIII"], gameSl: "MM4", icon: "/robots/Megamugshot.png" },
+  { name: "Pharaoh Man", code: "Pharaoh", games: ["MM4", "MMIV", "MMP2"], gameSl: "MM4", icon: "/robots/Megamugshot.png" },
+  { name: "Ring Man", code: "Ring", games: ["MM4", "MMIV", "MM10"], gameSl: "MM4", icon: "/robots/Megamugshot.png" },//mm10 is weapons archive
+  { name: "Dust Man", code: "dust", games: ["MM4", "MMIII", "MMP1"], gameSl: "MM4", icon: "/robots/Megamugshot.png" },
+  { name: "Dive Man", code: "dive", games: ["MM4", "MMIII", "MMP2"], gameSl: "MM4", icon: "/robots/Megamugshot.png" },
+  { name: "Skull Man", code: "skull", games: ["MM4", "MMIII"], gameSl: "MM4", icon: "/robots/Megamugshot.png" },
+  //MM5
+  { name: "Gravity Man", code: "gravity", games: ["MM5"], gameSl: "MM5", icon: "/robots/Megamugshot.png" },
+  { name: "Wave Man", code: "wave", games: ["MM5", "MMGG"], gameSl: "MM5", icon: "/robots/Megamugshot.png" },
+  { name: "Stone Man", code: "stone", games: ["MM5", "MMIV", "MMP2", "MMGG"], gameSl: "MM5", icon: "/robots/Megamugshot.png" },
+  { name: "Gyro Man", code: "gyro", games: ["MM5", "MMP1", "MMP2"], gameSl: "MM5", icon: "/robots/Megamugshot.png" },
+  { name: "Star Man", code: "star", games: ["MM5", "MMGG"], gameSl: "MM5", icon: "/robots/Megamugshot.png" },
+  { name: "Charge Man", code: "charge", games: ["MM5", "MMIV"], gameSl: "MM5", icon: "/robots/Megamugshot.png" },
+  { name: "Napalm Man", code: "napalm", games: ["MM5", "MMIV", "MMP1", "MMP2", "MM10", "MMGG"], gameSl: "MM5", icon: "/robots/Megamugshot.png" },//mm10 is weapons archive
+  { name: "Crystal Man", code: "crystal", games: ["MM5", "MMIV"], gameSl: "MM5", icon: "/robots/Megamugshot.png" },
+  //MM6
+  { name: "Blizzard Man", code: "blizzard", games: ["MM6"], gameSl: "MM6", icon: "/robots/Megamugshot.png" },
+  { name: "Centaur Man", code: "centaur", games: ["MM6", "MMP2"], gameSl: "MM6", icon: "/robots/Megamugshot.png" },
+  { name: "Flame Man", code: "flame", games: ["MM6", "MM10"], gameSl: "MM6", icon: "/robots/Megamugshot.png" },//mm10 is weapons archive
+  { name: "Knight Man", code: "knight", games: ["MM6"], gameSl: "MM6", icon: "/robots/Megamugshot.png" },
+  { name: "Plant Man", code: "plant", games: ["MM6", "MMP1", "MMP2"], gameSl: "MM6", icon: "/robots/Megamugshot.png" },
+  { name: "Tomahawk Man", code: "tomahawk", games: ["MM6"], gameSl: "MM6", icon: "/robots/Megamugshot.png" },
+  { name: "Wind Man", code: "wind", games: ["MM6"], gameSl: "MM6", icon: "/robots/Megamugshot.png" },
+  { name: "Yamato Man", code: "yamato", games: ["MM6"], gameSl: "MM6", icon: "/robots/Megamugshot.png" },
+  //MMWW, MMI,II,III,IV
+  { name: "Buster Rod G", code: "buster", games: ["MM1", "MM2", "MM3"], gameSl: "MM1", icon: "/robots/Megamugshot.png" },
+  { name: "Mega Water S", code: "water", games: ["MM1", "MM2", "MM3"], gameSl: "MM1", icon: "/robots/Megamugshot.png" },
+  { name: "Hyper Storm H", code: "storm", games: ["MM1", "MM2", "MM3"], gameSl: "MM1", icon: "/robots/Megamugshot.png" },
+  { name: "Enker", code: "enker", games: ["MMI", "MMV"], gameSl: "MMI", icon: "/robots/Megamugshot.png" },
+  { name: "Quint", code: "quint", games: ["MMII", "MMV"], gameSl: "MMII", icon: "/robots/Megamugshot.png" },
+  { name: "Punk", code: "punk", games: ["MMIII", "MMV"], gameSl: "MMIII", icon: "/robots/Megamugshot.png" },
+  { name: "Ballade", code: "ballade", games: ["MMIV", "MMV"], gameSl: "MMIV", icon: "/robots/Megamugshot.png" },
+  //MMV
+  { name: "Terra", code: "terra", games: ["MMV"], gameSl: "MMV", icon: "/robots/Megamugshot.png" },
+  { name: "Mercury", code: "mercury", games: ["MMV"], gameSl: "MMV", icon: "/robots/Megamugshot.png" },
+  { name: "Venus", code: "venus", games: ["MMV"], gameSl: "MMV", icon: "/robots/Megamugshot.png" },
+  { name: "Mars", code: "mars", games: ["MMV"], gameSl: "MMV", icon: "/robots/Megamugshot.png" },
+  { name: "Jupiter", code: "jupiter", games: ["MMV"], gameSl: "MMV", icon: "/robots/Megamugshot.png" },
+  { name: "Saturn", code: "saturn", games: ["MMV"], gameSl: "MMV", icon: "/robots/Megamugshot.png" },
+  { name: "Uranus", code: "uranus", games: ["MMV"], gameSl: "MMV", icon: "/robots/Megamugshot.png" },
+  { name: "Pluto", code: "pluto", games: ["MMV"], gameSl: "MMV", icon: "/robots/Megamugshot.png" },
+  { name: "Neptune", code: "neptune", games: ["MMV"], gameSl: "MMV", icon: "/robots/Megamugshot.png" },
+  //MM7
+  { name: "Freeze Man", code: "freeze", games: ["MM7", "MMP1"], gameSl: "MM7", icon: "/robots/Megamugshot.png" },
+  { name: "Junk Man", code: "junk", games: ["MM7", "MMP1"], gameSl: "MM7", icon: "/robots/Megamugshot.png" },
+  { name: "Burst Man", code: "burst", games: ["MM7"], gameSl: "MM7", icon: "/robots/Megamugshot.png" },
+  { name: "Cloud Man", code: "cloud", games: ["MM7", "MMP1"], gameSl: "MM7", icon: "/robots/Megamugshot.png" },
+  { name: "Spring Man", code: "spring", games: ["MM7"], gameSl: "MM7", icon: "/robots/Megamugshot.png" },
+  { name: "Slash Man", code: "slash", games: ["MM7", "MMP1", "MMP2", "MM10"], gameSl: "MM7", icon: "/robots/Megamugshot.png" },//mm10 is weapons archive
+  { name: "Shade Man", code: "shade", games: ["MM7", "MMP1", "MMP2"], gameSl: "MM7", icon: "/robots/Megamugshot.png" },
+  { name: "Turbo Man", code: "turbo", games: ["MM7", "MMP1"], gameSl: "MM7", icon: "/robots/Megamugshot.png" },
+  //MM8 & MM&B
+  { name: "Tengu Man", code: "tengu", games: ["MM8", "MM&B1"], gameSl: "MM8", icon: "/robots/Tengumugshot.png" },
+  { name: "Astro Man", code: "astro", games: ["MM8", "MM&B1"], gameSl: "MM8", icon: "/robots/Megamugshot.png" },
+  //MM8
+  { name: "Sword Man", code: "sword", games: ["MM8"], gameSl: "MM", icon: "/robots/Megamugshot.png" },
+  { name: "Clown Man", code: "clown", games: ["MM8"], gameSl: "MM", icon: "/robots/Megamugshot.png" },
+  { name: "Search Man", code: "search", games: ["MM8"], gameSl: "MM", icon: "/robots/Megamugshot.png" },
+  { name: "Frost Man", code: "frost", games: ["MM8", "MM10"], gameSl: "MM", icon: "/robots/Megamugshot.png" },//mm10 is weapons archive
+  { name: "Grenade Man", code: "grenade", games: ["MM8"], gameSl: "MM", icon: "/robots/Megamugshot.png" },
+  { name: "Aqua Man", code: "aqua", games: ["MM8"], gameSl: "MM", icon: "/robots/Megamugshot.png" },
+  //MM&B1
+  { name: "Dynamo Man", code: "dynamo", games: ["MM&B1"], gameSl: "MM&B1", icon: "/robots/Megamugshot.png" },
+  { name: "Cold Man", code: "cold", games: ["MM&B1"], gameSl: "MM&B1", icon: "/robots/Megamugshot.png" },
+  { name: "Ground Man", code: "ground", games: ["MM&B1"], gameSl: "MM&B1", icon: "/robots/Megamugshot.png" },
+  { name: "Pirate Man", code: "pirate", games: ["MM&B1"], gameSl: "MM&B1", icon: "/robots/Megamugshot.png" },
+  { name: "Burner Man", code: "burner", games: ["MM&B1"], gameSl: "MM&B1", icon: "/robots/Megamugshot.png" },
+  { name: "Magic Man", code: "magic", games: ["MM&B1"], gameSl: "MM&B1", icon: "/robots/Megamugshot.png" },
+  //MM9
+  { name: "Concrete Man", code: "concrete", games: ["MM9"], gameSl: "MM9", icon: "/robots/Megamugshot.png" },
+  { name: "Tornado Man", code: "tornado", games: ["MM9", "MM10"], gameSl: "MM9", icon: "/robots/Megamugshot.png" },//mm10 is weapons archive
+  { name: "Splash Woman", code: "splash", games: ["MM9"], gameSl: "MM9", icon: "/robots/Megamugshot.png" },
+  { name: "Plug Man", code: "plug", games: ["MM9"], gameSl: "MM9", icon: "/robots/Megamugshot.png" },
+  { name: "Jewel Man", code: "jewel", games: ["MM9"], gameSl: "MM9", icon: "/robots/Megamugshot.png" },
+  { name: "Hornet Man", code: "hornet", games: ["MM9"], gameSl: "MM9", icon: "/robots/Megamugshot.png" },
+  { name: "Magma Man", code: "magma", games: ["MM9"], gameSl: "MM9", icon: "/robots/Megamugshot.png" },
+  { name: "Galaxy Man", code: "galaxy", games: ["MM9"], gameSl: "MM9", icon: "/robots/Megamugshot.png" },
+  //MM10
+  { name: "Blade Man", code: "blade", games: ["MM10"], gameSl: "MM10", icon: "/robots/Megamugshot.png" },
+  { name: "Pump Man", code: "pump", games: ["MM10"], gameSl: "MM10", icon: "/robots/Megamugshot.png" },
+  { name: "Commando Man", code: "commando", games: ["MM10"], gameSl: "MM10", icon: "/robots/Megamugshot.png" },
+  { name: "Chill Man", code: "chill", games: ["MM10"], gameSl: "MM10", icon: "/robots/Megamugshot.png" },
+  { name: "Sheep Man", code: "sheep", games: ["MM10"], gameSl: "MM10", icon: "/robots/Megamugshot.png" },
+  { name: "Strike Man", code: "strike", games: ["MM10"], gameSl: "MM10", icon: "/robots/Megamugshot.png" },
+  { name: "Nitro Man", code: "nitro", games: ["MM10"], gameSl: "MM10", icon: "/robots/Megamugshot.png" },
+  { name: "Solar Man", code: "solar", games: ["MM10"], gameSl: "MM10", icon: "/robots/Megamugshot.png" },
+  //MM11
+  { name: "Block Man", code: "block", games: ["MM11"], gameSl: "MM11", icon: "/robots/Megamugshot.png" },
+  { name: "Fuse Man", code: "fuse", games: ["MM11"], gameSl: "MM11", icon: "/robots/Megamugshot.png" },
+  { name: "Blast Man", code: "blast", games: ["MM11"], gameSl: "MM11", icon: "/robots/Megamugshot.png" },
+  { name: "Acid Man", code: "acid", games: ["MM11"], gameSl: "MM11", icon: "/robots/Megamugshot.png" },
+  { name: "Tundra Man", code: "tundra", games: ["MM11"], gameSl: "MM11", icon: "/robots/Megamugshot.png" },
+  { name: "Torch Man", code: "torch", games: ["MM11"], gameSl: "MM11", icon: "/robots/Megamugshot.png" },
+  { name: "Impact Man", code: "impact", games: ["MM11"], gameSl: "MM11", icon: "/robots/Megamugshot.png" },
+  { name: "Bounce Man", code: "bounce", games: ["MM11"], gameSl: "MM11", icon: "/robots/Megamugshot.png" },
+  //MMDOS
+  { name: "Sonic Man", code: "sonic", games: ["MM1D"], gameSl: "MM1D", icon: "/robots/Megamugshot.png" },
+  { name: "Volt Man", code: "volt", games: ["MM1D"], gameSl: "MM1D", icon: "/robots/Megamugshot.png" },
+  { name: "Dyna Man", code: "dyna", games: ["MM1D"], gameSl: "MM1D", icon: "/robots/Megamugshot.png" },
+  //MMDOS3
+  { name: "Bit Man", code: "bit", games: ["MM3D"], gameSl: "MM3D", icon: "/robots/Megamugshot.png" },
+  { name: "Blade Man (DOS)", code: "slice", games: ["MM3D"], gameSl: "MM3D", icon: "/robots/Megamugshot.png" },
+  { name: "Oil Man (DOS)", code: "petrol", games: ["MM3D"], gameSl: "MM3D", icon: "/robots/Megamugshot.png" },
+  { name: "Shark Man", code: "shark", games: ["MM3D"], gameSl: "MM3D", icon: "/robots/Megamugshot.png" },
+  { name: "Wave Man (DOS)", code: "cascade", games: ["MM3D"], gameSl: "MM3D", icon: "/robots/Megamugshot.png" },
+  { name: "Torch Man (DOS)", code: "solder", games: ["MM3D"], gameSl: "MM3D", icon: "/robots/Megamugshot.png" },
+  //MM&B2
+  { name: "Dangan Man", code: "bullet", games: ["MM&B2"], gameSl: "MM&B2", icon: "/robots/Dangamug.png" },
+  { name: "Konro Man", code: "stove", games: ["MM&B2"], gameSl: "MM&B2", icon: "/robots/Megamugshot.png" },
+  { name: "Aircon Man", code: "fan", games: ["MM&B2"], gameSl: "MM&B2", icon: "/robots/Megamugshot.png" },
+  { name: "Komuso Man", code: "monk", games: ["MM&B2"], gameSl: "MM&B2", icon: "/robots/Megamugshot.png" },
+  { name: "Clock Men", code: "clock", games: ["MM&B2"], gameSl: "MM&B2", icon: "/robots/Megamugshot.png" },
+  { name: "Compass Man", code: "compass", games: ["MM&B2"], gameSl: "MM&B2", icon: "/robots/Megamugshot.png" },
+
 ])
 const rmTableColumns = ref([
-  {
-    name: "name",
-    label: "Designation",
-    field: "name",
-    align: "start",
-    sortable: false,
-  },
   {
     name: "icon",
     label: "Portrait",
     field: "icon",
-    align: "start",
+    align: "center",
+    sortable: false,
+  },
+  {
+    name: "name",
+    label: "Designation",
+    field: "name",
+    align: "center",
     sortable: false,
   },
   {
     name: "gamelist",
     label: "Games",
     field: "games",
-    align: "start",
+    align: "center",
     sortable: false,
   },
   {
     name: "weapon",
     label: "Weapon Get",
     field: "weapon",
-    align: "start",
+    align: "center",
     sortable: false,
   },
   {
     name: "weakness",
     label: "Weak To",
     field: "weakness",
-    align: "start",
+    align: "center",
     sortable: false,
   },
-])
-const specialWeapons = ref([
-
-  { code: "PLACE", name: "PLACEHOLDERNAME", icon: "" },
-  { code: "mega", name: "Mega/Rock Buster", icon: "" },
-  { code: "cutw", name: "Rolling Cutter", icon: "" },
-  { code: "elecw", name: "Thunder Beam", icon: "" },
-  { code: "icew", name: "Ice Slasher", icon: "" },
-  { code: "bombw", name: "Hyper Bomb", icon: "" },
-  { code: "firew", name: "Fire Storm", icon: "" },
-  { code: "gutsw", name: "Super Arm", icon: "" },
-
-  { code: "tenguw1", name: "Tornado Hold", icon: "" },
-  { code: "astrow1", name: "Astro Crush", icon: "" },
-  { code: "swordw", name: "Flame Sword", icon: "" },
-  { code: "clownw", name: "Thunder Claw", icon: "" },
-  { code: "searchw", name: "Homing Sniper", icon: "" },
-  { code: "frostw", name: "Ice Wave", icon: "" },
-  { code: "grenadew", name: "Flash Bomb", icon: "" },
-  { code: "aquaw", name: "Water Balloon", icon: "" },
-
-  { code: "coldw", name: "Ice Wall", icon: "" },
-  { code: "burnerw", name: "Wave Burner", icon: "" },
-  { code: "piratew", name: "Remote Mine", icon: "" },
-  { code: "groundw", name: "Spread Drill", icon: "" },
-  { code: "tenguw2", name: "Tengu Blade", icon: "" },
-  { code: "magicw", name: "Magic Card", icon: "" },
-  { code: "astrow2", name: "Copy Vision", icon: "" },
-  { code: "dynamow", name: "Lightning Bolt", icon: "" },
-
-  { code: "bulletw1", name: "Rock'n Vulcan", icon: "" },
-  { code: "bulletw2", name: "Forte Vulcan", icon: "" },
-  { code: "stovew1", name: "Flame Shower", icon: "" },
-  { code: "stovew2", name: "Flame Mixer", icon: "" },
-  { code: "airconw1", name: "Barrier Wind", icon: "" },
-  { code: "airconw2", name: "Forte Cyclone", icon: "" },
-  { code: "monkw1", name: "Doppel Crash", icon: "" },
-  { code: "monkw2", name: "Doppler Attack", icon: "" },
-  { code: "clockw1", name: "Time Switch", icon: "" },
-  { code: "clockw2", name: "Time Bomb", icon: "" },
-
-
-  { code: "bass", name: "Bass/Forte Buster", icon: "" },
 ])
 const playerSwitch = ref("mega")
 //false equals mega, true equals bass
 const wpnColumns = ref([])
 const rbtRow = ref({})
+const damageDataTable = damageDataTable2;
 function dataFill() {
+  robotMastersFltrdLst.value = [];
   if (game.value == "ALL") {
     robotMastersFltrdLst.value = robotMasters.value
   } else {
     for (var i = 0; i < robotMasters.value.length; i++) {
       for (var j = 0; j < robotMasters.value[i].games.length; j++) {
         if (robotMasters.value[i].games[j] == game.value) {
-          robotMasters.value[i].game = game.value
+          robotMasters.value[i].gameSl = game.value
           robotMastersFltrdLst.value.push(robotMasters.value[i])
         }
       }
     }
   }
 }
-function nameReturn(gamesChar, func) {
+function gameFormatName(gamesChar, func) {
   switch (func) {
     case 1:
       var tempListGames = []
@@ -191,357 +313,7 @@ function nameReturn(gamesChar, func) {
   }
 
 }
-function damageDataTable(robot, game, player, funct) {
-  //funct 1 brings whole table. funct 2 just brings robot weakness
-  var tempColumns
-  var tempRow
-  switch (game) {
-    case 'MM1':
-      tempColumns = [
-        {
-          name: "buster",
-          field: "buster",
-          align: "start",
-          sortable: false,
-        },
-        {
-          name: "cutw",
-          field: "cutw",
-          align: "center",
-          sortable: false,
-        },
-        {
-          name: "gutsw",
-          field: "gutsw",
-          align: "center",
-          sortable: false,
-        },
-        {
-          name: "icew",
-          field: "icew",
-          align: "center",
-          sortable: false,
-        },
-        {
-          name: "bombw",
-          field: "bombw",
-          align: "center",
-          sortable: false,
-        },
-        {
-          name: "firew",
-          field: "firew",
-          align: "center",
-          sortable: false,
-        },
-        {
-          name: "elecw",
-          field: "elecw",
-          align: "center",
-          sortable: false,
-        },
-      ]
-      switch (robot) {
-        case 'cut':
-          tempRow = {
-            buster: 3,
-            cutw: 1,
-            gutsw: 14,
-            icew: 0,
-            bombw: 2,
-            firew: 3,
-            elecw: 1,
-            weapon: "cutw",
-            weakness: "gutsw"
-          }
-          break
-        case 'guts':
-          tempRow = {
-            buster: 2,
-            cutw: 1,
-            gutsw: 1,
-            icew: 0,
-            bombw: 10,
-            firew: 2,
-            elecw: 1,
-            weapon: "gutsw",
-            weakness: "bombw"
-          }
-          break
-        case 'ice':
-          tempRow = {
-            buster: 1,
-            cutw: 2,
-            gutsw: 'X',
-            icew: 0,
-            bombw: 4,
-            firew: 1,
-            elecw: 10,
-            weapon: "icew",
-            weakness: "elecw"
-          }
-          break
-        case 'bomb':
-          tempRow = {
-            buster: 2,
-            cutw: 2,
-            gutsw: 'X',
-            icew: 0,
-            bombw: 1,
-            firew: 4,
-            elecw: 2,
-            weapon: "bombw",
-            weakness: "firew"
-          }
-          break
-        case 'fire':
-          tempRow = {
-            buster: 2,
-            cutw: 2,
-            gutsw: 'X',
-            icew: 4,
-            bombw: 1,
-            firew: 1,
-            elecw: 1,
-            weapon: "firew",
-            weakness: "icew"
-          }
-          break
-        case 'elec':
-          tempRow = {
-            buster: 1,
-            cutw: 10,
-            gutsw: 4,
-            icew: 0,
-            bombw: 2,
-            firew: 1,
-            elecw: 1,
-            weapon: "elecw",
-            weakness: "cutw"
-          }
-          break
-      }
-      break
-    case 'MM2': break
-    case 'MM3': break
-    case 'MM4': break
-    case 'MM5': break
-    case 'MM6': break
-    case 'MM7': break
-    case 'MM8':
-      tempColumns = [
-        {
-          name: "buster",
-          field: "buster",
-          align: "start",
-          sortable: false,
-        },
-        {
-          name: "tenguw1",
-          field: "tenguw1",
-          align: "center",
-          sortable: false,
-        },
-        {
-          name: "astrow1",
-          field: "astrow1",
-          align: "center",
-          sortable: false,
-        },
-        {
-          name: "swordw",
-          field: "swordw",
-          align: "center",
-          sortable: false,
-        },
-        {
-          name: "clownw",
-          field: "clownw",
-          align: "center",
-          sortable: false,
-        },
-        {
-          name: "searchw",
-          field: "searchw",
-          align: "center",
-          sortable: false,
-        },
-        {
-          name: "frostw",
-          field: "frostw",
-          align: "center",
-          sortable: false,
-        },
-        {
-          name: "grenadew",
-          field: "grenadew",
-          align: "center",
-          sortable: false,
-        },
-        {
-          name: "aquaw",
-          field: "aquaw",
-          align: "center",
-          sortable: false,
-        },
-      ]
-      switch (robot) {
-        case 'tengu':
-          tempRow = {
-            buster: '2:3:4',
-            tenguw1: '2:1',
-            astrow1: 0,
-            swordw: 2,
-            clownw: 1,
-            searchw: 1,
-            frostw: 6,
-            grenadew: 1,
-            aquaw: 1,
-            weapon: "tenguw1",
-            weakness: "frostw"
-          }
-          break
-        case 'cut':
-          tempRow = {
-            buster: '2:3:4',
-            tenguw1: '2:3',
-            astrow1: 6,
-            swordw: 4,
-            clownw: 4,
-            searchw: 3,
-            frostw: 4,
-            grenadew: 3,
-            aquaw: 4,
 
-            weapon: "NONE",
-            weakness: "astrow"
-          }
-          break
-      }
-      break
-    case 'MM9': break
-    case 'MM10': break
-    case 'MM11': break
-    case 'MMI': break
-    case 'MMII': break
-    case 'MMIII': break
-    case 'MMIV': break
-    case 'MMV': break
-    case 'MM&B1':
-      tempColumns = [
-        {
-          name: "buster",
-          field: "buster",
-          align: "start",
-          sortable: false,
-        },
-        {
-          name: "coldew",
-          field: "coldew",
-          align: "center",
-          sortable: false,
-        },
-        {
-          name: "burnerw",
-          field: "burnerw",
-          align: "center",
-          sortable: false,
-        },
-        {
-          name: "piratew",
-          field: "piratew",
-          align: "center",
-          sortable: false,
-        },
-        {
-          name: "groundw",
-          field: "groundw",
-          align: "center",
-          sortable: false,
-        },
-        {
-          name: "tenguw2",
-          field: "tenguw2",
-          align: "center",
-          sortable: false,
-        },
-        {
-          name: "magicw",
-          field: "magicw",
-          align: "center",
-          sortable: false,
-        },
-        {
-          name: "astrow2",
-          field: "astrow2",
-          align: "center",
-          sortable: false,
-        },
-        {
-          name: "dynamow",
-          field: "dynamow",
-          align: "center",
-          sortable: false,
-        },
-      ]
-      switch (robot) {
-        case 'tengu':
-          tempRow = {
-            megab: '1:3',
-            bassb: '1:2',
-            coldw: 1,
-            burnerw: 1,
-            piratew: 1,
-            groundw: '6:4:3',
-            tenguw2: "1:1:1",
-            magicw: 1,
-            astrow2: 1,
-            dynamow: 1,
-            weapon: "tenguw2",
-            weakness: 'groundw',
-          }
-          break
-      }
-      switch (player) {
-        case 'mega':
-          tempRow.buster = tempRow.megab
-          break
-        case 'bass':
-          tempRow.buster = tempRow.bassb
-          break
-      }
-      break
-    case 'MM&B2': break
-    case 'MM1D': break
-    case 'MM3D': break
-    case 'MMP1': break
-    case 'MMP2': break
-    case 'MMPU': break
-  }
-  switch (funct) {
-    case 1:
-      wpnColumns.value = tempColumns
-      rbtRow.value = tempRow
-      break
-    case 2:
-      for (var i = 0; i < specialWeapons.value.length; i++) {
-        if (specialWeapons.value[i].code == tempRow.weakness) {
-          return specialWeapons.value[i]
-        }
-      }
-      break
-    case 3:
-      if (tempRow.weapon == "NONE") {
-        return tempRow.weapon
-      }
-      for (var i = 0; i < specialWeapons.value.length; i++) {
-        if (specialWeapons.value[i].code == tempRow.weapon) {
-          return specialWeapons.value[i]
-        }
-      }
-      break
-  }
-}
 watch(game, (newValue, oldValue) => {
   // Cuando count cambie, actualizamos el valor de double
   dataFill();
