@@ -57,7 +57,7 @@
 import { onMounted, ref, watch } from "vue";
 import { useDamageDataTable } from 'src/composables/useDamageDataTable'
 const { damageDataTable2, specialWeapons } = useDamageDataTable()
-const game = ref("ALL")
+const game = ref("MM1")
 const games = ref([
   { title: "ALL", code: "ALL", chars: ["yes"], },
   { title: "Mega Man", code: "MM1", chars: ["cut", "elec", "ice", "fire", "bomb", "guts"], },
@@ -66,11 +66,11 @@ const games = ref([
   { title: "Mega Man 3", code: "MM3", chars: ["top", "shadow", "spark", "magnet", "hard", "snake", "needle", "gemini", "metal", "quick", "air", "crash", "flash", "bubble", "wood", "heat"], },
   { title: "Mega Man 4", code: "MM4", chars: ["ring", "dust", "skull", "dive", "drill", "toad", "bright", "pharaoh"], },
   { title: "Mega Man 5", code: "MM5", chars: ["gravity", "gyro", "crystal", "napalm", "stone", "charge", "wave", "star"], },
-  //DONE ^^ / UNDONE vv
   { title: "Mega Man 6", code: "MM6", chars: ["centaur", "wind", "flame", "blizzard", "plant", "tomahawk", "yamato", "knight"], },
-  { title: "Mega Man: Dr. Wily's Revenge", code: "MMI", chars: [""], },
-  { title: "Mega Man II", code: "MMII", chars: [""], },
-  { title: "Mega Man III", code: "MMIII", chars: [""], },
+  { title: "Mega Man: Dr. Wily's Revenge", code: "MMI", chars: ["cut","elec","ice","fire","flash","quick","bubble","heat","enker"], },
+  { title: "Mega Man II", code: "MMII", chars: ["metal","wood","air","crash","needle","magnet","hard","top","quint"], },
+  //DONE ^^ / UNDONE vv
+  /*{ title: "Mega Man III", code: "MMIII", chars: [""], },
   { title: "Mega Man IV", code: "MMIV", chars: [""], },
   { title: "Mega Man V", code: "MMV", chars: [""], },
   { title: "Mega Man 7", code: "MM7", chars: [""], },
@@ -86,7 +86,7 @@ const games = ref([
   { title: "Rockman & Forte: Mirai Kara no Chōsensha", code: "MM&B2", chars: [""], },
   { title: "Mega Man 2 (Tiger)", code: "MMT2", chars: [""], },
   { title: "Mega Man 3 (Tiger)", code: "MMT3", chars: [""], },
-  { title: "Mega Man (Game Gear)", code: "MMGG", chars: [""], },
+  { title: "Mega Man (Game Gear)", code: "MMGG", chars: [""], },*/
 ])
 const robotMastersFltrdLst = ref([])
 const robotMasters = ref([
