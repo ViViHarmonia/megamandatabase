@@ -43,7 +43,27 @@ game list chronology
   "MMT3"
   "MMGG"
   "MM&B2"
-
+DEFAULTS
+tempColumns = [
+  {
+    name: "megaw",
+    field: "megaw",
+    align: "start",
+    sortable: false,
+  },
+  {
+    name: "changew",
+    field: "changew",
+    align: "center",
+    sortable: false,
+  },
+]
+tempRow = [{
+    megaw: 0,
+    weaponsw: 0,
+    weapon: "",
+    weakness: [],
+}]
 */
 
 const linksList = [
