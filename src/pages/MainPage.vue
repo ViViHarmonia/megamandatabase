@@ -88,14 +88,15 @@ const games = ref([
   { title: "MM: The Power Battle (MM1-2)", code: "MMP1-1", chars: ["cut", "crash", "guts", "ice", "heat", "wood"], },
   { title: "MM: The Power Battle (MM3-6)", code: "MMP1-2", chars: ["gemini", "napalm", "gyro", "dust", "plant", "magnet"], },
   { title: "MM: The Power Battle (MM7)", code: "MMP1-3", chars: ["freeze", "slash", "shade", "turbo", "cloud", "junk"], },
+  { title: "MM2: The Power Fighters (Search for Wily)", code: "MMP2-A", chars: ["centaur","shadow","bubble","heat","plant","gyro"], },
+  { title: "MM2: The Power Fighters (Rescue Roll)", code: "MMP2-B", chars: ["elec","dive","slash","cut","shade","stone"], },
+  { title: "MM2: The Power Fighters (Recover Parts)", code: "MMP2-C", chars: ["air","quick","pharaoh","gemini","napalm","guts"], },
+
 
   //DONE ^^ / UNDONE vv
   /*
-
-
-  { title: "MM2: The Power Fighters (Search for Wily)", code: "MMP2-A", chars: [""], },
-  { title: "MM2: The Power Fighters (Rescue Roll)", code: "MMP2-B", chars: [""], },
-  { title: "MM2: The Power Fighters (Recover Parts)", code: "MMP2-C", chars: [""], },
+  
+  
   { title: "Mega Man 9", code: "MM9", chars: [""], },
   { title: "Mega Man 10", code: "MM10", chars: [""], },
   { title: "Mega Man 11", code: "MM11", chars: [""], },
