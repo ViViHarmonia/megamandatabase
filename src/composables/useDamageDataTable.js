@@ -6,7 +6,7 @@ export function useDamageDataTable() {
     {
       code: "megaw",
       name: "Mega/Rock Buster",
-      icon: "/weapons/base/megawuster.png",
+      icon: "/weapons/base/megabuster.png",
     },
     {
       code: "bassw",
@@ -276,30 +276,35 @@ export function useDamageDataTable() {
       name: "Salt Water",
       icon: "/weapons/mmgb,p/saltwater.png",
     },
-    //MMPOWER
-    {
-      code: "pharaohw2",
-      name: "Pharaoh Wave",
-      icon: "/weapons/mmgb,p/pharaohwave.png",
-    },
-    {
-      code: "centaurw2",
-      name: "Centaur Arrow",
-      icon: "/weapons/mmgb,p/centaurarrow.png",
-    },
     //MM7
     {
       code: "freezew",
       name: "Freeze Cracker",
-      icon: "/weapons/megawuster.png",
+      icon: "/weapons/mm7/freezecracker.png",
     },
-    { code: "junkw", name: "Junk Shield", icon: "/weapons/megawuster.png" },
-    { code: "burstw", name: "Danger Wrap", icon: "/weapons/megawuster.png" },
-    { code: "cloudw", name: "Thunder Bolt", icon: "/weapons/megawuster.png" },
-    { code: "springw", name: "Wild Coil", icon: "/weapons/megawuster.png" },
-    { code: "slashw", name: "Slash Claw", icon: "/weapons/megawuster.png" },
-    { code: "shadew", name: "Noise Crush", icon: "/weapons/megawuster.png" },
-    { code: "turbow", name: "Scorch Wheel", icon: "/weapons/megawuster.png" },
+    { code: "junkw", name: "Junk Shield", icon: "/weapons/mm7/junkshield.png" },
+    {
+      code: "burstw",
+      name: "Danger Wrap",
+      icon: "/weapons/mm7/dangerwrap.png",
+    },
+    {
+      code: "cloudw",
+      name: "Thunder Bolt",
+      icon: "/weapons/mm7/thunderbolt.png",
+    },
+    { code: "springw", name: "Wild Coil", icon: "/weapons/mm7/wildcoil.png" },
+    { code: "slashw", name: "Slash Claw", icon: "/weapons/mm7/slashclaw.png" },
+    {
+      code: "shadew",
+      name: "Noise Crush",
+      icon: "/weapons/mm7/noisecrush.png",
+    },
+    {
+      code: "turbow",
+      name: "Scorch Wheel",
+      icon: "/weapons/mm7/scorchwheel.png",
+    },
     //MM8
     {
       code: "tenguw1",
@@ -369,6 +374,17 @@ export function useDamageDataTable() {
       code: "dynamow",
       name: "Lightning Bolt",
       icon: "/weapons/mm&b/lightningbolt.png",
+    },
+    //MMPOWER
+    {
+      code: "pharaohw2",
+      name: "Pharaoh Wave",
+      icon: "/weapons/mmgb,p/pharaohwave.png",
+    },
+    {
+      code: "centaurw2",
+      name: "Centaur Arrow",
+      icon: "/weapons/mmgb,p/centaurarrow.png",
     },
     //MM&B2
     {
@@ -566,6 +582,7 @@ export function useDamageDataTable() {
   ]);
   function damageDataTable2(robot, game, player, funct) {
     //funct 1 brings whole table. funct 2 just brings robot weakness
+    //console.log(robot + ", " + game + ", " + player + ", " + funct);
     var tempColumns;
     var tempRow;
     switch (game) {
@@ -702,66 +719,6 @@ export function useDamageDataTable() {
                 elecw: 1,
                 weapon: "elecw",
                 weakness: ["cutw"],
-              },
-            ];
-            break;
-          case "buster":
-            tempRow = [
-              {
-                megaw: 1,
-                cutw: 3,
-                gutsw: "X",
-                icew: 1,
-                bombw: 8,
-                firew: 1,
-                elecw: 1,
-                weapon: "NONE",
-                weakness: ["bombw", "cutw"],
-                notes: "Wily Wars - MM1 Weapons",
-              },
-              {
-                megaw: 1,
-                cutw: 3,
-                gutsw: "X",
-                icew: 1,
-                bombw: "X",
-                firew: 1,
-                elecw: 1,
-                weapon: "NONE",
-                weakness: ["cutw"],
-                notes: "Wily Wars - MM1 Weapons (2nd Fight)",
-              },
-            ];
-            break;
-          case "water":
-            tempRow = [
-              {
-                megaw: 1,
-                cutw: 0,
-                gutsw: "X",
-                icew: 3,
-                bombw: 3,
-                firew: 1,
-                elecw: 1,
-                weapon: "NONE",
-                weakness: ["icew", "bombw"],
-                notes: "Wily Wars - MM1 Weapons",
-              },
-            ];
-            break;
-          case "storm":
-            tempRow = [
-              {
-                megaw: 1,
-                cutw: 1,
-                gutsw: "X",
-                icew: 1,
-                bombw: 6,
-                firew: 3,
-                elecw: 1,
-                weapon: "NONE",
-                weakness: ["bombw", "firew"],
-                notes: "Wily Wars - MM1 Weapons",
               },
             ];
             break;
@@ -1157,74 +1114,6 @@ export function useDamageDataTable() {
               },
             ];
             break;
-          case "buster":
-            tempRow = [
-              {
-                megaw: 1,
-                metalw: 1,
-                airw: 4,
-                bubblew: 4,
-                quickw: 2,
-                crashw: 1,
-                flashw: "X",
-                heatw: "1:3:9",
-                woodw: 1,
-                weapon: "NONE",
-                weakness: ["airw", "bubblew"],
-                notes: "Wily Wars - MM2 Weapons",
-              },
-              {
-                megaw: 1,
-                metalw: 1,
-                airw: 4,
-                bubblew: 0,
-                quickw: 2,
-                crashw: 1,
-                flashw: 0,
-                heatw: "1:2:3",
-                woodw: 4,
-                weapon: "NONE",
-                weakness: ["airw", "woodw"],
-                notes: "Wily Wars - MM2 Weapons (2nd Fight)",
-              },
-            ];
-            break;
-          case "water":
-            tempRow = [
-              {
-                megaw: 1,
-                metalw: 0,
-                airw: 0,
-                bubblew: 1,
-                quickw: 1,
-                crashw: 1,
-                flashw: 0,
-                heatw: "1:3:3",
-                woodw: 1,
-                weapon: "NONE",
-                weakness: ["heatw"],
-                notes: "Wily Wars - MM2 Weapons",
-              },
-            ];
-            break;
-          case "storm":
-            tempRow = [
-              {
-                megaw: 1,
-                metalw: 2,
-                airw: 0,
-                bubblew: 0,
-                quickw: 1,
-                crashw: 2,
-                flashw: 0,
-                heatw: "2:3:6",
-                woodw: 0,
-                weapon: "NONE",
-                weakness: ["heatw"],
-                notes: "Wily Wars - MM2 Weapons",
-              },
-            ];
-            break;
         }
         break;
       case "MM3":
@@ -1565,7 +1454,303 @@ export function useDamageDataTable() {
               },
             ];
             break;
-          case "buster":
+        }
+        break;
+      case "WW1":
+        tempColumns = [
+          {
+            name: "megaw",
+            field: "megaw",
+            align: "start",
+            sortable: false,
+          },
+          {
+            name: "cutw",
+            field: "cutw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "gutsw",
+            field: "gutsw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "icew",
+            field: "icew",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "bombw",
+            field: "bombw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "firew",
+            field: "firew",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "elecw",
+            field: "elecw",
+            align: "center",
+            sortable: false,
+          },
+        ];
+        switch (robot) {
+          case "buster1":
+            tempRow = [
+              {
+                megaw: 1,
+                cutw: 3,
+                gutsw: "X",
+                icew: 1,
+                bombw: 8,
+                firew: 1,
+                elecw: 1,
+                weapon: "NONE",
+                weakness: ["bombw", "cutw"],
+              },
+            ];
+            break;
+          case "buster2":
+            tempRow = [
+              {
+                megaw: 1,
+                cutw: 3,
+                gutsw: "X",
+                icew: 1,
+                bombw: "X",
+                firew: 1,
+                elecw: 1,
+                weapon: "NONE",
+                weakness: ["cutw"],
+              },
+            ];
+            break;
+          case "water":
+            tempRow = [
+              {
+                megaw: 1,
+                cutw: 0,
+                gutsw: "X",
+                icew: 3,
+                bombw: 3,
+                firew: 1,
+                elecw: 1,
+                weapon: "NONE",
+                weakness: ["icew", "bombw"],
+              },
+            ];
+            break;
+          case "storm":
+            tempRow = [
+              {
+                megaw: 1,
+                cutw: 1,
+                gutsw: "X",
+                icew: 1,
+                bombw: 6,
+                firew: 3,
+                elecw: 1,
+                weapon: "NONE",
+                weakness: ["bombw", "firew"],
+              },
+            ];
+            break;
+        }
+        break;
+      case "WW2":
+        tempColumns = [
+          {
+            name: "megaw",
+            field: "megaw",
+            align: "start",
+            sortable: false,
+          },
+          {
+            name: "metalw",
+            field: "metalw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "airw",
+            field: "airw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "bubblew",
+            field: "bubblew",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "quickw",
+            field: "quickw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "crashw",
+            field: "crashw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "flashw",
+            field: "flashw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "heatw",
+            field: "heatw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "woodw",
+            field: "woodw",
+            align: "center",
+            sortable: false,
+          },
+        ];
+        switch (robot) {
+          case "buster1":
+            tempRow = [
+              {
+                megaw: 1,
+                metalw: 1,
+                airw: 4,
+                bubblew: 4,
+                quickw: 2,
+                crashw: 1,
+                flashw: "X",
+                heatw: "1:3:9",
+                woodw: 1,
+                weapon: "NONE",
+                weakness: ["airw", "bubblew"],
+              },
+            ];
+            break;
+          case "buster2":
+            tempRow = [
+              {
+                megaw: 1,
+                metalw: 1,
+                airw: 4,
+                bubblew: 0,
+                quickw: 2,
+                crashw: 1,
+                flashw: 0,
+                heatw: "1:2:3",
+                woodw: 4,
+                weapon: "NONE",
+                weakness: ["airw", "woodw"],
+              },
+            ];
+            break;
+          case "water":
+            tempRow = [
+              {
+                megaw: 1,
+                metalw: 0,
+                airw: 0,
+                bubblew: 1,
+                quickw: 1,
+                crashw: 1,
+                flashw: 0,
+                heatw: "1:3:3",
+                woodw: 1,
+                weapon: "NONE",
+                weakness: ["heatw"],
+              },
+            ];
+            break;
+          case "storm":
+            tempRow = [
+              {
+                megaw: 1,
+                metalw: 2,
+                airw: 0,
+                bubblew: 0,
+                quickw: 1,
+                crashw: 2,
+                flashw: 0,
+                heatw: "2:3:6",
+                woodw: 0,
+                weapon: "NONE",
+                weakness: ["heatw"],
+              },
+            ];
+            break;
+        }
+        break;
+      case "WW3":
+        tempColumns = [
+          {
+            name: "megaw",
+            field: "megaw",
+            align: "start",
+            sortable: false,
+          },
+          {
+            name: "needlew",
+            field: "needlew",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "magnetw",
+            field: "magnetw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "geminiw",
+            field: "geminiw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "hardw",
+            field: "hardw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "topw",
+            field: "topw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "snakew",
+            field: "snakew",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "sparkw",
+            field: "sparkw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "shadoww",
+            field: "shadoww",
+            align: "center",
+            sortable: false,
+          },
+        ];
+        switch (robot) {
+          case "buster1":
             tempRow = [
               {
                 megaw: 1,
@@ -1579,8 +1764,11 @@ export function useDamageDataTable() {
                 shadoww: 1,
                 weapon: "NONE",
                 weakness: ["hardw"],
-                notes: "Wily Wars - MM3 Weapons",
               },
+            ];
+            break;
+          case "buster2":
+            tempRow = [
               {
                 megaw: 1,
                 needlew: 2,
@@ -1593,7 +1781,6 @@ export function useDamageDataTable() {
                 shadoww: 1,
                 weapon: "NONE",
                 weakness: ["hardw", "magnetw"],
-                notes: "Wily Wars - MM3 Weapons (2nd Fight)",
               },
             ];
             break;
@@ -1611,7 +1798,6 @@ export function useDamageDataTable() {
                 shadoww: 1,
                 weapon: "NONE",
                 weakness: ["snakew"],
-                notes: "Wily Wars - MM3 Weapons",
               },
             ];
             break;
@@ -1629,7 +1815,6 @@ export function useDamageDataTable() {
                 shadoww: 2,
                 weapon: "NONE",
                 weakness: ["geminiw", "sparkw", "shadoww"],
-                notes: "Wily Wars - MM3 Weapons",
               },
             ];
             break;
@@ -2042,8 +2227,8 @@ export function useDamageDataTable() {
             sortable: false,
           },
           {
-            name: "centaurw",
-            field: "centaurw",
+            name: "centaurw1",
+            field: "centaurw1",
             align: "center",
             sortable: false,
           },
@@ -2090,7 +2275,7 @@ export function useDamageDataTable() {
               {
                 megaw: "1:3",
                 blizzardw: 1,
-                centaurw: 0,
+                centaurw1: 0,
                 flamew: 4,
                 knightw: 1,
                 plantw: 0,
@@ -2107,14 +2292,14 @@ export function useDamageDataTable() {
               {
                 megaw: "1:3",
                 blizzardw: 1,
-                centaurw: 0,
+                centaurw1: 0,
                 flamew: 1,
                 knightw: 4,
                 plantw: 0,
                 tomahawkw: 1,
                 windw: 1,
                 yamatow: 1,
-                weapon: "centaurw",
+                weapon: "centaurw1",
                 weakness: ["knightw"],
               },
             ];
@@ -2124,7 +2309,7 @@ export function useDamageDataTable() {
               {
                 megaw: "1:3",
                 blizzardw: 1,
-                centaurw: 0,
+                centaurw1: 0,
                 flamew: 1,
                 knightw: 1,
                 plantw: 0,
@@ -2141,7 +2326,7 @@ export function useDamageDataTable() {
               {
                 megaw: "1:3",
                 blizzardw: 1,
-                centaurw: 0,
+                centaurw1: 0,
                 flamew: 1,
                 knightw: 1,
                 plantw: 0,
@@ -2158,7 +2343,7 @@ export function useDamageDataTable() {
               {
                 megaw: "1:3",
                 blizzardw: 4,
-                centaurw: 0,
+                centaurw1: 0,
                 flamew: 2,
                 knightw: 1,
                 plantw: 0,
@@ -2175,7 +2360,7 @@ export function useDamageDataTable() {
               {
                 megaw: "1:3",
                 blizzardw: 1,
-                centaurw: 0,
+                centaurw1: 0,
                 flamew: 1,
                 knightw: 1,
                 plantw: 4,
@@ -2192,7 +2377,7 @@ export function useDamageDataTable() {
               {
                 megaw: "1:3",
                 blizzardw: 1,
-                centaurw: 4,
+                centaurw1: 4,
                 flamew: 1,
                 knightw: 1,
                 plantw: 0,
@@ -2200,7 +2385,7 @@ export function useDamageDataTable() {
                 windw: 1,
                 yamatow: 1,
                 weapon: "windw",
-                weakness: ["centaurw"],
+                weakness: ["centaurw1"],
               },
             ];
             break;
@@ -2209,7 +2394,7 @@ export function useDamageDataTable() {
               {
                 megaw: "1:3",
                 blizzardw: 1,
-                centaurw: 0,
+                centaurw1: 0,
                 flamew: 1,
                 knightw: 1,
                 plantw: 0,
@@ -2437,7 +2622,7 @@ export function useDamageDataTable() {
             break;
         }
         break;
-      case "MMII":  
+      case "MMII":
         tempColumns = [
           {
             name: "megaw",
@@ -2682,37 +2867,61 @@ export function useDamageDataTable() {
             align: "center",
             sortable: false,
           },
+          {
+            name: "drillw",
+            field: "drillw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "dustw",
+            field: "dustw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "divew",
+            field: "divew",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "skullw",
+            field: "skullw",
+            align: "center",
+            sortable: false,
+          },
         ];
         switch (robot) {
           case "shadow":
             tempRow = [
               {
-                megaw: 1,
-                needlew: 1,
-                magnetw: 1,
-                geminiw: 1,
-                hardw: 2,
-                topw: 7,
-                snakew: 1,
+                megaw: "1:3",
+                shadoww: "X",
                 sparkw: 1,
-                shadoww: 4,
+                snakew: 1,
+                geminiw: 3,
+                dustw: "X",
+                skullw: "X",
+                divew: "X",
+                drillw: "X",
                 weapon: "shadoww",
-                weakness: ["topw"],
+                weakness: ["geminiw"],
               },
             ];
             break;
           case "spark":
             tempRow = [
               {
-                megaw: 1,
-                needlew: 2,
-                magnetw: 0,
-                geminiw: 1,
-                hardw: 2,
-                topw: 1,
+                megaw: "1:3",
+                shadoww: 3,
+                sparkw: "X",
                 snakew: 0,
-                sparkw: 4,
-                shadoww: 4,
+                geminiw: 1,
+                dustw: "X",
+                skullw: "X",
+                divew: "X",
+                drillw: "X",
                 weapon: "sparkw",
                 weakness: ["shadoww"],
               },
@@ -2721,44 +2930,850 @@ export function useDamageDataTable() {
           case "snake":
             tempRow = [
               {
-                megaw: 1,
-                needlew: 4,
-                magnetw: 0,
-                geminiw: 1,
-                hardw: 2,
-                topw: 2,
-                snakew: 4,
-                sparkw: 1,
+                megaw: "1:3",
                 shadoww: 2,
+                sparkw: 3,
+                snakew: "X",
+                geminiw: 1,
+                dustw: "X",
+                skullw: "X",
+                divew: "X",
+                drillw: "X",
                 weapon: "snakew",
-                weakness: ["needlew"],
+                weakness: ["sparkw"],
               },
             ];
             break;
           case "gemini":
             tempRow = [
               {
-                megaw: 1,
-                needlew: 1,
-                magnetw: 2,
-                geminiw: 4,
-                hardw: 2,
-                topw: 2,
-                snakew: 5,
-                sparkw: 1,
+                megaw: "1:3",
                 shadoww: 2,
+                sparkw: 1,
+                snakew: 3,
+                geminiw: "X",
+                dustw: "X",
+                skullw: "X",
+                divew: "X",
+                drillw: "X",
                 weapon: "geminiw",
                 weakness: ["snakew"],
+              },
+            ];
+            break;
+          case "dust":
+            tempRow = [
+              {
+                megaw: "1:3",
+                shadoww: 1,
+                sparkw: 1,
+                snakew: 1,
+                geminiw: 1,
+                dustw: "X",
+                skullw: 1,
+                divew: 1,
+                drillw: 2,
+                weapon: "dustw",
+                weakness: ["drillw"],
+              },
+            ];
+            break;
+          case "skull":
+            tempRow = [
+              {
+                megaw: "1:3",
+                shadoww: 1,
+                sparkw: 0,
+                snakew: 1,
+                geminiw: 1,
+                dustw: 3,
+                skullw: "X",
+                divew: 1,
+                drillw: 1,
+                weapon: "skullw",
+                weakness: ["dustw"],
+              },
+            ];
+            break;
+          case "dive":
+            tempRow = [
+              {
+                megaw: "1:3",
+                shadoww: 1,
+                sparkw: 0,
+                snakew: 1,
+                geminiw: 1,
+                dustw: 3,
+                skullw: 3,
+                divew: "X",
+                drillw: 1,
+                weapon: "divew",
+                weakness: ["skullw", "dustw"],
+              },
+            ];
+            break;
+          case "drill":
+            tempRow = [
+              {
+                megaw: "1:3",
+                shadoww: 1,
+                sparkw: 0,
+                snakew: 1,
+                geminiw: 1,
+                dustw: 1,
+                skullw: 1,
+                divew: 3,
+                drillw: "X",
+                weapon: "drillw",
+                weakness: ["divew"],
+              },
+            ];
+            break;
+          case "punk":
+            tempRow = [
+              {
+                megaw: "1:3",
+                shadoww: 0,
+                sparkw: 0,
+                snakew: 0,
+                geminiw: 0,
+                dustw: 0,
+                skullw: 0,
+                divew: 0,
+                drillw: 0,
+                weapon: "punkw",
+                weakness: ["megaw"],
+                notes: "Only buster can damage him at all.",
               },
             ];
             break;
         }
         break;
       case "MMIV":
+        tempColumns = [
+          {
+            name: "megaw",
+            field: "megaw",
+            align: "start",
+            sortable: false,
+          },
+          {
+            name: "toadw",
+            field: "toadw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "brightw",
+            field: "brightw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "pharaohw1",
+            field: "pharaohw1",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "ringw",
+            field: "ringw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "crystalw",
+            field: "crystalw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "napalmw",
+            field: "napalmw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "stonew",
+            field: "stonew",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "chargew",
+            field: "chargew",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "balladew",
+            field: "balladew",
+            align: "center",
+            sortable: false,
+          },
+        ];
+        switch (robot) {
+          case "toad":
+            tempRow = [
+              {
+                megaw: "1:3",
+                toadw: 2,
+                brightw: "X",
+                pharaohw1: "1:3",
+                ringw: 2,
+                crystalw: 1,
+                napalmw: 2,
+                stonew: 1,
+                chargew: 1,
+                balladew: 1,
+                weapon: "toadw",
+                weakness: ["ringw", "toadw", "napalmw"],
+              },
+            ];
+            break;
+          case "bright":
+            tempRow = [
+              {
+                megaw: "1:3",
+                toadw: 6,
+                brightw: "X",
+                pharaohw1: "1:3",
+                ringw: 1,
+                crystalw: 1,
+                napalmw: 1,
+                stonew: 2,
+                chargew: 1,
+                balladew: 1,
+                weapon: "brightw",
+                weakness: ["toadw"],
+              },
+            ];
+            break;
+          case "pharaoh":
+            tempRow = [
+              {
+                megaw: "1:3",
+                toadw: 2,
+                brightw: "YES",
+                pharaohw1: "1:3",
+                ringw: 1,
+                crystalw: 2,
+                napalmw: 1,
+                stonew: 1,
+                chargew: 1,
+                balladew: 1,
+                weapon: "pharaohw1",
+                weakness: ["brightw", "crystalw"],
+              },
+            ];
+            break;
+          case "ring":
+            tempRow = [
+              {
+                megaw: "1:3",
+                toadw: 2,
+                brightw: "X",
+                pharaohw1: "2:6",
+                ringw: 1,
+                crystalw: 1,
+                napalmw: 1,
+                stonew: 1,
+                chargew: 2,
+                balladew: 1,
+                weapon: "ringw",
+                weakness: ["pharaohw1", "chargew"],
+              },
+            ];
+            break;
+          case "crystal":
+            tempRow = [
+              {
+                megaw: "1:3",
+                toadw: 2,
+                brightw: "X",
+                pharaohw1: "1:3",
+                ringw: 2,
+                crystalw: 1,
+                napalmw: 1,
+                stonew: 1,
+                chargew: 3,
+                balladew: 1,
+                weapon: "crystalw",
+                weakness: ["chargew", "ringw"],
+              },
+            ];
+            break;
+          case "napalm":
+            tempRow = [
+              {
+                megaw: "1:3",
+                toadw: 2,
+                brightw: "X",
+                pharaohw1: "2:6",
+                ringw: 1,
+                crystalw: 3,
+                napalmw: 1,
+                stonew: 1,
+                chargew: 1,
+                balladew: 1,
+                weapon: "napalmw",
+                weakness: ["crystalw", "pharaohw1"],
+              },
+            ];
+            break;
+          case "stone":
+            tempRow = [
+              {
+                megaw: "1:3",
+                toadw: 2,
+                brightw: "X",
+                pharaohw1: "1:3",
+                ringw: 1,
+                crystalw: 1,
+                napalmw: 3,
+                stonew: 1,
+                chargew: 1,
+                balladew: 2,
+                weapon: "stonew",
+                weakness: ["napalmw", "balladew"],
+              },
+            ];
+            break;
+          case "charge":
+            tempRow = [
+              {
+                megaw: "1:3",
+                toadw: "2 x 2",
+                brightw: "X",
+                pharaohw1: "1:3",
+                ringw: 1,
+                crystalw: 1,
+                napalmw: 1,
+                stonew: 4,
+                chargew: 1,
+                balladew: 1,
+                weapon: "chargew",
+                weakness: ["stonew", "toadw"],
+              },
+            ];
+            break;
+          case "ballade":
+            tempRow = [
+              {
+                megaw: "1:3",
+                toadw: 2,
+                brightw: "X",
+                pharaohw1: "1:3",
+                ringw: 1,
+                crystalw: 1,
+                napalmw: 1,
+                stonew: 2,
+                chargew: 1,
+                balladew: "X",
+                weapon: "balladew",
+                weakness: ["stonew", "megaw"],
+                notes: "1st fight pre-Stone. Get B.Cracker post 2nd fight. ",
+              },
+            ];
+            break;
+        }
         break;
       case "MMV":
+        tempColumns = [
+          {
+            name: "megaw",
+            field: "megaw",
+            align: "start",
+            sortable: false,
+          },
+          {
+            name: "mercuryw",
+            field: "mercuryw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "venusw",
+            field: "venusw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "marsw",
+            field: "marsw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "neptunew",
+            field: "neptunew",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "jupiterw",
+            field: "jupiterw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "saturnw",
+            field: "saturnw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "uranusw",
+            field: "uranusw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "plutow",
+            field: "plutow",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "terraw",
+            field: "terraw",
+            align: "center",
+            sortable: false,
+          },
+        ];
+        switch (robot) {
+          case "mercury":
+            tempRow = [
+              {
+                megaw: "1:2:3",
+                mercuryw: 0,
+                venusw: 1,
+                marsw: 1,
+                jupiterw: 1,
+                saturnw: 5,
+                uranusw: "X",
+                plutow: 1,
+                neptunew: 2,
+                terraw: 1,
+                weapon: "mercuryw",
+                weakness: ["saturnw"],
+              },
+            ];
+            break;
+          case "venus":
+            tempRow = [
+              {
+                megaw: "1:2:3",
+                mercuryw: 0,
+                venusw: 0,
+                marsw: 3,
+                jupiterw: 1,
+                saturnw: 0,
+                uranusw: "X",
+                plutow: 2,
+                neptunew: 1,
+                terraw: 1,
+                weapon: "venusw",
+                weakness: ["marsw"],
+              },
+            ];
+            break;
+          case "mars":
+            tempRow = [
+              {
+                megaw: "1:2:3",
+                mercuryw: 0,
+                venusw: 1,
+                marsw: 0,
+                jupiterw: 2,
+                saturnw: 0,
+                uranusw: "X",
+                plutow: 1,
+                neptunew: 3,
+                terraw: 1,
+                weapon: "marsw",
+                weakness: ["neptunew"],
+              },
+            ];
+            break;
+          case "jupiter":
+            tempRow = [
+              {
+                megaw: "1:2:3",
+                mercuryw: 0,
+                venusw: 3,
+                marsw: 1,
+                jupiterw: 0,
+                saturnw: 0,
+                uranusw: "X",
+                plutow: 2,
+                neptunew: 2,
+                terraw: 1,
+                weapon: "jupiterw",
+                weakness: ["venusw"],
+              },
+            ];
+            break;
+          case "saturn":
+            tempRow = [
+              {
+                megaw: "1:2:3",
+                mercuryw: 0,
+                venusw: 0,
+                marsw: 2,
+                jupiterw: 4,
+                saturnw: 0,
+                uranusw: 0,
+                plutow: 0,
+                neptunew: 0,
+                terraw: 0,
+                weapon: "saturnw",
+                weakness: ["jupiterw"],
+              },
+            ];
+            break;
+          case "uranus":
+            tempRow = [
+              {
+                megaw: "1:1:1",
+                mercuryw: 0,
+                venusw: 0,
+                marsw: 0,
+                jupiterw: 0,
+                saturnw: 0,
+                uranusw: 0,
+                plutow: 5,
+                neptunew: 0,
+                terraw: 1,
+                weapon: "uranusw",
+                weakness: ["plutow"],
+              },
+            ];
+            break;
+          case "pluto":
+            tempRow = [
+              {
+                megaw: "1:2:3",
+                mercuryw: 3,
+                venusw: 1,
+                marsw: 1,
+                jupiterw: 2,
+                saturnw: 0,
+                uranusw: "X",
+                plutow: 0,
+                neptunew: 1,
+                terraw: 1,
+                weapon: "plutow",
+                weakness: ["mercuryw"],
+              },
+            ];
+            break;
+          case "neptune":
+            tempRow = [
+              {
+                megaw: "1:2:3",
+                mercuryw: 0,
+                venusw: 1,
+                marsw: 2,
+                jupiterw: 1,
+                saturnw: 0,
+                uranusw: "X",
+                plutow: 1,
+                neptunew: 0,
+                terraw: 3,
+                weapon: "neptunew",
+                weakness: ["terraw"],
+              },
+            ];
+            break;
+          case "terra":
+            tempRow = [
+              {
+                megaw: "1:2:3",
+                mercuryw: 0,
+                venusw: 0,
+                marsw: 1,
+                jupiterw: 1,
+                saturnw: 0,
+                uranusw: 4,
+                plutow: 1,
+                neptunew: 2,
+                terraw: "X",
+                weapon: "terraw",
+                weakness: ["uranusw"],
+              },
+            ];
+            break;
+          case "enker":
+            tempRow = [
+              {
+                megaw: "1:2:3",
+                mercuryw: 0,
+                venusw: 0,
+                marsw: 0,
+                jupiterw: 0,
+                saturnw: 0,
+                uranusw: "X",
+                plutow: 0,
+                neptunew: 0,
+                terraw: 0,
+                weapon: "NONE",
+                weakness: ["megaw"],
+                notes: "Only buster can damage him at all.",
+              },
+            ];
+            break;
+          case "quint":
+            tempRow = [
+              {
+                megaw: "1:2:3",
+                mercuryw: 0,
+                venusw: 1,
+                marsw: 3,
+                jupiterw: 1,
+                saturnw: 0,
+                uranusw: "X",
+                plutow: 0,
+                neptunew: 1,
+                terraw: 1,
+                weapon: "NONE",
+                weakness: ["marsw"],
+              },
+            ];
+            break;
+          case "punk":
+            tempRow = [
+              {
+                megaw: "1:2:3",
+                mercuryw: 0,
+                venusw: 3,
+                marsw: 1,
+                jupiterw: 1,
+                saturnw: 0,
+                uranusw: "X",
+                plutow: 1,
+                neptunew: 4,
+                terraw: 1,
+                weapon: "NONE",
+                weakness: ["neptunew", "venusw"],
+              },
+            ];
+            break;
+          case "ballade":
+            tempRow = [
+              {
+                megaw: "1:2:3",
+                mercuryw: 0,
+                venusw: 3,
+                marsw: 3,
+                jupiterw: 1,
+                saturnw: 0,
+                uranusw: "X",
+                plutow: 2,
+                neptunew: 2,
+                terraw: 1,
+                weapon: "NONE",
+                weakness: ["venusw", "marsw"],
+              },
+            ];
+            break;
+        }
         break;
       case "MM7":
+        tempColumns = [
+          {
+            name: "megaw",
+            field: "megaw",
+            align: "start",
+            sortable: false,
+          },
+          {
+            name: "freezew",
+            field: "freezew",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "junkw",
+            field: "junkw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "burstw",
+            field: "burstw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "cloudw",
+            field: "cloudw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "springw",
+            field: "springw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "slashw",
+            field: "slashw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "shadew",
+            field: "shadew",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "turbow",
+            field: "turbow",
+            align: "center",
+            sortable: false,
+          },
+        ];
+        switch (robot) {
+          case "freeze":
+            tempRow = [
+              {
+                megaw: "1:1:2",
+                freezew: "+4:+4",
+                junkw: "4:4",
+                burstw: "1:1:1",
+                cloudw: "1:1",
+                springw: "1:1",
+                slashw: 1,
+                shadew: "1:1",
+                turbow: 3,
+                weapon: "freezew",
+                weakness: ["junkw", "turbow"],
+              },
+            ];
+            break;
+          case "junk":
+            tempRow = [
+              {
+                megaw: "1:1:2",
+                freezew: "1:1",
+                junkw: "0:0",
+                burstw: "1:1:1",
+                cloudw: "4:4",
+                springw: "1:1",
+                slashw: 2,
+                shadew: "1:2",
+                turbow: 0,
+                weapon: "junkw",
+                weakness: ["cloudw"],
+              },
+            ];
+            break;
+          case "burst":
+            tempRow = [
+              {
+                megaw: "1:1:2",
+                freezew: "4:3",
+                junkw: "1:1",
+                burstw: "0:0:0",
+                cloudw: "1:1",
+                springw: "1:1",
+                slashw: 1,
+                shadew: "1:2",
+                turbow: 4,
+                weapon: "burstw",
+                weakness: ["turbow", "freezew"],
+              },
+            ];
+            break;
+          case "cloud":
+            tempRow = [
+              {
+                megaw: "1:1:2",
+                freezew: "1:1",
+                junkw: "0:0",
+                burstw: "4:4:4",
+                cloudw: "2:2",
+                springw: "1:1",
+                slashw: 1,
+                shadew: "1:2",
+                turbow: 1,
+                weapon: "cloudw",
+                weakness: ["burstw"],
+              },
+            ];
+            break;
+          case "spring":
+            tempRow = [
+              {
+                megaw: "1:1:2",
+                freezew: "1:1",
+                junkw: "1:1",
+                burstw: "1:1:1",
+                cloudw: "0:0",
+                springw: "0:0",
+                slashw: 4,
+                shadew: "1:2",
+                turbow: 1,
+                weapon: "springw",
+                weakness: ["slashw"],
+              },
+            ];
+            break;
+          case "slash":
+            tempRow = [
+              {
+                megaw: "1:1:2",
+                freezew: "6:4",
+                junkw: "1:1",
+                burstw: "0:0:0",
+                cloudw: "1:1",
+                springw: "1:1",
+                slashw: 1,
+                shadew: "1:2",
+                turbow: 4,
+                weapon: "slashw",
+                weakness: ["freezew", "turbow"],
+              },
+            ];
+            break;
+          case "shade":
+            tempRow = [
+              {
+                megaw: "1:1:2",
+                freezew: "1:1",
+                junkw: "1:1",
+                burstw: "1:1:1",
+                cloudw: "1:1",
+                springw: "3:6",
+                slashw: 1,
+                shadew: "0:0",
+                turbow: 1,
+                weapon: "shadew",
+                weakness: ["springw"],
+              },
+            ];
+            break;
+          case "turbo":
+            tempRow = [
+              {
+                megaw: "1:1:2",
+                freezew: "1:1",
+                junkw: "1:1",
+                burstw: "1:1:1",
+                cloudw: "0:0",
+                springw: "1:1",
+                slashw: 1,
+                shadew: "3:6",
+                turbow: 0,
+                weapon: "turbow",
+                weakness: ["shadew"],
+              },
+            ];
+            break;
+        }
         break;
       case "MM8":
         tempColumns = [
@@ -2835,6 +3850,125 @@ export function useDamageDataTable() {
               },
             ];
             break;
+          case "astro":
+            tempRow = [
+              {
+                megaw: "1:1:3",
+                tenguw1: "1:1",
+                astrow1: 0,
+                swordw: 1,
+                clownw: 1,
+                searchw: 3,
+                frostw: 1,
+                grenadew: 2,
+                aquaw: 1,
+                weapon: "astrow1",
+                weakness: ["searchw"],
+              },
+            ];
+            break;
+          case "sword":
+            tempRow = [
+              {
+                megaw: "1:1:3",
+                tenguw1: "1:1",
+                astrow1: 0,
+                swordw: 1,
+                clownw: 1,
+                searchw: 1,
+                frostw: 2,
+                grenadew: 1,
+                aquaw: 4,
+                weapon: "swordw",
+                weakness: ["aquaw"],
+              },
+            ];
+            break;
+          case "clown":
+            tempRow = [
+              {
+                megaw: "1:2:3",
+                tenguw1: "1:4",
+                astrow1: 0,
+                swordw: 1,
+                clownw: 1,
+                searchw: 1,
+                frostw: 1,
+                grenadew: 1,
+                aquaw: 1,
+                weapon: "clownw",
+                weakness: ["tenguw1"],
+              },
+            ];
+            break;
+          case "search":
+            tempRow = [
+              {
+                megaw: "1:1:3",
+                tenguw1: "1:1",
+                astrow1: 0,
+                swordw: 4,
+                clownw: 1,
+                searchw: 1,
+                frostw: 1,
+                grenadew: 1,
+                aquaw: 1,
+                weapon: "searchw",
+                weakness: ["swordw"],
+              },
+            ];
+            break;
+          case "frost":
+            tempRow = [
+              {
+                megaw: "1:2:3",
+                tenguw1: "1:1",
+                astrow1: 0,
+                swordw: 3,
+                clownw: 1,
+                searchw: 0,
+                frostw: 0,
+                grenadew: 3,
+                aquaw: 0,
+                weapon: "frostw",
+                weakness: ["grenadew", "swordw"],
+              },
+            ];
+            break;
+          case "grenade":
+            tempRow = [
+              {
+                megaw: "1:2:3",
+                tenguw1: "1:1",
+                astrow1: 0,
+                swordw: 1,
+                clownw: 4,
+                searchw: 1,
+                frostw: 1,
+                grenadew: 2,
+                aquaw: 1,
+                weapon: "grenadew",
+                weakness: ["clownw"],
+              },
+            ];
+            break;
+          case "aqua":
+            tempRow = [
+              {
+                megaw: "1:1:2",
+                tenguw1: "1:1",
+                astrow1: 8,
+                swordw: 1,
+                clownw: 1,
+                searchw: 1,
+                frostw: 1,
+                grenadew: 1,
+                aquaw: 0,
+                weapon: "aquaw",
+                weakness: ["astrow1"],
+              },
+            ];
+            break;
           case "cut":
             tempRow = [
               {
@@ -2847,9 +3981,27 @@ export function useDamageDataTable() {
                 frostw: 4,
                 grenadew: 3,
                 aquaw: 4,
-
                 weapon: "NONE",
                 weakness: ["megaw", "astrow1"],
+                notes: "Only available in Sega Saturn as miniboss",
+              },
+            ];
+            break;
+          case "wood":
+            tempRow = [
+              {
+                megaw: "1:2:3",
+                tenguw1: "1:1",
+                astrow1: 4,
+                swordw: 4,
+                clownw: 2,
+                searchw: "X",
+                frostw: 2,
+                grenadew: 1,
+                aquaw: 0,
+                weapon: "NONE",
+                weakness: ["swordw", "astrow1"],
+                notes: "Only available in Sega Saturn as miniboss",
               },
             ];
             break;
@@ -2925,6 +4077,132 @@ export function useDamageDataTable() {
               },
             ];
             break;
+          case "astro":
+            tempRow = [
+              {
+                megaw: "1:3",
+                bassw: "1:2",
+                coldw: 0,
+                burnerw: 1,
+                piratew: 1,
+                groundw: "1:0:0",
+                tenguw2: "0:0:0",
+                magicw: 2,
+                astrow2: 0,
+                dynamow: 1,
+                weapon: "astrow2",
+                weakness: ["magicw"],
+              },
+            ];
+            break;
+          case "cold":
+            tempRow = [
+              {
+                megaw: "1:3",
+                bassw: "1:2",
+                coldw: "+3",
+                burnerw: 2,
+                piratew: 1,
+                groundw: "1:1:1",
+                tenguw2: "1:1:1",
+                magicw: 1,
+                astrow2: 1,
+                dynamow: 3,
+                weapon: "coldw",
+                weakness: ["dynamow"],
+              },
+            ];
+            break;
+          case "burner":
+            tempRow = [
+              {
+                megaw: "1:3",
+                bassw: "1:2",
+                coldw: "3:8",
+                burnerw: 0,
+                piratew: 1,
+                groundw: "1:1:1",
+                tenguw2: "1:1:1",
+                magicw: 0,
+                astrow2: 1,
+                dynamow: 1,
+                weapon: "burnerw",
+                weakness: ["coldw"],
+              },
+            ];
+            break;
+          case "pirate":
+            tempRow = [
+              {
+                megaw: "1:3",
+                bassw: "1:2",
+                coldw: 1,
+                burnerw: "3:4",
+                piratew: 1,
+                groundw: "1:1:1",
+                tenguw2: "1:2:2",
+                magicw: 1,
+                astrow2: 0,
+                dynamow: 2,
+                weapon: "piratew",
+                weakness: ["burnerw"],
+              },
+            ];
+            break;
+          case "ground":
+            tempRow = [
+              {
+                megaw: "1:3",
+                bassw: "1:2",
+                coldw: 1,
+                burnerw: 1,
+                piratew: 4,
+                groundw: "0:0:0",
+                tenguw2: "1:0:1",
+                magicw: 1,
+                astrow2: 0,
+                dynamow: 1,
+                weapon: "groundw",
+                weakness: ["piratew"],
+              },
+            ];
+            break;
+          case "magic":
+            tempRow = [
+              {
+                megaw: "1:3",
+                bassw: "1:2",
+                coldw: 0,
+                burnerw: 2,
+                piratew: 1,
+                groundw: "2:1:1",
+                tenguw2: "4:3:4",
+                magicw: 1,
+                astrow2: 1,
+                dynamow: 2,
+                weapon: "magicw",
+                weakness: ["tenguw2"],
+              },
+            ];
+            break;
+          case "dynamo":
+            tempRow = [
+              {
+                megaw: "1:3",
+                bassw: "1:2",
+                coldw: 1,
+                burnerw: 1,
+                piratew: 1,
+                groundw: "1:1:0",
+                tenguw2: "0:0:2",
+                magicw: 1,
+                astrow2: 2,
+                dynamow: 0,
+                weapon: "dynamow",
+                weakness: ["astrow2"],
+              },
+            ];
+            break;
         }
         switch (player) {
           case "megaw":
@@ -2945,9 +4223,425 @@ export function useDamageDataTable() {
             break;
         }
         break;
-      case "MMP1":
+      case "MMP1-1":
+        tempColumns = [
+          {
+            name: "megaw",
+            field: "megaw",
+            align: "start",
+            sortable: false,
+          },
+          {
+            name: "gutsw",
+            field: "gutsw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "woodw",
+            field: "woodw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "heatw",
+            field: "heatw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "cutw",
+            field: "cutw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "icew",
+            field: "icew",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "crashw",
+            field: "crashw",
+            align: "center",
+            sortable: false,
+          },
+        ];
+        switch (robot) {
+          case "guts":
+            tempRow = [
+              {
+                megaw: "1:4:10:16",
+                gutsw: "X",
+                woodw: "1:8",
+                heatw: "3:4:4:6",
+                cutw: 3,
+                icew: 3,
+                crashw: "12:8",
+                weapon: "gutsw",
+                weakness: ["crashw"],
+              },
+            ];
+            break;
+          case "wood":
+            tempRow = [
+              {
+                megaw: "1:4:10:16",
+                gutsw: 6,
+                woodw: "X",
+                heatw: "6:8:8:12",
+                cutw: 3,
+                icew: 3,
+                crashw: "6:4",
+                weapon: "woodw",
+                weakness: ["heatw"],
+              },
+            ];
+            break;
+          case "heat":
+            tempRow = [
+              {
+                megaw: "1:4:10:16",
+                gutsw: 6,
+                woodw: "1:8",
+                heatw: "X",
+                cutw: 3,
+                icew: 6,
+                crashw: "6:4",
+                weapon: "heatw",
+                weakness: ["icew"],
+              },
+            ];
+            break;
+          case "cut":
+            tempRow = [
+              {
+                megaw: "1:4:10:16",
+                gutsw: 6,
+                woodw: "2:16",
+                heatw: "3:4:4:6",
+                cutw: "X",
+                icew: 3,
+                crashw: "6:4",
+                weapon: "cutw",
+                weakness: ["woodw"],
+              },
+            ];
+            break;
+          case "ice":
+            tempRow = [
+              {
+                megaw: "1:4:10:16",
+                gutsw: 12,
+                woodw: "1:8",
+                heatw: "3:4:4:6",
+                cutw: 3,
+                icew: "X",
+                crashw: "6:4",
+                weapon: "icew",
+                weakness: ["gutsw"],
+              },
+            ];
+            break;
+          case "crash":
+            tempRow = [
+              {
+                megaw: "1:4:10:16",
+                gutsw: 6,
+                woodw: "1:8",
+                heatw: "3:4:4:6",
+                cutw: 6,
+                icew: 3,
+                crashw: "X",
+                weapon: "crashw",
+                weakness: ["cutw"],
+              },
+            ];
+            break;
+        }
         break;
-      case "MMP2":
+      case "MMP1-2":
+        tempColumns = [
+          {
+            name: "megaw",
+            field: "megaw",
+            align: "start",
+            sortable: false,
+          },
+          {
+            name: "napalmw",
+            field: "napalmw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "plantw",
+            field: "plantw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "gyrow",
+            field: "gyrow",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "magnetw",
+            field: "magnetw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "geminiw",
+            field: "geminiw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "dustw",
+            field: "dustw",
+            align: "center",
+            sortable: false,
+          },
+        ];
+        switch (robot) {
+          case "napalm":
+            tempRow = [
+              {
+                megaw: "1:4:10:16",
+                napalmw: "X",
+                plantw: "1:8",
+                gyrow: 4,
+                magnetw: 4,
+                geminiw: 8,
+                dustw: "6:3",
+                weapon: "napalmw",
+                weakness: ["geminiw"],
+              },
+            ];
+            break;
+          case "plant":
+            tempRow = [
+              {
+                megaw: "1:4:10:16",
+                napalmw: "3:2",
+                plantw: "X",
+                gyrow: 8,
+                magnetw: 4,
+                geminiw: 4,
+                dustw: "6:3",
+                weapon: "plantw",
+                weakness: ["gyrow"],
+              },
+            ];
+            break;
+          case "gyro":
+            tempRow = [
+              {
+                megaw: "1:4:10:16",
+                napalmw: "6:4",
+                plantw: "1:8",
+                gyrow: "X",
+                magnetw: 4,
+                geminiw: 4,
+                dustw: "6:3",
+                weapon: "gyrow",
+                weakness: ["napalmw"],
+              },
+            ];
+            break;
+          case "magnet":
+            tempRow = [
+              {
+                megaw: "1:4:10:16",
+                napalmw: "3:2",
+                plantw: "1:8",
+                gyrow: 8,
+                magnetw: "X",
+                geminiw: 4,
+                dustw: "6:3",
+                weapon: "magnetw",
+                weakness: ["gyrow"],
+              },
+            ];
+            break;
+          case "gemini":
+            tempRow = [
+              {
+                megaw: "1:4:10:16",
+                napalmw: "3:2",
+                plantw: "1:8",
+                gyrow: 4,
+                magnetw: 4,
+                geminiw: "X",
+                dustw: "6:3",
+                weapon: "geminiw",
+                weakness: ["snakew"],
+              },
+            ];
+            break;
+          case "dust":
+            tempRow = [
+              {
+                megaw: "1:4:10:16",
+                napalmw: "6:4",
+                plantw: "1:8",
+                gyrow: 4,
+                magnetw: 4,
+                geminiw: 4,
+                dustw: "X",
+                weapon: "dustw",
+                weakness: ["napalmw"],
+              },
+            ];
+            break;
+        }
+        break;
+      case "MMP1-3":
+        tempColumns = [
+          {
+            name: "megaw",
+            field: "megaw",
+            align: "start",
+            sortable: false,
+          },
+          {
+            name: "turbow",
+            field: "turbow",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "slashw",
+            field: "slashw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "cloudw",
+            field: "cloudw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "shadew",
+            field: "shadew",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "freezew",
+            field: "freezew",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "junkw",
+            field: "junkw",
+            align: "center",
+            sortable: false,
+          },
+        ];
+        switch (robot) {
+          case "turbo":
+            tempRow = [
+              {
+                megaw: "1:4:10:16",
+                turbow: "X",
+                slashw: 6,
+                cloudw: "6:6",
+                shadew: "8:16",
+                freezew: "3:3",
+                junkw: "1:6",
+                weapon: "turbow",
+                weakness: ["shadew"],
+              },
+            ];
+            break;
+          case "slash":
+            tempRow = [
+              {
+                megaw: "1:4:10:16",
+                turbow: 4,
+                slashw: "X",
+                cloudw: "6:6",
+                shadew: "4:8",
+                freezew: "6:6",
+                junkw: "1:6",
+                weapon: "slashw",
+                weakness: ["freezew"],
+              },
+            ];
+            break;
+          case "cloud":
+            tempRow = [
+              {
+                megaw: "1:4:10:16",
+                turbow: 8,
+                slashw: 6,
+                cloudw: "X",
+                shadew: "4:8",
+                freezew: "3:3",
+                junkw: "1:6",
+                weapon: "cloudw",
+                weakness: ["turbow"],
+              },
+            ];
+            break;
+          case "shade":
+            tempRow = [
+              {
+                megaw: "1:4:10:16",
+                turbow: 4,
+                slashw: 12,
+                cloudw: "6:6",
+                shadew: "X",
+                freezew: "3:3",
+                junkw: "1:6",
+                weapon: "shadew",
+                weakness: ["slashw"],
+              },
+            ];
+            break;
+          case "freeze":
+            tempRow = [
+              {
+                megaw: "1:4:10:16",
+                turbow: 4,
+                slashw: 6,
+                cloudw: "6:6",
+                shadew: "4:8",
+                freezew: "X",
+                junkw: "2:12",
+                weapon: "freezew",
+                weakness: ["junkw"],
+              },
+            ];
+            break;
+          case "junk":
+            tempRow = [
+              {
+                megaw: "1:4:10:16",
+                turbow: 4,
+                slashw: 6,
+                cloudw: "12:12",
+                shadew: "4:8",
+                freezew: "3:3",
+                junkw: "X",
+                weapon: "junkw",
+                weakness: ["cloudw"],
+              },
+            ];
+            break;
+        }
+        break;
+      case "MMP2-A":
+        break;
+      case "MMP2-B":
+        break;
+      case "MMP2-C":
         break;
       case "MM9":
         break;
@@ -2974,32 +4668,31 @@ export function useDamageDataTable() {
         var tempObj = { col: tempColumns, row: tempRow };
         return tempObj;
       case 2:
-        if (tempRow.weakness[0] == "NONE") {
+        if (tempRow[0].weakness == "NONE") {
           arrayWeaknesses.push(specialWeapons.value[0]);
           return arrayWeaknesses;
         }
-        for (var i = 0; i < tempRow.weakness.length; i++) {
+        for (var i = 0; i < tempRow[0].weakness.length; i++) {
           for (var j = 0; j < specialWeapons.value.length; j++) {
-            if (specialWeapons.value[j].code == tempRow.weakness[i]) {
+            if (specialWeapons.value[j].code == tempRow[0].weakness[i]) {
               arrayWeaknesses.push(specialWeapons.value[j]);
             }
           }
         }
-        console.log(arrayWeaknesses);
         return arrayWeaknesses;
       case 3:
-        if (tempRow.weapon == "NONE") {
+        if (tempRow[0].weapon == "NONE") {
           return specialWeapons.value[0];
         }
         for (var i = 0; i < specialWeapons.value.length; i++) {
-          if (specialWeapons.value[i].code == tempRow.weapon) {
+          if (specialWeapons.value[i].code == tempRow[0].weapon) {
             return specialWeapons.value[i];
           }
         }
         break;
       case 4:
-        if (tempRow.hasOwnProperty("notes")) {
-          return tempRow.notes;
+        if (tempRow[0].hasOwnProperty("notes")) {
+          return tempRow[0].notes;
         } else {
           return "";
         }

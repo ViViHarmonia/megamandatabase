@@ -48,6 +48,13 @@
             </div>
           </q-td>
         </template>
+        <template v-slot:body-cell-notes="props">
+          <q-td :props="props">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span>{{ damageDataTable(props.row.code, props.row.gameSl, playerSwitch, 4) }}</span>
+            </div>
+          </q-td>
+        </template>
       </q-table>
     </q-card-section>
   </q-card>
@@ -59,25 +66,36 @@ import { useDamageDataTable } from 'src/composables/useDamageDataTable'
 const { damageDataTable2, specialWeapons } = useDamageDataTable()
 const game = ref("MM1")
 const games = ref([
-  { title: "ALL", code: "ALL", chars: ["yes"], },
+  //{ title: "ALL", code: "ALL", chars: ["yes"], },
   { title: "Mega Man", code: "MM1", chars: ["cut", "elec", "ice", "fire", "bomb", "guts"], },
   { title: "Mega Man Powered Up", code: "MMPU", chars: ["cut", "bomb", "ice", "fire", "oil", "elec", "time", "guts"], },
   { title: "Mega Man 2", code: "MM2", chars: ["metal", "flash", "bubble", "heat", "wood", "air", "crash", "quick"], },
   { title: "Mega Man 3", code: "MM3", chars: ["top", "shadow", "spark", "magnet", "hard", "snake", "needle", "gemini", "metal", "quick", "air", "crash", "flash", "bubble", "wood", "heat"], },
-  { title: "Mega Man 4", code: "MM4", chars: ["ring", "dust", "skull", "dive", "drill", "toad", "bright", "pharaoh"], },
+  { title: "MM: The Wily Wars (MM1)", code: "WW1", chars: ["buster1", "buster2", "water", "storm"], },
+  { title: "MM: The Wily Wars (MM2)", code: "WW2", chars: ["buster1", "buster2", "water", "storm"], },
+  { title: "MM: The Wily Wars (MM3)", code: "WW3", chars: ["buster1", "buster2", "water", "storm"], },
+  { title: "Mega Man 4", code: "MM4", chars: ["toad", "bright", "pharaoh", "ring", "dust", "skull", "dive", "drill"], },
   { title: "Mega Man 5", code: "MM5", chars: ["gravity", "gyro", "crystal", "napalm", "stone", "charge", "wave", "star"], },
   { title: "Mega Man 6", code: "MM6", chars: ["centaur", "wind", "flame", "blizzard", "plant", "tomahawk", "yamato", "knight"], },
-  { title: "Mega Man: Dr. Wily's Revenge", code: "MMI", chars: ["cut","elec","ice","fire","flash","quick","bubble","heat","enker"], },
-  { title: "Mega Man II", code: "MMII", chars: ["metal","wood","air","crash","needle","magnet","hard","top","quint"], },
+  { title: "Mega Man: Dr. Wily's Revenge", code: "MMI", chars: ["cut", "elec", "ice", "fire", "flash", "quick", "bubble", "heat", "enker"], },
+  { title: "Mega Man II", code: "MMII", chars: ["metal", "wood", "air", "crash", "needle", "magnet", "hard", "top", "quint"], },
+  { title: "Mega Man III", code: "MMIII", chars: ["shadow", "spark", "snake", "gemini", "drill", "dust", "skull", "dive", "punk"], },
+  { title: "Mega Man IV", code: "MMIV", chars: ["toad", "bright", "pharaoh", "ring", "crystal", "napalm", "stone", "charge", "ballade"], },
+  { title: "Mega Man V", code: "MMV", chars: ["mercury", "neptune", "mars", "venus", "jupiter", "saturn", "pluto", "uranus", "terra", "enker", "quint", "punk", "ballade"], },
+  { title: "Mega Man 7", code: "MM7", chars: ["burst", "cloud", "junk", "freeze", "slash", "spring", "shade", "turbo"], },
+  { title: "Mega Man 8", code: "MM8", chars: ["tengu", "clown", "grenade", "frost", "aqua", "sword", "search", "astro", "cut", "wood"], },
+  { title: "Mega Man & Bass", code: "MM&B1", chars: ["cold", "burner", "pirate", "ground", "tengu", "magic", "astro", "dynamo"], },
+  { title: "MM: The Power Battle (MM1-2)", code: "MMP1-1", chars: ["cut", "crash", "guts", "ice", "heat", "wood"], },
+  { title: "MM: The Power Battle (MM3-6)", code: "MMP1-2", chars: ["gemini", "napalm", "gyro", "dust", "plant", "magnet"], },
+  { title: "MM: The Power Battle (MM7)", code: "MMP1-3", chars: ["freeze", "slash", "shade", "turbo", "cloud", "junk"], },
+
   //DONE ^^ / UNDONE vv
-  /*{ title: "Mega Man III", code: "MMIII", chars: [""], },
-  { title: "Mega Man IV", code: "MMIV", chars: [""], },
-  { title: "Mega Man V", code: "MMV", chars: [""], },
-  { title: "Mega Man 7", code: "MM7", chars: [""], },
-  { title: "Mega Man 8", code: "MM8", chars: [""], },
-  { title: "Mega Man & Bass", code: "MM&B1", chars: [""], },
-  { title: "Mega Man: The Power Battle", code: "MMP1", chars: [""], },
-  { title: "Mega Man 2: The Power Fighters", code: "MMP2", chars: [""], },
+  /*
+
+
+  { title: "MM2: The Power Fighters (Search for Wily)", code: "MMP2-A", chars: [""], },
+  { title: "MM2: The Power Fighters (Rescue Roll)", code: "MMP2-B", chars: [""], },
+  { title: "MM2: The Power Fighters (Recover Parts)", code: "MMP2-C", chars: [""], },
   { title: "Mega Man 9", code: "MM9", chars: [""], },
   { title: "Mega Man 10", code: "MM10", chars: [""], },
   { title: "Mega Man 11", code: "MM11", chars: [""], },
@@ -86,69 +104,71 @@ const games = ref([
   { title: "Rockman & Forte: Mirai Kara no Chōsensha", code: "MM&B2", chars: [""], },
   { title: "Mega Man 2 (Tiger)", code: "MMT2", chars: [""], },
   { title: "Mega Man 3 (Tiger)", code: "MMT3", chars: [""], },
-  { title: "Mega Man (Game Gear)", code: "MMGG", chars: [""], },*/
+  { title: "Mega Man (Game Gear)", code: "MMGG", chars: [""], },
+   */
 ])
 const robotMastersFltrdLst = ref([])
 const robotMasters = ref([
   //MM1
-  { name: "Cut Man", code: "cut", games: ["MM1", "MMPU", "MMI", "MM8", "MMP1", "MMP2"], gameSl: "MM1", icon: "/robots/MM1PU/cut.png" }, //mm8 is secret sega saturn boss
-  { name: "Guts Man", code: "guts", games: ["MM1", "MMPU", "MMP1", "MMP2"], gameSl: "MM1", icon: "/robots/MM1PU/guts.png" },
-  { name: "Ice Man", code: "ice", games: ["MM1", "MMPU", "MMI", "MMP1"], gameSl: "MM1", icon: "/robots/MM1PU/ice.png" },
-  { name: "Bomb Man", code: "bomb", games: ["MM1", "MMPU"], gameSl: "MM1", icon: "/MM1PU/bomb.png" },
-  { name: "Fire Man", code: "fire", games: ["MM1", "MMPU", "MMI"], gameSl: "MM1", icon: "/MM1PU/fire.png" },
-  { name: "Elec Man", code: "elec", games: ["MM1", "MMPU", "MMI", "MMP2", "MM10"], gameSl: "MM1", icon: "/MM1PU/elec.png" }, //mm10 is weapons archive
+  { name: "Cut Man", code: "cut", games: ["MM1", "MMPU", "MMI", "MM8", "MMP1-1", "MMP2-B"], gameSl: "MM1", icon: "/robots/MM1PU/cut.png" }, //mm8 is secret sega saturn boss
+  { name: "Guts Man", code: "guts", games: ["MM1", "MMPU", "MMP1-1", "MMP2-C"], gameSl: "MM1", icon: "/robots/MM1PU/guts.png" },
+  { name: "Ice Man", code: "ice", games: ["MM1", "MMPU", "MMI", "MMP1-1"], gameSl: "MM1", icon: "/robots/MM1PU/ice.png" },
+  { name: "Bomb Man", code: "bomb", games: ["MM1", "MMPU"], gameSl: "MM1", icon: "/robots/MM1PU/bomb.png" },
+  { name: "Fire Man", code: "fire", games: ["MM1", "MMPU", "MMI"], gameSl: "MM1", icon: "/robots/MM1PU/fire.png" },
+  { name: "Elec Man", code: "elec", games: ["MM1", "MMPU", "MMI", "MMP2-B", "MM10"], gameSl: "MM1", icon: "/robots/MM1PU/elec.png" }, //mm10 is weapons archive
   //MMPU
-  { name: "Oil Man", code: "oil", games: ["MMPU"], gameSl: "MMPU", icon: "/MM1PU/oil.png" },
-  { name: "Time Man", code: "time", games: ["MMPU"], gameSl: "MMPU", icon: "/MM1PU/time.png" },
+  { name: "Oil Man", code: "oil", games: ["MMPU"], gameSl: "MMPU", icon: "/robots/MM1PU/oil.png" },
+  { name: "Time Man", code: "time", games: ["MMPU"], gameSl: "MMPU", icon: "/robots/MM1PU/time.png" },
   //MM2
   { name: "Metal Man", code: "metal", games: ["MM2", "MM3", "MMII", "MMT2"], gameSl: "MM2", icon: "/robots/MM2/metal.png" },//mm3 doc robot
-  { name: "Air Man", code: "air", games: ["MM2", "MM3", "MMII", "MMP2", "MMT2"], gameSl: "MM2", icon: "/robots/MM2/air.png" },//mm3 doc robot
-  { name: "Bubble Man", code: "bubble", games: ["MM2", "MM3", "MMI", "MMP2", "MMT2"], gameSl: "MM2", icon: "/robots/MM2/bubble.png" },//mm3 doc robot
-  { name: "Quick Man", code: "quick", games: ["MM2", "MM3", "MMI", "MMP2", "MMT2"], gameSl: "MM2", icon: "/robots/MM2/quick.png" },//mm3 doc robot
-  { name: "Crash Man", code: "crash", games: ["MM2", "MM3", "MMII", "MMP1"], gameSl: "MM2", icon: "/robots/MM2/crash.png" },//mm3 doc robot
+  { name: "Air Man", code: "air", games: ["MM2", "MM3", "MMII", "MMP2-C", "MMT2"], gameSl: "MM2", icon: "/robots/MM2/air.png" },//mm3 doc robot
+  { name: "Bubble Man", code: "bubble", games: ["MM2", "MM3", "MMI", "MMP2-A", "MMT2"], gameSl: "MM2", icon: "/robots/MM2/bubble.png" },//mm3 doc robot
+  { name: "Quick Man", code: "quick", games: ["MM2", "MM3", "MMI", "MMP2-C", "MMT2"], gameSl: "MM2", icon: "/robots/MM2/quick.png" },//mm3 doc robot
+  { name: "Crash Man", code: "crash", games: ["MM2", "MM3", "MMII", "MMP1-1"], gameSl: "MM2", icon: "/robots/MM2/crash.png" },//mm3 doc robot
   { name: "Flash Man", code: "flash", games: ["MM2", "MM3", "MMI", "MMT2"], gameSl: "MM2", icon: "/robots/MM2/flash.png" },//mm3 doc robot
-  { name: "Heat Man", code: "heat", games: ["MM2", "MM3", "MMI", "MMP1", "MMP2", "MMT2"], gameSl: "MM2", icon: "/robots/MM2/heat.png" },//mm3 doc robot
-  { name: "Wood Man", code: "wood", games: ["MM2", "MM3", "MMII", "MM8", "MMP1", "MM10"], gameSl: "MM2", icon: "/robots/MM2/wood.png" },//mm10 weapons archive, mm3 doc robot, mm8 secret sega saturn boss
+  { name: "Heat Man", code: "heat", games: ["MM2", "MM3", "MMI", "MMP1-1", "MMP2-A", "MMT2"], gameSl: "MM2", icon: "/robots/MM2/heat.png" },//mm3 doc robot
+  { name: "Wood Man", code: "wood", games: ["MM2", "MM3", "MMII", "MM8", "MMP1-1", "MM10"], gameSl: "MM2", icon: "/robots/MM2/wood.png" },//mm10 weapons archive, mm3 doc robot, mm8 secret sega saturn boss
   //MM3
   { name: "Needle Man", code: "needle", games: ["MM3", "MMII", "MMT3"], gameSl: "MM3", icon: "/robots/MM3/needle.png" },
-  { name: "Magnet Man", code: "magnet", games: ["MM3", "MMII", "MMP1", "MMT3"], gameSl: "MM3", icon: "/robots/MM3/magnet.png" },
-  { name: "Gemini Man", code: "gemini", games: ["MM3", "MMIII", "MMP1", "MMP2", "MM10", "MMT3"], gameSl: "MM3", icon: "/robots/MM3/gemini.png" },//mm10 is weapons archive
+  { name: "Magnet Man", code: "magnet", games: ["MM3", "MMII", "MMP1-2", "MMT3"], gameSl: "MM3", icon: "/robots/MM3/magnet.png" },
+  { name: "Gemini Man", code: "gemini", games: ["MM3", "MMIII", "MMP1-2", "MMP2-C", "MM10", "MMT3"], gameSl: "MM3", icon: "/robots/MM3/gemini.png" },//mm10 is weapons archive
   { name: "Hard Man", code: "hard", games: ["MM3", "MMII"], gameSl: "MM3", icon: "/robots/MM3/hard.png" },
   { name: "Top Man", code: "top", games: ["MM3", "MMII"], gameSl: "MM3", icon: "/robots/MM3/top.png" },
   { name: "Snake Man", code: "snake", games: ["MM3", "MMIII", "MMT3"], gameSl: "MM3", icon: "/robots/MM3/snake.png" },
   { name: "Spark Man", code: "spark", games: ["MM3", "MMIII", "MMT3"], gameSl: "MM3", icon: "/robots/MM3/spark.png" },
-  { name: "Shadow Man", code: "shadow", games: ["MM3", "MMIII", "MMP2", "MMT3"], gameSl: "MM3", icon: "/robots/MM3/shadow.png" },
+  { name: "Shadow Man", code: "shadow", games: ["MM3", "MMIII", "MMP2-A", "MMT3"], gameSl: "MM3", icon: "/robots/MM3/shadow.png" },
   //MM4
   { name: "Bright Man", code: "bright", games: ["MM4", "MMIV", "MMGG"], gameSl: "MM4", icon: "/robots/MM4/bright.png" },
   { name: "Toad Man", code: "toad", games: ["MM4", "MMIV", "MMGG"], gameSl: "MM4", icon: "/robots/MM4/toad.png" },
   { name: "Drill Man", code: "drill", games: ["MM4", "MMIII"], gameSl: "MM4", icon: "/robots/MM4/drill.png" },
-  { name: "Pharaoh Man", code: "Pharaoh", games: ["MM4", "MMIV", "MMP2"], gameSl: "MM4", icon: "/robots/MM4/pharaoh.png" },
-  { name: "Ring Man", code: "Ring", games: ["MM4", "MMIV", "MM10"], gameSl: "MM4", icon: "/robots/MM4/ring.png" },//mm10 is weapons archive
-  { name: "Dust Man", code: "dust", games: ["MM4", "MMIII", "MMP1"], gameSl: "MM4", icon: "/robots/MM4/dust.png" },
-  { name: "Dive Man", code: "dive", games: ["MM4", "MMIII", "MMP2"], gameSl: "MM4", icon: "/robots/MM4/dive.png" },
+  { name: "Pharaoh Man", code: "pharaoh", games: ["MM4", "MMIV", "MMP2-C"], gameSl: "MM4", icon: "/robots/MM4/pharaoh.png" },
+  { name: "Ring Man", code: "ring", games: ["MM4", "MMIV", "MM10"], gameSl: "MM4", icon: "/robots/MM4/ring.png" },//mm10 is weapons archive
+  { name: "Dust Man", code: "dust", games: ["MM4", "MMIII", "MMP1-2"], gameSl: "MM4", icon: "/robots/MM4/dust.png" },
+  { name: "Dive Man", code: "dive", games: ["MM4", "MMIII", "MMP2-B"], gameSl: "MM4", icon: "/robots/MM4/dive.png" },
   { name: "Skull Man", code: "skull", games: ["MM4", "MMIII"], gameSl: "MM4", icon: "/robots/MM4/skull.png" },
   //MM5
   { name: "Gravity Man", code: "gravity", games: ["MM5"], gameSl: "MM5", icon: "/robots/MM5/gravity.png" },
   { name: "Wave Man", code: "wave", games: ["MM5", "MMGG"], gameSl: "MM5", icon: "/robots/MM5/wave.png" },
-  { name: "Stone Man", code: "stone", games: ["MM5", "MMIV", "MMP2", "MMGG"], gameSl: "MM5", icon: "/robots/MM5/stone.png" },
-  { name: "Gyro Man", code: "gyro", games: ["MM5", "MMP1", "MMP2"], gameSl: "MM5", icon: "/robots/MM5/gyro.png" },
+  { name: "Stone Man", code: "stone", games: ["MM5", "MMIV", "MMP2-B", "MMGG"], gameSl: "MM5", icon: "/robots/MM5/stone.png" },
+  { name: "Gyro Man", code: "gyro", games: ["MM5", "MMP1-2", "MMP2-A"], gameSl: "MM5", icon: "/robots/MM5/gyro.png" },
   { name: "Star Man", code: "star", games: ["MM5", "MMGG"], gameSl: "MM5", icon: "/robots/MM5/star.png" },
   { name: "Charge Man", code: "charge", games: ["MM5", "MMIV"], gameSl: "MM5", icon: "/robots/MM5/charge.png" },
-  { name: "Napalm Man", code: "napalm", games: ["MM5", "MMIV", "MMP1", "MMP2", "MM10", "MMGG"], gameSl: "MM5", icon: "/robots/MM5/napalm.png" },//mm10 is weapons archive
+  { name: "Napalm Man", code: "napalm", games: ["MM5", "MMIV", "MMP1-2", "MMP2-C", "MM10", "MMGG"], gameSl: "MM5", icon: "/robots/MM5/napalm.png" },//mm10 is weapons archive
   { name: "Crystal Man", code: "crystal", games: ["MM5", "MMIV"], gameSl: "MM5", icon: "/robots/MM5/crystal.png" },
   //MM6
   { name: "Blizzard Man", code: "blizzard", games: ["MM6"], gameSl: "MM6", icon: "/robots/MM6/blizzard.png" },
-  { name: "Centaur Man", code: "centaur", games: ["MM6", "MMP2"], gameSl: "MM6", icon: "/robots/MM6/centaur.png" },
+  { name: "Centaur Man", code: "centaur", games: ["MM6", "MMP2-A"], gameSl: "MM6", icon: "/robots/MM6/centaur.png" },
   { name: "Flame Man", code: "flame", games: ["MM6", "MM10"], gameSl: "MM6", icon: "/robots/MM6/flame.png" },//mm10 is weapons archive
   { name: "Knight Man", code: "knight", games: ["MM6"], gameSl: "MM6", icon: "/robots/MM6/knight.png" },
-  { name: "Plant Man", code: "plant", games: ["MM6", "MMP1", "MMP2"], gameSl: "MM6", icon: "/robots/MM6/plant.png" },
+  { name: "Plant Man", code: "plant", games: ["MM6", "MMP1-2", "MMP2-A"], gameSl: "MM6", icon: "/robots/MM6/plant.png" },
   { name: "Tomahawk Man", code: "tomahawk", games: ["MM6"], gameSl: "MM6", icon: "/robots/MM6/tomahawk.png" },
   { name: "Wind Man", code: "wind", games: ["MM6"], gameSl: "MM6", icon: "/robots/MM6/wind.png" },
   { name: "Yamato Man", code: "yamato", games: ["MM6"], gameSl: "MM6", icon: "/robots/MM6/yamato.png" },
   //MMWW, MMI,II,III,IV
-  { name: "Buster Rod G", code: "buster", games: ["MM1", "MM2", "MM3"], gameSl: "MM1", icon: "/robots/MMWWGB-V/buster.png" },
-  { name: "Mega Water S", code: "water", games: ["MM1", "MM2", "MM3"], gameSl: "MM1", icon: "/robots/MMWWGB-V/water.png" },
-  { name: "Hyper Storm H", code: "storm", games: ["MM1", "MM2", "MM3"], gameSl: "MM1", icon: "/robots/MMWWGB-V/storm.png" },
+  { name: "Buster Rod G", code: "buster1", games: ["WW1", "WW2", "WW3"], gameSl: "WW1", icon: "/robots/MMWWGB-V/buster.png" },
+  { name: "Buster Rod G (2nd Fight)", code: "buster2", games: ["WW1", "WW2", "WW3"], gameSl: "WW1", icon: "/robots/MMWWGB-V/buster.png" },
+  { name: "Mega Water S", code: "water", games: ["WW1", "WW2", "WW3"], gameSl: "WW1", icon: "/robots/MMWWGB-V/water.png" },
+  { name: "Hyper Storm H", code: "storm", games: ["WW1", "WW2", "WW3"], gameSl: "WW1", icon: "/robots/MMWWGB-V/storm.png" },
   { name: "Enker", code: "enker", games: ["MMI", "MMV", "MM10"], gameSl: "MMI", icon: "/robots/MMWWGB-V/enker.png" },
   { name: "Quint", code: "quint", games: ["MMII", "MMV"], gameSl: "MMII", icon: "/robots/MMWWGB-V/quint.png" },
   { name: "Punk", code: "punk", games: ["MMIII", "MMV", "MM10"], gameSl: "MMIII", icon: "/robots/MMWWGB-V/punk.png" },
@@ -164,14 +184,14 @@ const robotMasters = ref([
   { name: "Pluto", code: "pluto", games: ["MMV"], gameSl: "MMV", icon: "/robots/MMV/pluto.png" },
   { name: "Neptune", code: "neptune", games: ["MMV"], gameSl: "MMV", icon: "/robots/MMV/neptune.png" },
   //MM7
-  { name: "Freeze Man", code: "freeze", games: ["MM7", "MMP1"], gameSl: "MM7", icon: "/robots/MM7/freeze.png" },
-  { name: "Junk Man", code: "junk", games: ["MM7", "MMP1"], gameSl: "MM7", icon: "/robots/MM7/junk.png" },
+  { name: "Freeze Man", code: "freeze", games: ["MM7", "MMP1-3"], gameSl: "MM7", icon: "/robots/MM7/freeze.png" },
+  { name: "Junk Man", code: "junk", games: ["MM7", "MMP1-3"], gameSl: "MM7", icon: "/robots/MM7/junk.png" },
   { name: "Burst Man", code: "burst", games: ["MM7"], gameSl: "MM7", icon: "/robots/MM7/burst.png" },
-  { name: "Cloud Man", code: "cloud", games: ["MM7", "MMP1"], gameSl: "MM7", icon: "/robots/MM7/cloud.png" },
+  { name: "Cloud Man", code: "cloud", games: ["MM7", "MMP1-3"], gameSl: "MM7", icon: "/robots/MM7/cloud.png" },
   { name: "Spring Man", code: "spring", games: ["MM7"], gameSl: "MM7", icon: "/robots/MM7/spring.png" },
-  { name: "Slash Man", code: "slash", games: ["MM7", "MMP1", "MMP2", "MM10"], gameSl: "MM7", icon: "/robots/MM7/slash.png" },//mm10 is weapons archive
-  { name: "Shade Man", code: "shade", games: ["MM7", "MMP1", "MMP2"], gameSl: "MM7", icon: "/robots/MM7/shade.png" },
-  { name: "Turbo Man", code: "turbo", games: ["MM7", "MMP1"], gameSl: "MM7", icon: "/robots/MM7/turbo.png" },
+  { name: "Slash Man", code: "slash", games: ["MM7", "MMP1-3", "MMP2-B", "MM10"], gameSl: "MM7", icon: "/robots/MM7/slash.png" },//mm10 is weapons archive
+  { name: "Shade Man", code: "shade", games: ["MM7", "MMP1-3", "MMP2-B"], gameSl: "MM7", icon: "/robots/MM7/shade.png" },
+  { name: "Turbo Man", code: "turbo", games: ["MM7", "MMP1-3"], gameSl: "MM7", icon: "/robots/MM7/turbo.png" },
   //MM8 & MM&B
   { name: "Tengu Man", code: "tengu", games: ["MM8", "MM&B1"], gameSl: "MM8", icon: "/robots/MM8/tengu.png" },
   { name: "Astro Man", code: "astro", games: ["MM8", "MM&B1"], gameSl: "MM8", icon: "/robots/MM8/astro.png" },
@@ -272,20 +292,34 @@ const rmTableColumns = ref([
     align: "center",
     sortable: false,
   },
+  {
+    name: "notes",
+    label: "Notes",
+    field: "notes",
+    align: "center",
+    sortable: false,
+  },
 ])
 const playerSwitch = ref("mega")
 //false equals mega, true equals bass
 const wpnColumns = ref([])
 const rbtRow = ref({})
-const damageDataTable = damageDataTable2;
+function damageDataTable(robot, game, player, funct) { return damageDataTable2(robot, game, player, funct) };
+
 function dataFill() {
   robotMastersFltrdLst.value = [];
   if (game.value == "ALL") {
     robotMastersFltrdLst.value = robotMasters.value
   } else {
-    for (var i = 0; i < robotMasters.value.length; i++) {
-      for (var j = 0; j < robotMasters.value[i].games.length; j++) {
-        if (robotMasters.value[i].games[j] == game.value) {
+    var tempArrayChar
+    for (var i = 0; i < games.value.length; i++) {
+      if (games.value[i].code == game.value) {
+        tempArrayChar = games.value[i].chars
+      }
+    }
+    for (var j = 0; j < tempArrayChar.length; j++) {
+      for (var i = 0; i < robotMasters.value.length; i++) {
+        if (robotMasters.value[i].code == tempArrayChar[j]) {
           robotMasters.value[i].gameSl = game.value
           robotMastersFltrdLst.value.push(robotMasters.value[i])
         }
@@ -333,7 +367,7 @@ onMounted(async () => {
 </script>
 <style>
 .my-sticky-header-table {
-  height: 500px;
+  height: 620px;
 }
 
 .q-table__top,
