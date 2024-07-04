@@ -6111,6 +6111,53 @@ export function useDamageDataTable() {
         }
         break;
       case "MM&B2":
+        tempRow = [
+          {
+            megaw: "1:4",
+            bassw: "½:1",
+            bulletw1: 4,
+            bulletw2: 4,
+            stovew1: 2,
+            stovew2: 2,
+            fanw1: 5,
+            fanw2: 5,
+            monkw1: 5,
+            monkw2: 2,
+            clockw1: "X",
+            clockw2: "X",
+            weapon: "NONE",
+            weakness: ["NONE"],
+          },
+        ];
+        switch (robot) {
+          case "bullet":
+            tempRow.bulletw1 = "X";
+            tempRow.bulletw2 = "X";
+            tempRow.weapon = "bulletw";
+            break;
+          case "stove":
+            tempRow.stovew1 = "X";
+            tempRow.stovew2 = "X";
+            tempRow.weapon = "stovew";
+            break;
+          case "fan":
+            tempRow.fanw1 = "X";
+            tempRow.fanw2 = "X";
+            tempRow.weapon = "fanw";
+            break;
+          case "monk":
+            tempRow.monkw1 = "X";
+            tempRow.monkw2 = "X";
+            tempRow.weapon = "monkw";
+            break;
+          case "clock":
+            tempRow.weapon = "clockw";
+            break;
+          case "compass":
+            tempRow.clockw1 = 0;
+            tempRow.clockw2 = 0;
+            break;
+        }
         switch (player) {
           case "mega":
             tempColumns = [
@@ -6151,6 +6198,7 @@ export function useDamageDataTable() {
                 sortable: false,
               },
             ];
+            tempRow.weapon = tempRow.weapon + "1";
             break;
           case "bass":
             tempColumns = [
@@ -6191,29 +6239,102 @@ export function useDamageDataTable() {
                 sortable: false,
               },
             ];
+            tempRow.weapon = tempRow.weapon + "2";
             break;
         }
-        switch (robot){
-          case "bullet":
-            tempRow = [{
-                megaw: 0,
-                bassw: 0,
-                bulletw1: 0,
-                bulletw2: 0,
-                stovew1: 0,
-                stovew2: 0,
-                fanw1: 0,
-                fanw2: 0,
-                monkw1: 0,
-                monkw2: 0,
-                clockw1: 0,
-                clockw2: 0,
-                weapon: "bulletw",
-                weakness: [],
-            }] 
-            break
+        break;
+      case "MMGG":
+        tempColumns = [
+          {
+            name: "megaw",
+            field: "megaw",
+            align: "start",
+            sortable: false,
+          },
+          {
+            name: "stonew",
+            field: "stonew",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "starw",
+            field: "starw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "brightw",
+            field: "brightw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "napalmw",
+            field: "napalmw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "wavew",
+            field: "wavew",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "toadw",
+            field: "toadw",
+            align: "center",
+            sortable: false,
+          },
+        ];
+        tempRow = [
+          {
+            megaw: "1:2:4",
+            stonew: 1,
+            starw: 1,
+            brightw: 1,
+            napalmw: 1,
+            wavew: "X",
+            toadw: "X",
+          },
+        ];
+        switch (robot) {
+          case "stone":
+            tempRow.stonew = "X";
+            tempRow.napalmw = 3;
+            tempRow.weapon = "stonew";
+            tempRow.weakness = ["napalmw"];
+            break;
+          case "star":
+            tempRow.starw = "X";
+            tempRow.stonew = 4;
+            tempRow.brightw = 2;
+            tempRow.weapon = "starw";
+            tempRow.weakness = ["stonew"];
+            break;
+          case "bright":
+            tempRow.starw = 4;
+            tempRow.brightw = "X";
+            tempRow.weapon = "brightw";
+            tempRow.weakness = ["starw"];
+            break;
+          case "napalm":
+            tempRow.napalmw = "X";
+            tempRow.brightw = 4;
+            tempRow.weapon = "napalmw";
+            tempRow.weakness = ["brightw"];
+            break;
+          case "wave":
+            tempRow.weapon = "wavew";
+            tempRow.weakness = ["NONE"];
+            break;
+          case "toad":
+            tempRow.weapon = "toadw";
+            tempRow.wavew = 5;
+            tempRow.weakness = ["wavew"];
+            break;
         }
-
         break;
       case "MMT2":
         tempColumns = [
@@ -6232,22 +6353,6 @@ export function useDamageDataTable() {
         ];
         break;
       case "MMT3":
-        tempColumns = [
-          {
-            name: "megaw",
-            field: "megaw",
-            align: "start",
-            sortable: false,
-          },
-          {
-            name: "changew",
-            field: "changew",
-            align: "center",
-            sortable: false,
-          },
-        ];
-        break;
-      case "MMGG":
         tempColumns = [
           {
             name: "megaw",

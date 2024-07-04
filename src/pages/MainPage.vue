@@ -96,12 +96,12 @@ const games = ref([
   { title: "Mega Man 11", code: "MM11", chars: ["block", "acid", "impact", "bounce", "fuse", "tundra", "torch", "blast"], },
   { title: "Mega Man (DOS)", code: "MM1D", chars: ["dyna", "sonic", "volt"], },
   { title: "Mega Man 3 (DOS)", code: "MM3D", chars: ["slice", "petrol", "shark", "cascade", "solder", "bit"], },
+  { title: "Rockman & Forte: Mirai Kara no Chōsensha", code: "MM&B2", chars: ["bullet", "stove", "fan", "monk", "clock", "compass"], },
+  { title: "Mega Man (Game Gear)", code: "MMGG", chars: ["star", "bright", "napalm", "stone", "wave", "toad"], },
   //DONE ^^ / UNDONE vv
   /*
-  { title: "Rockman & Forte: Mirai Kara no Chōsensha", code: "MM&B2", chars: [""], },
   { title: "Mega Man 2 (Tiger)", code: "MMT2", chars: [""], },
   { title: "Mega Man 3 (Tiger)", code: "MMT3", chars: [""], },
-  { title: "Mega Man (Game Gear)", code: "MMGG", chars: [""], },
    */
 ])
 const robotMastersFltrdLst = ref([])
