@@ -64,6 +64,7 @@ tempRow = [{
     weapon: "",
     weakness: [],
 }]
+
 */
 
 const linksList = [

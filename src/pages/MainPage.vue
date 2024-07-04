@@ -88,20 +88,16 @@ const games = ref([
   { title: "MM: The Power Battle (MM1-2)", code: "MMP1-1", chars: ["cut", "crash", "guts", "ice", "heat", "wood"], },
   { title: "MM: The Power Battle (MM3-6)", code: "MMP1-2", chars: ["gemini", "napalm", "gyro", "dust", "plant", "magnet"], },
   { title: "MM: The Power Battle (MM7)", code: "MMP1-3", chars: ["freeze", "slash", "shade", "turbo", "cloud", "junk"], },
-  { title: "MM2: The Power Fighters (Search for Wily)", code: "MMP2-A", chars: ["centaur","shadow","bubble","heat","plant","gyro"], },
-  { title: "MM2: The Power Fighters (Rescue Roll)", code: "MMP2-B", chars: ["elec","dive","slash","cut","shade","stone"], },
-  { title: "MM2: The Power Fighters (Recover Parts)", code: "MMP2-C", chars: ["air","quick","pharaoh","gemini","napalm","guts"], },
-
-
+  { title: "MM2: The Power Fighters (Search for Wily)", code: "MMP2-A", chars: ["centaur", "shadow", "bubble", "heat", "plant", "gyro"], },
+  { title: "MM2: The Power Fighters (Rescue Roll)", code: "MMP2-B", chars: ["elec", "dive", "slash", "cut", "shade", "stone"], },
+  { title: "MM2: The Power Fighters (Recover Parts)", code: "MMP2-C", chars: ["air", "quick", "pharaoh", "gemini", "napalm", "guts"], },
+  { title: "Mega Man 9", code: "MM9", chars: ["splash", "concrete", "galaxy", "jewel", "plug", "tornado", "magma", "hornet"], },
+  { title: "Mega Man 10", code: "MM10", chars: ["sheep", "pump", "solar", "chill", "nitro", "commando", "blade", "strike", "elec", "wood", "gemini", "ring", "napalm", "flame", "slash", "frost", "tornado", "enker", "punk", "ballade"], },
+  { title: "Mega Man 11", code: "MM11", chars: ["block", "acid", "impact", "bounce", "fuse", "tundra", "torch", "blast"], },
+  { title: "Mega Man (DOS)", code: "MM1D", chars: ["dyna", "sonic", "volt"], },
+  { title: "Mega Man 3 (DOS)", code: "MM3D", chars: ["slice", "petrol", "shark", "cascade", "solder", "bit"], },
   //DONE ^^ / UNDONE vv
   /*
-  
-  
-  { title: "Mega Man 9", code: "MM9", chars: [""], },
-  { title: "Mega Man 10", code: "MM10", chars: [""], },
-  { title: "Mega Man 11", code: "MM11", chars: [""], },
-  { title: "Mega Man (DOS)", code: "MM1D", chars: [""], },
-  { title: "Mega Man 3 (DOS)", code: "MM3D", chars: [""], },
   { title: "Rockman & Forte: Mirai Kara no Chōsensha", code: "MM&B2", chars: [""], },
   { title: "Mega Man 2 (Tiger)", code: "MMT2", chars: [""], },
   { title: "Mega Man 3 (Tiger)", code: "MMT3", chars: [""], },
