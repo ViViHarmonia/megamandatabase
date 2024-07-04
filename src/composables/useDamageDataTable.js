@@ -6121,15 +6121,97 @@ export function useDamageDataTable() {
                 sortable: false,
               },
               {
-                name: "changew",
-                field: "changew",
+                name: "bulletw1",
+                field: "bulletw1",
+                align: "center",
+                sortable: false,
+              },
+              {
+                name: "stovew1",
+                field: "stovew1",
+                align: "center",
+                sortable: false,
+              },
+              {
+                name: "fanw1",
+                field: "fanw1",
+                align: "center",
+                sortable: false,
+              },
+              {
+                name: "monkw1",
+                field: "monkw1",
+                align: "center",
+                sortable: false,
+              },
+              {
+                name: "clockw1",
+                field: "clockw1",
                 align: "center",
                 sortable: false,
               },
             ];
             break;
           case "bass":
+            tempColumns = [
+              {
+                name: "bassw",
+                field: "bassw",
+                align: "start",
+                sortable: false,
+              },
+              {
+                name: "bulletw2",
+                field: "bulletw2",
+                align: "center",
+                sortable: false,
+              },
+              {
+                name: "stovew2",
+                field: "stovew2",
+                align: "center",
+                sortable: false,
+              },
+              {
+                name: "fanw2",
+                field: "fanw2",
+                align: "center",
+                sortable: false,
+              },
+              {
+                name: "monkw2",
+                field: "monkw2",
+                align: "center",
+                sortable: false,
+              },
+              {
+                name: "clockw2",
+                field: "clockw2",
+                align: "center",
+                sortable: false,
+              },
+            ];
             break;
+        }
+        switch (robot){
+          case "bullet":
+            tempRow = [{
+                megaw: 0,
+                bassw: 0,
+                bulletw1: 0,
+                bulletw2: 0,
+                stovew1: 0,
+                stovew2: 0,
+                fanw1: 0,
+                fanw2: 0,
+                monkw1: 0,
+                monkw2: 0,
+                clockw1: 0,
+                clockw2: 0,
+                weapon: "bulletw",
+                weakness: [],
+            }] 
+            break
         }
 
         break;
