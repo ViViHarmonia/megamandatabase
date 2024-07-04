@@ -6345,12 +6345,134 @@ export function useDamageDataTable() {
             sortable: false,
           },
           {
-            name: "changew",
-            field: "changew",
+            name: "heatw",
+            field: "heatw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "airw",
+            field: "airw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "bubblew",
+            field: "bubblew",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "quickw",
+            field: "quickw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "flashw",
+            field: "flashw",
+            align: "center",
+            sortable: false,
+          },
+          {
+            name: "metalw",
+            field: "metalw",
             align: "center",
             sortable: false,
           },
         ];
+        switch (robot) {
+          case "heat":
+            tempRow = [
+              {
+                megaw: 2,
+                metalw: 1,
+                airw: 2,
+                bubblew: 6,
+                quickw: 2,
+                flashw: 0,
+                heatw: "+:+:+",
+                weapon: "heatw",
+                weakness: ["megaw", "bubblew"],
+              },
+            ];
+            break;
+          case "air":
+            tempRow = [
+              {
+                megaw: 2,
+                metalw: 0,
+                airw: 0,
+                bubblew: 0,
+                quickw: 2,
+                flashw: 0,
+                heatw: "2:6:6",
+                weapon: "airw",
+                weakness: ["megaw", "woodw"],
+              },
+            ];
+            break;
+          case "bubble":
+            tempRow = [
+              {
+                megaw: 1,
+                metalw: 4,
+                airw: 0,
+                bubblew: "+",
+                quickw: 2,
+                flashw: 0,
+                heatw: "0:0:0",
+                weapon: "bubblew",
+                weakness: ["metalw"],
+              },
+            ];
+            break;
+          case "quick":
+            tempRow = [
+              {
+                megaw: 2,
+                metalw: 0,
+                airw: 2,
+                bubblew: 0,
+                quickw: 0,
+                flashw: 14,
+                heatw: "2:6:10",
+                weapon: "quickw",
+                weakness: ["megaw", "flashw", "crashw", "heatw"],
+              },
+            ];
+            break;
+          case "flash":
+            tempRow = [
+              {
+                megaw: 2,
+                metalw: 4,
+                airw: 0,
+                bubblew: 2,
+                quickw: 0,
+                flashw: "+",
+                heatw: "2:6:6",
+                weapon: "flashw",
+                weakness: ["megaw", "metalw"],
+              },
+            ];
+            break;
+          case "metal":
+            tempRow = [
+              {
+                megaw: 1,
+                metalw: 14,
+                airw: 0,
+                bubblew: 0,
+                quickw: 4,
+                flashw: 0,
+                heatw: "1:3:4",
+                weapon: "metalw",
+                weakness: ["quickw", "metalw"],
+              },
+            ];
+            break;
+        }
         break;
       case "MMT3":
         tempColumns = [
