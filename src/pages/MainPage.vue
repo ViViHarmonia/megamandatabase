@@ -1,9 +1,9 @@
 <template>
   <q-card>
     <q-card-section>
-      <q-table flat bordered dark class="my-sticky-header-table" hide-bottom virtual-scroll auto-width wrap-cells
-        :rows-per-page-options="[0]" :columns="rmTableColumns" :rows="robotMastersFltrdLst"
-        card-class="bg-light-blue-6 text-white">
+      <q-table flat bordered dark class="my-sticky-header-table" virtual-scroll auto-width wrap-cells
+        :rows-per-page-options="[0]" :columns="rmTableColumns" :rows="robotMastersFltrdLst" card-class="text-white"
+        :card-class="{ tableBodyColorMega: playerSwitch == 'mega', tableBodyColorBass: playerSwitch == 'bass' }">
         <template v-slot:top>
           <q-select v-model="game" :options="games" option-label="title" option-value="code" input-debounce="0" dark
             outlined dense emit-value />
@@ -48,12 +48,39 @@
             </div>
           </q-td>
         </template>
+        <template v-slot:body-cell-action="props">
+          <q-td :props="props">
+            <q-btn :class="{ actionbtn: playerSwitch == 'mega', actionbtnBass: playerSwitch == 'bass', }"
+              @click="openDamageTable(props.row.code, props.row.gameSl)">Display</q-btn>
+          </q-td>
+        </template>
         <template v-slot:body-cell-notes="props">
           <q-td :props="props">
             <div style="display: flex; align-items: center; gap: 10px;">
               <span>{{ damageDataTable(props.row.code, props.row.gameSl, playerSwitch, 4) }}</span>
             </div>
           </q-td>
+        </template>
+        <template v-slot:bottom>
+          <div style="width: 100%; display:flex; justify-content: center;">
+            <div style="width: 80%">
+              <q-table v-show="damageShowSwitch" flat bordered :rows="rbtRow" :columns="wpnColumns" hide-bottom
+                wrap-cells row-key="name" separator="cell">
+                <template v-slot:header="props">
+                  <q-tr :props="props">
+                    <q-th v-for="col in props.cols" :key="col.name" :props="props" class="text-white">
+                      <div style="display:flex; flex-direction: column; align-items: center; gap: 5px;">
+                        <span>{{ damageDTIconRetrieve(col.field).name }}</span>
+                        <q-avatar rounded size="24px">
+                          <img :src="damageDTIconRetrieve(col.field).icon" />
+                        </q-avatar>
+                      </div>
+                    </q-th>
+                  </q-tr>
+                </template>
+              </q-table>
+            </div>
+          </div>
         </template>
       </q-table>
     </q-card-section>
@@ -66,43 +93,46 @@ import { useDamageDataTable } from 'src/composables/useDamageDataTable'
 const { damageDataTable2, specialWeapons } = useDamageDataTable()
 const game = ref("MM1")
 const games = ref([
-  //{ title: "ALL", code: "ALL", chars: ["yes"], },
-  { title: "Mega Man", code: "MM1", chars: ["cut", "elec", "ice", "fire", "bomb", "guts"], },
-  { title: "Mega Man Powered Up", code: "MMPU", chars: ["cut", "bomb", "ice", "fire", "oil", "elec", "time", "guts"], },
-  { title: "Mega Man 2", code: "MM2", chars: ["metal", "flash", "bubble", "heat", "wood", "air", "crash", "quick"], },
-  { title: "Mega Man 3", code: "MM3", chars: ["top", "shadow", "spark", "magnet", "hard", "snake", "needle", "gemini", "metal", "quick", "air", "crash", "flash", "bubble", "wood", "heat"], },
-  { title: "MM: The Wily Wars (MM1)", code: "WW1", chars: ["buster1", "buster2", "water", "storm"], },
-  { title: "MM: The Wily Wars (MM2)", code: "WW2", chars: ["buster1", "buster2", "water", "storm"], },
-  { title: "MM: The Wily Wars (MM3)", code: "WW3", chars: ["buster1", "buster2", "water", "storm"], },
-  { title: "Mega Man 4", code: "MM4", chars: ["toad", "bright", "pharaoh", "ring", "dust", "skull", "dive", "drill"], },
-  { title: "Mega Man 5", code: "MM5", chars: ["gravity", "gyro", "crystal", "napalm", "stone", "charge", "wave", "star"], },
-  { title: "Mega Man 6", code: "MM6", chars: ["centaur", "wind", "flame", "blizzard", "plant", "tomahawk", "yamato", "knight"], },
-  { title: "Mega Man: Dr. Wily's Revenge", code: "MMI", chars: ["cut", "elec", "ice", "fire", "flash", "quick", "bubble", "heat", "enker"], },
-  { title: "Mega Man II", code: "MMII", chars: ["metal", "wood", "air", "crash", "needle", "magnet", "hard", "top", "quint"], },
-  { title: "Mega Man III", code: "MMIII", chars: ["shadow", "spark", "snake", "gemini", "drill", "dust", "skull", "dive", "punk"], },
-  { title: "Mega Man IV", code: "MMIV", chars: ["toad", "bright", "pharaoh", "ring", "crystal", "napalm", "stone", "charge", "ballade"], },
-  { title: "Mega Man V", code: "MMV", chars: ["mercury", "neptune", "mars", "venus", "jupiter", "saturn", "pluto", "uranus", "terra", "enker", "quint", "punk", "ballade"], },
-  { title: "Mega Man 7", code: "MM7", chars: ["burst", "cloud", "junk", "freeze", "slash", "spring", "shade", "turbo"], },
-  { title: "Mega Man 8", code: "MM8", chars: ["tengu", "clown", "grenade", "frost", "aqua", "sword", "search", "astro", "cut", "wood"], },
-  { title: "Mega Man & Bass", code: "MM&B1", chars: ["cold", "burner", "pirate", "ground", "tengu", "magic", "astro", "dynamo"], },
-  { title: "MM: The Power Battle (MM1-2)", code: "MMP1-1", chars: ["cut", "crash", "guts", "ice", "heat", "wood"], },
-  { title: "MM: The Power Battle (MM3-6)", code: "MMP1-2", chars: ["gemini", "napalm", "gyro", "dust", "plant", "magnet"], },
-  { title: "MM: The Power Battle (MM7)", code: "MMP1-3", chars: ["freeze", "slash", "shade", "turbo", "cloud", "junk"], },
-  { title: "MM2: The Power Fighters (Search for Wily)", code: "MMP2-A", chars: ["centaur", "shadow", "bubble", "heat", "plant", "gyro"], },
-  { title: "MM2: The Power Fighters (Rescue Roll)", code: "MMP2-B", chars: ["elec", "dive", "slash", "cut", "shade", "stone"], },
-  { title: "MM2: The Power Fighters (Recover Parts)", code: "MMP2-C", chars: ["air", "quick", "pharaoh", "gemini", "napalm", "guts"], },
-  { title: "Mega Man 9", code: "MM9", chars: ["splash", "concrete", "galaxy", "jewel", "plug", "tornado", "magma", "hornet"], },
-  { title: "Mega Man 10", code: "MM10", chars: ["sheep", "pump", "solar", "chill", "nitro", "commando", "blade", "strike", "elec", "wood", "gemini", "ring", "napalm", "flame", "slash", "frost", "tornado", "enker", "punk", "ballade"], },
-  { title: "Mega Man 11", code: "MM11", chars: ["block", "acid", "impact", "bounce", "fuse", "tundra", "torch", "blast"], },
-  { title: "Mega Man (DOS)", code: "MM1D", chars: ["dyna", "sonic", "volt"], },
-  { title: "Mega Man 3 (DOS)", code: "MM3D", chars: ["slice", "petrol", "shark", "cascade", "solder", "bit"], },
-  { title: "Rockman & Forte: Mirai Kara no Chōsensha", code: "MM&B2", chars: ["bullet", "stove", "fan", "monk", "clock", "compass"], },
-  { title: "Mega Man (Game Gear)", code: "MMGG", chars: ["star", "bright", "napalm", "stone", "wave", "toad"], },
+  { title: "ALL", code: "ALL", rms: ["yes"], },
+  { title: "Mega Man", code: "MM1", rms: ["cut", "elec", "ice", "fire", "bomb", "guts"], },
+  { title: "Mega Man Powered Up", code: "MMPU", rms: ["cut", "bomb", "ice", "fire", "oil", "elec", "time", "guts"], },
+  { title: "Mega Man 2", code: "MM2", rms: ["metal", "flash", "bubble", "heat", "wood", "air", "crash", "quick"], },
+  { title: "Mega Man 3", code: "MM3", rms: ["top", "shadow", "spark", "magnet", "hard", "snake", "needle", "gemini", "metal", "quick", "air", "crash", "flash", "bubble", "wood", "heat"], },
+  { title: "MM: The Wily Wars (MM1)", code: "WW1", rms: ["buster1", "buster2", "water", "storm"], },
+  { title: "MM: The Wily Wars (MM2)", code: "WW2", rms: ["buster1", "buster2", "water", "storm"], },
+  { title: "MM: The Wily Wars (MM3)", code: "WW3", rms: ["buster1", "buster2", "water", "storm"], },
+  { title: "Mega Man 4", code: "MM4", rms: ["toad", "bright", "pharaoh", "ring", "dust", "skull", "dive", "drill"], },
+  { title: "Mega Man 5", code: "MM5", rms: ["gravity", "gyro", "crystal", "napalm", "stone", "charge", "wave", "star"], },
+  { title: "Mega Man 6", code: "MM6", rms: ["centaur", "wind", "flame", "blizzard", "plant", "tomahawk", "yamato", "knight"], },
+  { title: "Mega Man: Dr. Wily's Revenge", code: "MMI", rms: ["cut", "elec", "ice", "fire", "flash", "quick", "bubble", "heat", "enker"], },
+  { title: "Mega Man II", code: "MMII", rms: ["metal", "wood", "air", "crash", "needle", "magnet", "hard", "top", "quint"], },
+  { title: "Mega Man III", code: "MMIII", rms: ["shadow", "spark", "snake", "gemini", "drill", "dust", "skull", "dive", "punk"], },
+  { title: "Mega Man IV", code: "MMIV", rms: ["toad", "bright", "pharaoh", "ring", "crystal", "napalm", "stone", "charge", "ballade"], },
+  { title: "Mega Man V", code: "MMV", rms: ["mercury", "neptune", "mars", "venus", "jupiter", "saturn", "pluto", "uranus", "terra", "enker", "quint", "punk", "ballade"], },
+  { title: "Mega Man 7", code: "MM7", rms: ["burst", "cloud", "junk", "freeze", "slash", "spring", "shade", "turbo"], },
+  { title: "Mega Man 8", code: "MM8", rms: ["tengu", "clown", "grenade", "frost", "aqua", "sword", "search", "astro", "cut", "wood"], },
+  { title: "Mega Man & Bass", code: "MM&B1", rms: ["cold", "burner", "pirate", "ground", "tengu", "magic", "astro", "dynamo"], },
+  { title: "MM: The Power Battle (MM1-2)", code: "MMP1-1", rms: ["cut", "crash", "guts", "ice", "heat", "wood"], },
+  { title: "MM: The Power Battle (MM3-6)", code: "MMP1-2", rms: ["gemini", "napalm", "gyro", "dust", "plant", "magnet"], },
+  { title: "MM: The Power Battle (MM7)", code: "MMP1-3", rms: ["freeze", "slash", "shade", "turbo", "cloud", "junk"], },
+  { title: "MM2: The Power Fighters (Search for Wily)", code: "MMP2-A", rms: ["centaur", "shadow", "bubble", "heat", "plant", "gyro"], },
+  { title: "MM2: The Power Fighters (Rescue Roll)", code: "MMP2-B", rms: ["elec", "dive", "slash", "cut", "shade", "stone"], },
+  { title: "MM2: The Power Fighters (Recover Parts)", code: "MMP2-C", rms: ["air", "quick", "pharaoh", "gemini", "napalm", "guts"], },
+  { title: "Mega Man 9", code: "MM9", rms: ["splash", "concrete", "galaxy", "jewel", "plug", "tornado", "magma", "hornet"], },
+  { title: "Mega Man 10", code: "MM10", rms: ["sheep", "pump", "solar", "chill", "nitro", "commando", "blade", "strike", "elec", "wood", "gemini", "ring", "napalm", "flame", "slash", "frost", "tornado", "enker", "punk", "ballade"], },
+  { title: "Mega Man 11", code: "MM11", rms: ["block", "acid", "impact", "bounce", "fuse", "tundra", "torch", "blast"], },
+  { title: "Mega Man (DOS)", code: "MM1D", rms: ["dyna", "sonic", "volt"], },
+  { title: "Mega Man 3 (DOS)", code: "MM3D", rms: ["slice", "petrol", "shark", "cascade", "solder", "bit"], },
+  { title: "Rockman & Forte: Mirai Kara no Chōsensha", code: "MM&B2", rms: ["bullet", "stove", "fan", "monk", "clock", "compass"], },
+  { title: "Mega Man (Game Gear)", code: "MMGG", rms: ["star", "bright", "napalm", "stone", "wave", "toad"], },
   //DONE ^^ / UNDONE vv
   /*
-  { title: "Mega Man 2 (Tiger)", code: "MMT2", chars: [""], },
-  { title: "Mega Man 3 (Tiger)", code: "MMT3", chars: [""], },
+  { title: "Mega Man 2 (Tiger)", code: "MMT2", rms: [""], },
+  { title: "Mega Man 3 (Tiger)", code: "MMT3", rms: [""], },
    */
+])
+const playerChars = ref([
+  { code: "mega", name: "Mega Man" }
 ])
 const robotMastersFltrdLst = ref([])
 const robotMasters = ref([
@@ -193,12 +223,12 @@ const robotMasters = ref([
   { name: "Tengu Man", code: "tengu", games: ["MM8", "MM&B1"], gameSl: "MM8", icon: "/robots/MM8/tengu.png" },
   { name: "Astro Man", code: "astro", games: ["MM8", "MM&B1"], gameSl: "MM8", icon: "/robots/MM8/astro.png" },
   //MM8
-  { name: "Sword Man", code: "sword", games: ["MM8"], gameSl: "MM", icon: "/robots/MM8/sword.png" },
-  { name: "Clown Man", code: "clown", games: ["MM8"], gameSl: "MM", icon: "/robots/MM8/clown.png" },
-  { name: "Search Man", code: "search", games: ["MM8"], gameSl: "MM", icon: "/robots/MM8/search.png" },
-  { name: "Frost Man", code: "frost", games: ["MM8", "MM10"], gameSl: "MM", icon: "/robots/MM8/frost.png" },//mm10 is weapons archive
-  { name: "Grenade Man", code: "grenade", games: ["MM8"], gameSl: "MM", icon: "/robots/MM8/grenade.png" },
-  { name: "Aqua Man", code: "aqua", games: ["MM8"], gameSl: "MM", icon: "/robots/MM8/aqua.png" },
+  { name: "Sword Man", code: "sword", games: ["MM8"], gameSl: "MM8", icon: "/robots/MM8/sword.png" },
+  { name: "Clown Man", code: "clown", games: ["MM8"], gameSl: "MM8", icon: "/robots/MM8/clown.png" },
+  { name: "Search Man", code: "search", games: ["MM8"], gameSl: "MM8", icon: "/robots/MM8/search.png" },
+  { name: "Frost Man", code: "frost", games: ["MM8", "MM10"], gameSl: "MM8", icon: "/robots/MM8/frost.png" },//mm10 is weapons archive
+  { name: "Grenade Man", code: "grenade", games: ["MM8"], gameSl: "MM8", icon: "/robots/MM8/grenade.png" },
+  { name: "Aqua Man", code: "aqua", games: ["MM8"], gameSl: "MM8", icon: "/robots/MM8/aqua.png" },
   //MM&B1
   { name: "Dynamo Man", code: "dynamo", games: ["MM&B1"], gameSl: "MM&B1", icon: "/robots/MMandB/dynamo.png" },
   { name: "Cold Man", code: "cold", games: ["MM&B1"], gameSl: "MM&B1", icon: "/robots/MMandB/cold.png" },
@@ -290,6 +320,14 @@ const rmTableColumns = ref([
     sortable: false,
   },
   {
+    name: "action",
+    label: "Damage (Full)",
+    field: "action",
+    align: "center",
+    sortable: false,
+  },
+
+  {
     name: "notes",
     label: "Notes",
     field: "notes",
@@ -298,11 +336,12 @@ const rmTableColumns = ref([
   },
 ])
 const playerSwitch = ref("mega")
-//false equals mega, true equals bass
+const damageDataTempRobot = ref("")
+const damageDataTempGame = ref("")
+const damageShowSwitch = ref(false)
 const wpnColumns = ref([])
-const rbtRow = ref({})
+const rbtRow = ref([])
 function damageDataTable(robot, game, player, funct) { return damageDataTable2(robot, game, player, funct) };
-
 function dataFill() {
   robotMastersFltrdLst.value = [];
   if (game.value == "ALL") {
@@ -311,7 +350,7 @@ function dataFill() {
     var tempArrayChar
     for (var i = 0; i < games.value.length; i++) {
       if (games.value[i].code == game.value) {
-        tempArrayChar = games.value[i].chars
+        tempArrayChar = games.value[i].rms
       }
     }
     for (var j = 0; j < tempArrayChar.length; j++) {
@@ -325,8 +364,10 @@ function dataFill() {
   }
 }
 function damageDTIconRetrieve(headerWpnCode) {
+  console.log(headerWpnCode)
   for (var i = 0; i < specialWeapons.value.length; i++) {
     if (specialWeapons.value[i].code == headerWpnCode) {
+      console.log(specialWeapons.value[i])
       return specialWeapons.value[i];
     }
   }
@@ -352,11 +393,28 @@ function gameFormatName(gamesChar, func) {
   }
 
 }
+function openDamageTable(robot, game) {
+  wpnColumns.value = []
+  rbtRow.value = []
+  damageDataTempRobot.value = robot
+  damageDataTempGame.value = game
+  var tempStorage = damageDataTable(robot, game, playerSwitch.value, 1)
+  console.log(tempStorage)
+  wpnColumns.value = tempStorage.col
+  rbtRow.value = tempStorage.row
+  damageShowSwitch.value = true
+}
 
 watch(game, (newValue, oldValue) => {
   // Cuando count cambie, actualizamos el valor de double
   dataFill();
+  damageShowSwitch.value = false
 });
+watch(playerSwitch, (newValue, oldValue) => {
+  if (damageShowSwitch.value == true) {
+    openDamageTable(damageDataTempRobot.value, damageDataTempGame.value)
+  }
+})
 
 onMounted(async () => {
   dataFill()
@@ -367,11 +425,28 @@ onMounted(async () => {
   height: 620px;
 }
 
+.actionbtn {
+  background-color: #1a41c4;
+}
+
+.actionbtnBass {
+  background-color: #c46a04;
+}
+
+.tableBodyColorMega {
+  background-color: #46a5f3;
+}
+
+.tableBodyColorBass {
+  background-color: #383c49;
+}
+
 .q-table__top,
 .q-table__bottom,
 thead tr:first-child th {
   background-color: #1a41c4;
 }
+
 
 thead tr th {
   position: sticky;
