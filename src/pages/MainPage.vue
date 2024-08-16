@@ -1,17 +1,19 @@
 <template>
-  <q-card>
+  <div class="flex-center q-pa-md">
+    <q-card class="bg-cyan text-white">
+    <q-card-section>
+      <q-select v-model="game" :options="games" option-label="title" option-value="code" input-debounce="0" dark
+        outlined dense emit-value />
+      <div class="radios">
+        <q-radio v-model="playerSwitch" val="mega" label="Mega Man" />
+        <q-radio v-model="playerSwitch" val="bass" label="Bass" />
+      </div>
+    </q-card-section>
     <q-card-section>
       <q-table flat bordered dark class="my-sticky-header-table" hide-bottom virtual-scroll auto-width wrap-cells
         :rows-per-page-options="[0]" :columns="rmTableColumns" :rows="robotMastersFltrdLst"
         card-class="bg-light-blue-6 text-white">
-        <template v-slot:top>
-          <q-select v-model="game" :options="games" option-label="title" option-value="code" input-debounce="0" dark
-            outlined dense emit-value />
-          <div class="radios">
-            <q-radio v-model="playerSwitch" val="mega" label="Mega Man" />
-            <q-radio v-model="playerSwitch" val="bass" label="Bass" />
-          </div>
-        </template>
+
         <template v-slot:body-cell-icon="props">
           <q-td :props="props">
             <q-avatar rounded size="48px">
@@ -58,13 +60,15 @@
       </q-table>
     </q-card-section>
   </q-card>
+  </div>
+  
 
 </template>
 <script setup>
 import { onMounted, ref, watch } from "vue";
 import { useDamageDataTable } from 'src/composables/useDamageDataTable'
 const { damageDataTable2, specialWeapons } = useDamageDataTable()
-const game = ref("MM1")
+const game = ref("ALL")
 const games = ref([
   //{ title: "ALL", code: "ALL", chars: ["yes"], },
   { title: "Mega Man", code: "MM1", chars: ["cut", "elec", "ice", "fire", "bomb", "guts"], },

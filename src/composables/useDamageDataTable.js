@@ -13,6 +13,16 @@ export function useDamageDataTable() {
       name: "Bass/Forte Buster",
       icon: "/weapons/base/bassbuster.png",
     },
+    {
+      code: "bluesw",
+      name: "Proto Buster",
+      icon: "/weapons/base/protobuster.png",
+    },
+    {
+      code: "rollw",
+      name: "Roll Swing",
+      icon: "/weapons/base/rollswing.png",
+    },
     //MM1
     {
       code: "cutw",
@@ -6198,7 +6208,9 @@ export function useDamageDataTable() {
                 sortable: false,
               },
             ];
+            console.log(tempRow.weapon);
             tempRow.weapon = tempRow.weapon + "1";
+            console.log(tempRow.weapon);
             break;
           case "bass":
             tempColumns = [
