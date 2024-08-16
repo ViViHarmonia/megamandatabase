@@ -601,7 +601,7 @@ export function useDamageDataTable() {
           {
             name: "megaw",
             field: "megaw",
-            align: "start",
+            align: "center",
             sortable: false,
           },
           {
@@ -739,7 +739,7 @@ export function useDamageDataTable() {
           {
             name: "megaw",
             field: "megaw",
-            align: "start",
+            align: "center",
             sortable: false,
           },
           {
@@ -802,8 +802,8 @@ export function useDamageDataTable() {
                 bombw: 1,
                 firew: 3,
                 elecw: 3,
-                time: "3:0",
-                oil: "1:3",
+                timew: "3:0",
+                oilw: "1:3",
                 weapon: "cutw",
                 weakness: ["megaw", "gutsw"],
               },
@@ -819,8 +819,8 @@ export function useDamageDataTable() {
                 bombw: 3,
                 firew: 3,
                 elecw: 3,
-                time: "3:6",
-                oil: "1:3",
+                timew: "3:6",
+                oilw: "1:3",
                 weapon: "gutsw",
                 weakness: ["megaw", "timew"],
               },
@@ -836,8 +836,8 @@ export function useDamageDataTable() {
                 bombw: 6,
                 firew: 1,
                 elecw: 3,
-                time: "3:0",
-                oil: "1:3",
+                timew: "3:0",
+                oilw: "1:3",
                 weapon: "icew",
                 weakness: ["megaw", "bombw"],
               },
@@ -853,8 +853,8 @@ export function useDamageDataTable() {
                 bombw: 1,
                 firew: 3,
                 elecw: 3,
-                time: "3:0",
-                oil: "1:3",
+                timew: "3:0",
+                oilw: "1:3",
                 weapon: "bombw",
                 weakness: ["megaw", "cutw"],
               },
@@ -870,8 +870,8 @@ export function useDamageDataTable() {
                 bombw: 3,
                 firew: 1,
                 elecw: 3,
-                time: "3:0",
-                oil: "1:1",
+                timew: "3:0",
+                oilw: "1:1",
                 weapon: "firew",
                 weakness: ["megaw", "icew"],
               },
@@ -887,8 +887,8 @@ export function useDamageDataTable() {
                 bombw: 3,
                 firew: 3,
                 elecw: 1,
-                time: "1:0",
-                oil: "2:6",
+                timew: "1:0",
+                oilw: "2:6",
                 weapon: "elecw",
                 weakness: ["megaw", "oilw"],
               },
@@ -904,8 +904,8 @@ export function useDamageDataTable() {
                 bombw: 1,
                 firew: 3,
                 elecw: 6,
-                time: "1:0",
-                oil: "1:3",
+                timew: "1:0",
+                oilw: "1:3",
                 weapon: "timew",
                 weakness: ["megaw", "elecw"],
               },
@@ -921,8 +921,8 @@ export function useDamageDataTable() {
                 bombw: 3,
                 firew: 6,
                 elecw: 1,
-                time: "3:0",
-                oil: "1:1",
+                timew: "3:0",
+                oilw: "1:1",
                 weapon: "oilw",
                 weakness: ["megaw", "firew"],
               },
@@ -935,7 +935,7 @@ export function useDamageDataTable() {
           {
             name: "megaw",
             field: "megaw",
-            align: "start",
+            align: "center",
             sortable: false,
           },
           {
@@ -1131,7 +1131,7 @@ export function useDamageDataTable() {
           {
             name: "megaw",
             field: "megaw",
-            align: "start",
+            align: "center",
             sortable: false,
           },
           {
@@ -1471,7 +1471,7 @@ export function useDamageDataTable() {
           {
             name: "megaw",
             field: "megaw",
-            align: "start",
+            align: "center",
             sortable: false,
           },
           {
@@ -1579,7 +1579,7 @@ export function useDamageDataTable() {
           {
             name: "megaw",
             field: "megaw",
-            align: "start",
+            align: "center",
             sortable: false,
           },
           {
@@ -1707,7 +1707,7 @@ export function useDamageDataTable() {
           {
             name: "megaw",
             field: "megaw",
-            align: "start",
+            align: "center",
             sortable: false,
           },
           {
@@ -1835,7 +1835,7 @@ export function useDamageDataTable() {
           {
             name: "megaw",
             field: "megaw",
-            align: "start",
+            align: "center",
             sortable: false,
           },
           {
@@ -2031,7 +2031,7 @@ export function useDamageDataTable() {
           {
             name: "megaw",
             field: "megaw",
-            align: "start",
+            align: "center",
             sortable: false,
           },
           {
@@ -2227,7 +2227,7 @@ export function useDamageDataTable() {
           {
             name: "megaw",
             field: "megaw",
-            align: "start",
+            align: "center",
             sortable: false,
           },
           {
@@ -2423,7 +2423,7 @@ export function useDamageDataTable() {
           {
             name: "megaw",
             field: "megaw",
-            align: "start",
+            align: "center",
             sortable: false,
           },
           {
@@ -2637,7 +2637,7 @@ export function useDamageDataTable() {
           {
             name: "megaw",
             field: "megaw",
-            align: "start",
+            align: "center",
             sortable: false,
           },
           {
@@ -2850,7 +2850,7 @@ export function useDamageDataTable() {
           {
             name: "megaw",
             field: "megaw",
-            align: "start",
+            align: "center",
             sortable: false,
           },
           {
@@ -3064,7 +3064,7 @@ export function useDamageDataTable() {
           {
             name: "megaw",
             field: "megaw",
-            align: "start",
+            align: "center",
             sortable: false,
           },
           {
@@ -3293,7 +3293,7 @@ export function useDamageDataTable() {
           {
             name: "megaw",
             field: "megaw",
-            align: "start",
+            align: "center",
             sortable: false,
           },
           {
@@ -3594,7 +3594,7 @@ export function useDamageDataTable() {
           {
             name: "megaw",
             field: "megaw",
-            align: "start",
+            align: "center",
             sortable: false,
           },
           {
@@ -3790,7 +3790,7 @@ export function useDamageDataTable() {
           {
             name: "megaw",
             field: "megaw",
-            align: "start",
+            align: "center",
             sortable: false,
           },
           {
@@ -4020,8 +4020,8 @@ export function useDamageDataTable() {
       case "MM&B1":
         tempColumns = [
           {
-            name: "coldew",
-            field: "coldew",
+            name: "coldw",
+            field: "coldw",
             align: "center",
             sortable: false,
           },
@@ -4215,11 +4215,11 @@ export function useDamageDataTable() {
             break;
         }
         switch (player) {
-          case "megaw":
+          case "mega":
             tempColumns.splice(0, 0, {
               name: "megaw",
               field: "megaw",
-              align: "start",
+              align: "center",
               sortable: false,
             });
             break;
@@ -4227,7 +4227,7 @@ export function useDamageDataTable() {
             tempColumns.splice(0, 0, {
               name: "bassw",
               field: "bassw",
-              align: "start",
+              align: "center",
               sortable: false,
             });
             break;
@@ -4238,7 +4238,7 @@ export function useDamageDataTable() {
           {
             name: "megaw",
             field: "megaw",
-            align: "start",
+            align: "center",
             sortable: false,
           },
           {
@@ -4376,7 +4376,7 @@ export function useDamageDataTable() {
           {
             name: "megaw",
             field: "megaw",
-            align: "start",
+            align: "center",
             sortable: false,
           },
           {
@@ -4514,7 +4514,7 @@ export function useDamageDataTable() {
           {
             name: "megaw",
             field: "megaw",
-            align: "start",
+            align: "center",
             sortable: false,
           },
           {
@@ -4652,7 +4652,7 @@ export function useDamageDataTable() {
           {
             name: "megaw",
             field: "megaw",
-            align: "start",
+            align: "center",
             sortable: false,
           },
           {
@@ -4790,7 +4790,7 @@ export function useDamageDataTable() {
           {
             name: "megaw",
             field: "megaw",
-            align: "start",
+            align: "center",
             sortable: false,
           },
           {
@@ -4928,7 +4928,7 @@ export function useDamageDataTable() {
           {
             name: "megaw",
             field: "megaw",
-            align: "start",
+            align: "center",
             sortable: false,
           },
           {
@@ -5066,7 +5066,7 @@ export function useDamageDataTable() {
           {
             name: "megaw",
             field: "megaw",
-            align: "start",
+            align: "center",
             sortable: false,
           },
           {
@@ -5262,7 +5262,7 @@ export function useDamageDataTable() {
           {
             name: "megaw",
             field: "megaw",
-            align: "start",
+            align: "center",
             sortable: false,
           },
           {
@@ -5723,16 +5723,16 @@ export function useDamageDataTable() {
             ];
             break;
         }
-        tempRow.megaw = 1;
-        tempRow.bassw = 1;
-        tempRow.bluesw = "1:3";
+        tempRow[0].megaw = 1;
+        tempRow[0].bassw = 1;
+        tempRow[0].bluesw = "1:3";
         break;
       case "MM11":
         tempColumns = [
           {
             name: "megaw",
             field: "megaw",
-            align: "start",
+            align: "center",
             sortable: false,
           },
           {
@@ -5914,14 +5914,14 @@ export function useDamageDataTable() {
             ];
             break;
         }
-        tempRow.megaw = "1:3:5:8";
+        tempRow[0].megaw = "1:3:5:8";
         break;
       case "MM1D":
         tempColumns = [
           {
             name: "megaw",
             field: "megaw",
-            align: "start",
+            align: "center",
             sortable: false,
           },
           {
@@ -5987,7 +5987,7 @@ export function useDamageDataTable() {
           {
             name: "megaw",
             field: "megaw",
-            align: "start",
+            align: "center",
             sortable: false,
           },
           {
@@ -6141,31 +6141,31 @@ export function useDamageDataTable() {
         ];
         switch (robot) {
           case "bullet":
-            tempRow.bulletw1 = "X";
-            tempRow.bulletw2 = "X";
-            tempRow.weapon = "bulletw";
+            tempRow[0].bulletw1 = "X";
+            tempRow[0].bulletw2 = "X";
+            tempRow[0].weapon = "bulletw";
             break;
           case "stove":
-            tempRow.stovew1 = "X";
-            tempRow.stovew2 = "X";
-            tempRow.weapon = "stovew";
+            tempRow[0].stovew1 = "X";
+            tempRow[0].stovew2 = "X";
+            tempRow[0].weapon = "stovew";
             break;
           case "fan":
-            tempRow.fanw1 = "X";
-            tempRow.fanw2 = "X";
-            tempRow.weapon = "fanw";
+            tempRow[0].fanw1 = "X";
+            tempRow[0].fanw2 = "X";
+            tempRow[0].weapon = "fanw";
             break;
           case "monk":
-            tempRow.monkw1 = "X";
-            tempRow.monkw2 = "X";
-            tempRow.weapon = "monkw";
+            tempRow[0].monkw1 = "X";
+            tempRow[0].monkw2 = "X";
+            tempRow[0].weapon = "monkw";
             break;
           case "clock":
-            tempRow.weapon = "clockw";
+            tempRow[0].weapon = "clockw";
             break;
           case "compass":
-            tempRow.clockw1 = 0;
-            tempRow.clockw2 = 0;
+            tempRow[0].clockw1 = 0;
+            tempRow[0].clockw2 = 0;
             break;
         }
         switch (player) {
@@ -6174,7 +6174,7 @@ export function useDamageDataTable() {
               {
                 name: "megaw",
                 field: "megaw",
-                align: "start",
+                align: "center",
                 sortable: false,
               },
               {
@@ -6208,16 +6208,15 @@ export function useDamageDataTable() {
                 sortable: false,
               },
             ];
-            console.log(tempRow.weapon);
-            tempRow.weapon = tempRow.weapon + "1";
-            console.log(tempRow.weapon);
+            tempRow[0].weapon =
+              tempRow[0].weapon == "NONE" ? "NONE" : tempRow[0].weapon + "1";
             break;
           case "bass":
             tempColumns = [
               {
                 name: "bassw",
                 field: "bassw",
-                align: "start",
+                align: "center",
                 sortable: false,
               },
               {
@@ -6251,7 +6250,8 @@ export function useDamageDataTable() {
                 sortable: false,
               },
             ];
-            tempRow.weapon = tempRow.weapon + "2";
+            tempRow[0].weapon =
+              tempRow[0].weapon == "NONE" ? "NONE" : tempRow[0].weapon + "2";
             break;
         }
         break;
@@ -6260,7 +6260,7 @@ export function useDamageDataTable() {
           {
             name: "megaw",
             field: "megaw",
-            align: "start",
+            align: "center",
             sortable: false,
           },
           {
@@ -6313,38 +6313,38 @@ export function useDamageDataTable() {
         ];
         switch (robot) {
           case "stone":
-            tempRow.stonew = "X";
-            tempRow.napalmw = 3;
-            tempRow.weapon = "stonew";
-            tempRow.weakness = ["napalmw"];
+            tempRow[0].stonew = "X";
+            tempRow[0].napalmw = 3;
+            tempRow[0].weapon = "stonew";
+            tempRow[0].weakness = ["napalmw"];
             break;
           case "star":
-            tempRow.starw = "X";
-            tempRow.stonew = 4;
-            tempRow.brightw = 2;
-            tempRow.weapon = "starw";
-            tempRow.weakness = ["stonew"];
+            tempRow[0].starw = "X";
+            tempRow[0].stonew = 4;
+            tempRow[0].brightw = 2;
+            tempRow[0].weapon = "starw";
+            tempRow[0].weakness = ["stonew"];
             break;
           case "bright":
-            tempRow.starw = 4;
-            tempRow.brightw = "X";
-            tempRow.weapon = "brightw";
-            tempRow.weakness = ["starw"];
+            tempRow[0].starw = 4;
+            tempRow[0].brightw = "X";
+            tempRow[0].weapon = "brightw";
+            tempRow[0].weakness = ["starw"];
             break;
           case "napalm":
-            tempRow.napalmw = "X";
-            tempRow.brightw = 4;
-            tempRow.weapon = "napalmw";
-            tempRow.weakness = ["brightw"];
+            tempRow[0].napalmw = "X";
+            tempRow[0].brightw = 4;
+            tempRow[0].weapon = "napalmw";
+            tempRow[0].weakness = ["brightw"];
             break;
           case "wave":
-            tempRow.weapon = "wavew";
-            tempRow.weakness = ["NONE"];
+            tempRow[0].weapon = "wavew";
+            tempRow[0].weakness = ["NONE"];
             break;
           case "toad":
-            tempRow.weapon = "toadw";
-            tempRow.wavew = 5;
-            tempRow.weakness = ["wavew"];
+            tempRow[0].weapon = "toadw";
+            tempRow[0].wavew = 5;
+            tempRow[0].weakness = ["wavew"];
             break;
         }
         break;
@@ -6353,7 +6353,7 @@ export function useDamageDataTable() {
           {
             name: "megaw",
             field: "megaw",
-            align: "start",
+            align: "center",
             sortable: false,
           },
           {
@@ -6491,7 +6491,7 @@ export function useDamageDataTable() {
           {
             name: "megaw",
             field: "megaw",
-            align: "start",
+            align: "center",
             sortable: false,
           },
           {
@@ -6503,6 +6503,7 @@ export function useDamageDataTable() {
         ];
         break;
     }
+    //console.log(tempRow);
     var arrayWeaknesses = [];
     switch (funct) {
       case 1:
