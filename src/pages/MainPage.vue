@@ -1,26 +1,49 @@
 <template>
   <div class="flex-center q-pa-md">
-    <q-card class="bg-cyan text-white">
-    <q-card-section>
-      <q-select v-model="game" :options="games" option-label="title" option-value="code" input-debounce="0" dark
-        outlined dense emit-value />
-      <div class="radios">
-        <q-radio v-model="playerSwitch" val="mega" label="Mega Man" />
-        <q-radio v-model="playerSwitch" val="bass" label="Bass" />
-      </div>
-    </q-card-section>
-    <q-card-section>
-      <q-table flat bordered dark class="my-sticky-header-table" virtual-scroll auto-width wrap-cells
-        :rows-per-page-options="[0]" :columns="rmTableColumns" :rows="robotMastersFltrdLst" :card-class="{
-          tableBodyColorMega: playerSwitch == 'mega', tableBodyColorBass: playerSwitch == 'bass', tableBodyColorBlues: playerSwitch == 'blues', tableBodyColorRoll: playerSwitch == 'roll', tableBodyColorDuo: playerSwitch == 'duo'
-        }">
+    <q-card class="text-white">
+      <q-layout class="shadow-2 rounded-borders " view="hHh Lpr lff" container style="height: 500px; min-width: 300px;"
+        v-if="$q.screen.lt.md || formatSwitch">
+        <q-header class="scrollheader" elevated>
+          <q-toolbar>
+            <q-select v-model="game" :options="games" option-label="title" option-value="code" input-debounce="0" dark
+              outlined dense emit-value style="margin-right: 5px; width: 120px;" />
+            <q-select v-model="playerSwitch" :options="playerCharacters" option-label="name" option-value="code"
+              input-debounce="0" dark outlined dense emit-value map-options style="margin-right: 5px; width: 130px;" />
+            <q-space />
+            <div style="display: flex; align-items: center;  ; gap: 10px;" v-if="!$q.screen.lt.md">
+              <span>Detailed/Simple</span>
+              <q-toggle v-model="formatSwitch" color="black" />
+            </div>
+
+          </q-toolbar>
+        </q-header>
+        <q-scroll-area visible class="text-white rounded-borders scrollAreaColor"
+          style="height: 500px; min-width: 300px;">
+          <div class="museScrollArea q-pt-sm">
+            <div class="row flex-center">
+              <q-btn v-for="(char, c) in robotMastersFltrdLst" square padding="xs" flat
+                @click="robotMasterFullInfo(char)">
+                <q-avatar rounded size="60px">
+                  <img :src="char.icon">
+                </q-avatar>
+              </q-btn>
+            </div>
+          </div>
+        </q-scroll-area>
+      </q-layout>
+      <q-table v-else flat bordered dark class="my-sticky-header-table" virtual-scroll auto-width wrap-cells
+        :rows-per-page-options="[0]" :columns="rmTableColumns" :rows="robotMastersFltrdLst" card-class="tableBodyColor">
         <template v-slot:top>
           <q-select v-model="game" :options="games" option-label="title" option-value="code" input-debounce="0" dark
-            outlined dense emit-value />
+            outlined dense emit-value style="margin-right: 5px; width: 120px;" />
           <div class="radios">
             <q-radio v-for="robots in playerCharacters" dark color="white" v-model="playerSwitch" :val="robots.code"
               :label="robots.name" />
           </div>
+          <q-space />
+          <span>Detailed/Simple</span>
+          <q-toggle v-model="formatSwitch" color="black" />
+
         </template>
         <template v-slot:body-cell-icon="props">
           <q-td :props="props">
@@ -60,9 +83,7 @@
         </template>
         <template v-slot:body-cell-action="props">
           <q-td :props="props">
-            <q-btn :class="{
-              actionbtnRock: playerSwitch == 'mega', actionbtnBass: playerSwitch == 'bass', actionbtnBlues: playerSwitch == 'blues', actionbtnRoll: playerSwitch == 'roll', actionbtnDuo: playerSwitch == 'duo'
-            }" @click="openDamageTable(props.row.code, props.row.gameSl)"
+            <q-btn class="actionbtn" @click="openDamageTable(props.row.code, props.row.gameSl)"
               :disabled="buttonDisableGameandPlayer(props.row.gameSl)">Display</q-btn>
           </q-td>
         </template>
@@ -75,13 +96,13 @@
         </template>
         <template v-slot:bottom>
           <div style="width: 100%; display:flex; justify-content: center;">
-            <div style="width: 80%">
+            <div style="width: 100%">
               <q-table v-show="damageShowSwitch" flat bordered :rows="rbtRow" :columns="wpnColumns" hide-bottom
                 wrap-cells row-key="name" separator="cell">
                 <template v-slot:header="props">
                   <q-tr :props="props">
                     <q-th v-for="col in props.cols" :key="col.name" :props="props" class="text-white">
-                      <div style="display:flex; flex-direction: column; align-items: center; gap: 5px;">
+                      <div style="display:flex; flex-direction: column; align-items: center; gap: 3px;">
                         <span>{{ damageDTIconRetrieve(col.field).name }}</span>
                         <q-avatar rounded size="24px">
                           <img :src="damageDTIconRetrieve(col.field).icon" />
@@ -95,16 +116,69 @@
           </div>
         </template>
       </q-table>
-    </q-card-section>
-  </q-card>
+    </q-card>
+    <q-dialog v-model="popupSwitch">
+      <q-card class="text-white tableBodyColor" style="width:400px; height:500px">
+        <q-card-section>
+          <div class="row">
+            <div class="col-xs-6 q-px-xs">
+              <q-select v-model="playerSwitch" :options="playerCharacters" option-label="name" option-value="code"
+                input-debounce="0" dark outlined dense emit-value style="width: 100%; text-transform: capitalize" />
+
+            </div>
+            <div class="col-xs-6 q-px-xs">
+              <q-select v-model="RMSelected.gameSl" :options="gameFormatName(RMSelected.games, 1)" option-label="title"
+                option-value="code" fill-input input-debounce="0" dark outlined dense emit-value style="width: 100%;" />
+            </div>
+          </div>
+          <div class="row q-pa-sm items-center">
+            <div class="col-xs-6 q-px-xs">
+              <div class="q-pb-xs"><b>Weapon:</b></div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <q-avatar rounded size="24px">
+                  <img :src="damageDataTable(RMSelected.code, RMSelected.gameSl, playerSwitch, 3).icon" />
+                </q-avatar>
+                <span>{{ damageDataTable(RMSelected.code, RMSelected.gameSl, playerSwitch, 3).name }}</span>
+              </div>
+            </div>
+            <div class="col-xs-6 q-px-xs">
+              <div class="text-h6 q-pt-sm q-pl-sm">{{ RMSelected.name }}</div>
+            </div>
+          </div>
+          <div class="row q-pa-sm items-center"><b>Damage Chart</b></div>
+          <q-card style="background-color: var(--colorHeaderandButton)">
+            <div class="row items-center" v-for="weaknesses in wpnColumns" style="line-height: 0">
+              <div class="col-xs-6">
+                <div style="display: flex; align-items: center; gap: 10px; border-style: solid; border-width: 1px; ">
+                  <div class="q-pa-xs">
+                    <q-avatar rounded size="24px">
+                      <img :src="damageDTIconRetrieve(weaknesses.field).icon" />
+                    </q-avatar>
+                    <span>{{ damageDTIconRetrieve(weaknesses.field).name }}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-6">
+                <div
+                  style="display: flex; align-items: center; gap: 10px; border-style: solid; border-width: 1px; border-color: white; background-color: white; ">
+                  <div class="q-py-md q-px-xs" style="color: black">{{ rbtRow[0][weaknesses.field] }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </q-card>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </div>
-  
+
 
 </template>
 <script setup>
 import { onMounted, ref, watch } from "vue";
 import { useDamageDataTable } from 'src/composables/useDamageDataTable'
 const { damageDataTable2, specialWeapons } = useDamageDataTable()
+const formatSwitch = ref(false)
 const game = ref("ALL")
 const games = ref([
   { title: "ALL", code: "ALL", rms: ["yes"], man: ["mega", "bass", "blues", "roll", "duo"] },
@@ -129,9 +203,9 @@ const games = ref([
   { title: "MM: The Power Battle (MM1-2)", code: "MMP1-1", rms: ["cut", "crash", "guts", "ice", "heat", "wood"], man: ["mega", "bass", "blues"] },
   { title: "MM: The Power Battle (MM3-6)", code: "MMP1-2", rms: ["gemini", "napalm", "gyro", "dust", "plant", "magnet"], man: ["mega", "bass", "blues"] },
   { title: "MM: The Power Battle (MM7)", code: "MMP1-3", rms: ["freeze", "slash", "shade", "turbo", "cloud", "junk"], man: ["mega", "bass", "blues"] },
-  { title: "MM2: The Power Fighters (Search for Wily)", code: "MMP2-A", rms: ["centaur", "shadow", "bubble", "heat", "plant", "gyro"], man: ["mega", "blues", "duo"] },
-  { title: "MM2: The Power Fighters (Rescue Roll)", code: "MMP2-B", rms: ["elec", "dive", "slash", "cut", "shade", "stone"], man: ["mega", "blues", "duo"] },
-  { title: "MM2: The Power Fighters (Recover Parts)", code: "MMP2-C", rms: ["air", "quick", "pharaoh", "gemini", "napalm", "guts"], man: ["mega", "blues", "duo"] },
+  { title: "MM2: The Power Fighters (Search for Wily)", code: "MMP2-A", rms: ["centaur", "shadow", "bubble", "heat", "plant", "gyro"], man: ["mega", "bass", "blues", "duo"] },
+  { title: "MM2: The Power Fighters (Rescue Roll)", code: "MMP2-B", rms: ["elec", "dive", "slash", "cut", "shade", "stone"], man: ["mega", "bass", "blues", "duo"] },
+  { title: "MM2: The Power Fighters (Recover Parts)", code: "MMP2-C", rms: ["air", "quick", "pharaoh", "gemini", "napalm", "guts"], man: ["mega", "bass", "blues", "duo"] },
   { title: "Mega Man 9", code: "MM9", rms: ["splash", "concrete", "galaxy", "jewel", "plug", "tornado", "magma", "hornet"], man: ["mega", "blues"] },
   { title: "Mega Man 10", code: "MM10", rms: ["sheep", "pump", "solar", "chill", "nitro", "commando", "blade", "strike", "elec", "wood", "gemini", "ring", "napalm", "flame", "slash", "frost", "tornado", "enker", "punk", "ballade"], man: ["mega", "bass", "blues"] },
   { title: "Mega Man 11", code: "MM11", rms: ["block", "acid", "impact", "bounce", "fuse", "tundra", "torch", "blast"], man: ["mega"] },
@@ -152,13 +226,8 @@ const allPlayers = ref([
   { code: "roll", name: "Roll" },
   { code: "duo", name: "Duo" },
 ])
-const playerCharacters = ref([
-  { code: "mega", name: "Mega Man" },
-  { code: "bass", name: "Bass" },
-  { code: "blues", name: "Proto Man" },
-  { code: "roll", name: "Roll" },
-  { code: "duo", name: "Duo" },
-])
+const RMSelected = ref({})
+const playerCharacters = ref([])
 const robotMastersFltrdLst = ref([])
 const robotMasters = ref([
   //MM1
@@ -366,6 +435,8 @@ const damageDataTempGame = ref("")
 const damageShowSwitch = ref(false)
 const wpnColumns = ref([])
 const rbtRow = ref([])
+const popupSwitch = ref(false)
+
 function damageDataTable(robot, game, player, funct) { return damageDataTable2(robot, game, player, funct) };
 function dataFill() {
   robotMastersFltrdLst.value = [];
@@ -422,7 +493,6 @@ function openDamageTable(robot, game) {
   damageDataTempRobot.value = robot
   damageDataTempGame.value = game
   var tempStorage = damageDataTable(robot, game, playerSwitch.value, 1)
-  console.log(tempStorage)
   wpnColumns.value = tempStorage.col
   rbtRow.value = tempStorage.row
   damageShowSwitch.value = true
@@ -431,19 +501,24 @@ function changeHeaderColor() {
   var r = document.querySelector(':root');
   switch (playerSwitch.value) {
     case 'mega':
-      r.style.setProperty('--color', '#1a41c4');
+      r.style.setProperty('--colorHeaderandButton', '#1a41c4');
+      r.style.setProperty('--colorTableBody', '#46a5f3');
       break
     case 'bass':
-      r.style.setProperty('--color', '#be6600');
+      r.style.setProperty('--colorHeaderandButton', '#be6600');
+      r.style.setProperty('--colorTableBody', '#242424');
       break
     case 'blues':
-      r.style.setProperty('--color', '#c40404');
+      r.style.setProperty('--colorHeaderandButton', '#c40404');
+      r.style.setProperty('--colorTableBody', '#7e7e7e');
       break
     case 'roll':
-      r.style.setProperty('--color', '#c40464');
+      r.style.setProperty('--colorHeaderandButton', '#c40464');
+      r.style.setProperty('--colorTableBody', '#dbbd0f');
       break
     case 'duo':
-      r.style.setProperty('--color', '#05004e');
+      r.style.setProperty('--colorHeaderandButton', '#05004e');
+      r.style.setProperty('--colorTableBody', '#c5283d');
       break
   }
 }
@@ -460,12 +535,7 @@ function buttonDisableGameandPlayer(game) {
   }
   return check
 }
-
-watch(game, () => {
-  // Cuando count cambie, actualizamos el valor de double
-  dataFill();
-  damageShowSwitch.value = false
-  playerCharacters.value = []
+function characterFiller() {
   var changeCharCheck = true
   for (var i = 0; i < games.value.length; i++) {
     if (games.value[i].code == game.value) {
@@ -485,6 +555,22 @@ watch(game, () => {
   if (changeCharCheck) {
     playerSwitch.value = "mega"
   }
+}
+function robotMasterFullInfo(character) {
+  RMSelected.value = character
+  wpnColumns.value = []
+  rbtRow.value = []
+  var tempStorage = damageDataTable(character.code, character.gameSl, playerSwitch.value, 1)
+  wpnColumns.value = tempStorage.col
+  rbtRow.value = tempStorage.row
+  popupSwitch.value = true
+}
+watch(game, () => {
+  // Cuando count cambie, actualizamos el valor de double
+  dataFill();
+  damageShowSwitch.value = false
+  playerCharacters.value = []
+  characterFiller();
 
 });
 watch(playerSwitch, () => {
@@ -496,61 +582,47 @@ watch(playerSwitch, () => {
 
 onMounted(async () => {
   dataFill()
+  characterFiller()
 })
 </script>
 <style>
 .my-sticky-header-table {
-  height: 750px;
+  height: 760px;
 }
 
-.actionbtnRock {
-  background-color: #1a41c4;
+.actionbtn {
+  background-color: var(--colorHeaderandButton);
 }
 
-.actionbtnBass {
-  background-color: #be6600;
+
+.tableBodyColor {
+  background-color: var(--colorTableBody);
 }
 
-.actionbtnBlues {
-  background-color: #c40404;
+.scrollheader {
+  background-color: var(--colorHeaderandButton);
 }
 
-.actionbtnRoll {
-  background-color: #c40464;
+.museScrollArea {
+  margin-bottom: 60px;
+  margin-top: 60px;
+  padding: 0 4%;
+  gap: 12px;
 }
 
-.actionbtnDuo {
-  background-color: #05004e;
-}
-
-.tableBodyColorMega {
-  background-color: #46a5f3;
-}
-
-.tableBodyColorBass {
-  background-color: #242424;
-}
-
-.tableBodyColorBlues {
-  background-color: #7e7e7e;
-}
-
-.tableBodyColorRoll {
-  background-color: #dbbd0f;
-}
-
-.tableBodyColorDuo {
-  background-color: #c5283d;
+.scrollAreaColor {
+  background-color: var(--colorTableBody);
 }
 
 :root {
-  --color: #1a41c4
+  --colorHeaderandButton: #1a41c4;
+  --colorTableBody: #46a5f3;
 }
 
 .q-table__top,
 .q-table__bottom,
 thead tr:first-child th {
-  background-color: var(--color);
+  background-color: var(--colorHeaderandButton);
 }
 
 
@@ -569,5 +641,9 @@ thead tr:first-child th {
 
 tbody {
   scroll-margin-top: 48px;
+}
+
+body {
+  background-color: black
 }
 </style>

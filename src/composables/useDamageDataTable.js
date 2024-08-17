@@ -9,19 +9,49 @@ export function useDamageDataTable() {
       icon: "/weapons/base/megabuster.png",
     },
     {
+      code: "megawS1",
+      name: "Mega Upper",
+      icon: "/weapons/base/megabuster.png",
+    },
+    {
       code: "bassw",
       name: "Bass/Forte Buster",
       icon: "/weapons/base/bassbuster.png",
     },
     {
-      code: "bluesw",
+      code: "basswS",
+      name: "Crescent Kick",
+      icon: "/weapons/base/bassbuster.png",
+    },
+    {
+      code: "bluesw1",
       name: "Proto Buster",
+      icon: "/weapons/base/protobuster.png",
+    },
+    {
+      code: "bluesw2",
+      name: "Proto Strike",
       icon: "/weapons/base/protobuster.png",
     },
     {
       code: "rollw",
       name: "Roll Swing",
       icon: "/weapons/base/rollswing.png",
+    },
+    {
+      code: "duoM1",
+      name: "Energy Hand",
+      icon: "/weapons/base/megabuster.png",
+    },
+    {
+      code: "duoM2",
+      name: "Shoulder Charge",
+      icon: "/weapons/base/megabuster.png",
+    },
+    {
+      code: "duoM3",
+      name: "Giant Knuckle",
+      icon: "/weapons/base/megabuster.png",
     },
     //MM1
     {
@@ -737,12 +767,6 @@ export function useDamageDataTable() {
       case "MMPU":
         tempColumns = [
           {
-            name: "megaw",
-            field: "megaw",
-            align: "center",
-            sortable: false,
-          },
-          {
             name: "cutw",
             field: "cutw",
             align: "center",
@@ -795,7 +819,6 @@ export function useDamageDataTable() {
           case "cut":
             tempRow = [
               {
-                megaw: "2:4",
                 cutw: 1,
                 gutsw: 6,
                 icew: 3,
@@ -812,7 +835,6 @@ export function useDamageDataTable() {
           case "guts":
             tempRow = [
               {
-                megaw: "2:4",
                 cutw: 1,
                 gutsw: 1,
                 icew: 3,
@@ -829,7 +851,6 @@ export function useDamageDataTable() {
           case "ice":
             tempRow = [
               {
-                megaw: "2:4",
                 cutw: 3,
                 gutsw: 3,
                 icew: 1,
@@ -846,7 +867,6 @@ export function useDamageDataTable() {
           case "bomb":
             tempRow = [
               {
-                megaw: "2:4",
                 cutw: 6,
                 gutsw: 3,
                 icew: 1,
@@ -863,7 +883,6 @@ export function useDamageDataTable() {
           case "fire":
             tempRow = [
               {
-                megaw: "2:4",
                 cutw: 3,
                 gutsw: 3,
                 icew: 6,
@@ -880,7 +899,6 @@ export function useDamageDataTable() {
           case "elec":
             tempRow = [
               {
-                megaw: "2:4",
                 cutw: 3,
                 gutsw: 3,
                 icew: 3,
@@ -897,7 +915,6 @@ export function useDamageDataTable() {
           case "time":
             tempRow = [
               {
-                megaw: "2:4",
                 cutw: 3,
                 gutsw: 3,
                 icew: 3,
@@ -914,7 +931,6 @@ export function useDamageDataTable() {
           case "oil":
             tempRow = [
               {
-                megaw: "2:4",
                 cutw: 3,
                 gutsw: 3,
                 icew: 3,
@@ -927,6 +943,35 @@ export function useDamageDataTable() {
                 weakness: ["megaw", "firew"],
               },
             ];
+            break;
+        }
+        switch (player) {
+          case "mega":
+            tempColumns.splice(0, 0, {
+              name: "megaw",
+              field: "megaw",
+              align: "center",
+              sortable: false,
+            });
+            tempRow[0].megaw = "2:4";
+            break;
+          case "roll":
+            tempColumns.splice(0, 0, {
+              name: "rollw",
+              field: "rollw",
+              align: "center",
+              sortable: false,
+            });
+            tempRow[0].rollw = 3;
+            break;
+          case "blues":
+            tempColumns.splice(0, 0, {
+              name: "bluesw2",
+              field: "bluesw2",
+              align: "center",
+              sortable: false,
+            });
+            tempRow[0].bluesw2 = 4;
             break;
         }
         break;
@@ -4236,12 +4281,6 @@ export function useDamageDataTable() {
       case "MMP1-1":
         tempColumns = [
           {
-            name: "megaw",
-            field: "megaw",
-            align: "center",
-            sortable: false,
-          },
-          {
             name: "gutsw",
             field: "gutsw",
             align: "center",
@@ -4282,7 +4321,7 @@ export function useDamageDataTable() {
           case "guts":
             tempRow = [
               {
-                megaw: "1:4:10:16",
+                buster: "1:4:10:16",
                 gutsw: "X",
                 woodw: "1:8",
                 heatw: "3:4:4:6",
@@ -4297,7 +4336,7 @@ export function useDamageDataTable() {
           case "wood":
             tempRow = [
               {
-                megaw: "1:4:10:16",
+                buster: "1:4:10:16",
                 gutsw: 6,
                 woodw: "X",
                 heatw: "6:8:8:12",
@@ -4312,7 +4351,7 @@ export function useDamageDataTable() {
           case "heat":
             tempRow = [
               {
-                megaw: "1:4:10:16",
+                buster: "1:4:10:16",
                 gutsw: 6,
                 woodw: "1:8",
                 heatw: "X",
@@ -4327,7 +4366,7 @@ export function useDamageDataTable() {
           case "cut":
             tempRow = [
               {
-                megaw: "1:4:10:16",
+                buster: "1:4:10:16",
                 gutsw: 6,
                 woodw: "2:16",
                 heatw: "3:4:4:6",
@@ -4342,7 +4381,7 @@ export function useDamageDataTable() {
           case "ice":
             tempRow = [
               {
-                megaw: "1:4:10:16",
+                buster: "1:4:10:16",
                 gutsw: 12,
                 woodw: "1:8",
                 heatw: "3:4:4:6",
@@ -4357,7 +4396,7 @@ export function useDamageDataTable() {
           case "crash":
             tempRow = [
               {
-                megaw: "1:4:10:16",
+                buster: "1:4:10:16",
                 gutsw: 6,
                 woodw: "1:8",
                 heatw: "3:4:4:6",
@@ -4370,15 +4409,38 @@ export function useDamageDataTable() {
             ];
             break;
         }
+        switch (player) {
+          case "mega":
+            tempColumns.splice(0, 0, {
+              name: "megaw",
+              field: "megaw",
+              align: "center",
+              sortable: false,
+            });
+            tempRow[0].megaw = tempRow[0].buster;
+            break;
+          case "bass":
+            tempColumns.splice(0, 0, {
+              name: "bassw",
+              field: "bassw",
+              align: "center",
+              sortable: false,
+            });
+            tempRow[0].bassw = tempRow[0].buster;
+            break;
+          case "blues":
+            tempColumns.splice(0, 0, {
+              name: "bluesw1",
+              field: "bluesw1",
+              align: "center",
+              sortable: false,
+            });
+            tempRow[0].bluesw1 = tempRow[0].buster;
+            break;
+        }
         break;
       case "MMP1-2":
         tempColumns = [
-          {
-            name: "megaw",
-            field: "megaw",
-            align: "center",
-            sortable: false,
-          },
           {
             name: "napalmw",
             field: "napalmw",
@@ -4420,7 +4482,7 @@ export function useDamageDataTable() {
           case "napalm":
             tempRow = [
               {
-                megaw: "1:4:10:16",
+                buster: "1:4:10:16",
                 napalmw: "X",
                 plantw: "1:8",
                 gyrow: 4,
@@ -4435,7 +4497,7 @@ export function useDamageDataTable() {
           case "plant":
             tempRow = [
               {
-                megaw: "1:4:10:16",
+                buster: "1:4:10:16",
                 napalmw: "3:2",
                 plantw: "X",
                 gyrow: 8,
@@ -4450,7 +4512,7 @@ export function useDamageDataTable() {
           case "gyro":
             tempRow = [
               {
-                megaw: "1:4:10:16",
+                buster: "1:4:10:16",
                 napalmw: "6:4",
                 plantw: "1:8",
                 gyrow: "X",
@@ -4465,7 +4527,7 @@ export function useDamageDataTable() {
           case "magnet":
             tempRow = [
               {
-                megaw: "1:4:10:16",
+                buster: "1:4:10:16",
                 napalmw: "3:2",
                 plantw: "1:8",
                 gyrow: 8,
@@ -4480,7 +4542,7 @@ export function useDamageDataTable() {
           case "gemini":
             tempRow = [
               {
-                megaw: "1:4:10:16",
+                buster: "1:4:10:16",
                 napalmw: "3:2",
                 plantw: "1:8",
                 gyrow: 4,
@@ -4495,7 +4557,7 @@ export function useDamageDataTable() {
           case "dust":
             tempRow = [
               {
-                megaw: "1:4:10:16",
+                buster: "1:4:10:16",
                 napalmw: "6:4",
                 plantw: "1:8",
                 gyrow: 4,
@@ -4508,15 +4570,38 @@ export function useDamageDataTable() {
             ];
             break;
         }
+        switch (player) {
+          case "mega":
+            tempColumns.splice(0, 0, {
+              name: "megaw",
+              field: "megaw",
+              align: "center",
+              sortable: false,
+            });
+            tempRow[0].megaw = tempRow[0].buster;
+            break;
+          case "bass":
+            tempColumns.splice(0, 0, {
+              name: "bassw",
+              field: "bassw",
+              align: "center",
+              sortable: false,
+            });
+            tempRow[0].bassw = tempRow[0].buster;
+            break;
+          case "blues":
+            tempColumns.splice(0, 0, {
+              name: "bluesw1",
+              field: "bluesw1",
+              align: "center",
+              sortable: false,
+            });
+            tempRow[0].bluesw1 = tempRow[0].buster;
+            break;
+        }
         break;
       case "MMP1-3":
         tempColumns = [
-          {
-            name: "megaw",
-            field: "megaw",
-            align: "center",
-            sortable: false,
-          },
           {
             name: "turbow",
             field: "turbow",
@@ -4558,7 +4643,7 @@ export function useDamageDataTable() {
           case "turbo":
             tempRow = [
               {
-                megaw: "1:4:10:16",
+                buster: "1:4:10:16",
                 turbow: "X",
                 slashw: 6,
                 cloudw: "6:6",
@@ -4573,7 +4658,7 @@ export function useDamageDataTable() {
           case "slash":
             tempRow = [
               {
-                megaw: "1:4:10:16",
+                buster: "1:4:10:16",
                 turbow: 4,
                 slashw: "X",
                 cloudw: "6:6",
@@ -4588,7 +4673,7 @@ export function useDamageDataTable() {
           case "cloud":
             tempRow = [
               {
-                megaw: "1:4:10:16",
+                buster: "1:4:10:16",
                 turbow: 8,
                 slashw: 6,
                 cloudw: "X",
@@ -4603,7 +4688,7 @@ export function useDamageDataTable() {
           case "shade":
             tempRow = [
               {
-                megaw: "1:4:10:16",
+                buster: "1:4:10:16",
                 turbow: 4,
                 slashw: 12,
                 cloudw: "6:6",
@@ -4618,7 +4703,7 @@ export function useDamageDataTable() {
           case "freeze":
             tempRow = [
               {
-                megaw: "1:4:10:16",
+                buster: "1:4:10:16",
                 turbow: 4,
                 slashw: 6,
                 cloudw: "6:6",
@@ -4633,7 +4718,7 @@ export function useDamageDataTable() {
           case "junk":
             tempRow = [
               {
-                megaw: "1:4:10:16",
+                buster: "1:4:10:16",
                 turbow: 4,
                 slashw: 6,
                 cloudw: "12:12",
@@ -4646,15 +4731,38 @@ export function useDamageDataTable() {
             ];
             break;
         }
+        switch (player) {
+          case "mega":
+            tempColumns.splice(0, 0, {
+              name: "megaw",
+              field: "megaw",
+              align: "center",
+              sortable: false,
+            });
+            tempRow[0].megaw = tempRow[0].buster;
+            break;
+          case "bass":
+            tempColumns.splice(0, 0, {
+              name: "bassw",
+              field: "bassw",
+              align: "center",
+              sortable: false,
+            });
+            tempRow[0].bassw = tempRow[0].buster;
+            break;
+          case "blues":
+            tempColumns.splice(0, 0, {
+              name: "bluesw1",
+              field: "bluesw1",
+              align: "center",
+              sortable: false,
+            });
+            tempRow[0].bluesw1 = tempRow[0].buster;
+            break;
+        }
         break;
       case "MMP2-A":
         tempColumns = [
-          {
-            name: "megaw",
-            field: "megaw",
-            align: "center",
-            sortable: false,
-          },
           {
             name: "shadoww",
             field: "shadoww",
@@ -4696,7 +4804,7 @@ export function useDamageDataTable() {
           case "shadow":
             tempRow = [
               {
-                megaw: "1:4:6:8",
+                buster: "1:4:6:8",
                 shadoww: "X",
                 plantw: "1:6",
                 gyrow: 3,
@@ -4711,7 +4819,7 @@ export function useDamageDataTable() {
           case "plant":
             tempRow = [
               {
-                megaw: "1:4:6:8",
+                buster: "1:4:6:8",
                 shadoww: 3,
                 plantw: "X",
                 gyrow: 3,
@@ -4726,7 +4834,7 @@ export function useDamageDataTable() {
           case "gyro":
             tempRow = [
               {
-                megaw: "1:4:6:8",
+                buster: "1:4:6:8",
                 shadoww: 3,
                 plantw: "2:12",
                 gyrow: "X",
@@ -4741,7 +4849,7 @@ export function useDamageDataTable() {
           case "centaur":
             tempRow = [
               {
-                megaw: "1:4:6:8",
+                buster: "1:4:6:8",
                 shadoww: 3,
                 plantw: "1:6",
                 gyrow: 6,
@@ -4756,7 +4864,7 @@ export function useDamageDataTable() {
           case "bubble":
             tempRow = [
               {
-                megaw: "1:4:6:8",
+                buster: "1:4:6:8",
                 shadoww: 6,
                 plantw: "1:6",
                 gyrow: 3,
@@ -4771,7 +4879,7 @@ export function useDamageDataTable() {
           case "heat":
             tempRow = [
               {
-                megaw: "1:4:6:8",
+                buster: "1:4:6:8",
                 shadoww: 3,
                 plantw: "1:6",
                 gyrow: 3,
@@ -4784,15 +4892,83 @@ export function useDamageDataTable() {
             ];
             break;
         }
+        switch (player) {
+          case "mega":
+            tempColumns.splice(0, 0, {
+              name: "megaw",
+              field: "megaw",
+              align: "center",
+              sortable: false,
+            });
+            tempColumns.splice(1, 0, {
+              name: "megawS1",
+              field: "megawS1",
+              align: "center",
+              sortable: false,
+            });
+            tempRow[0].megawS1 = "3:6";
+            tempRow[0].megaw = tempRow[0].buster;
+            break;
+          case "bass":
+            tempColumns.splice(0, 0, {
+              name: "bassw",
+              field: "bassw",
+              align: "center",
+              sortable: false,
+            });
+            tempColumns.splice(1, 0, {
+              name: "basswS",
+              field: "basswS",
+              align: "center",
+              sortable: false,
+            });
+            tempRow[0].basswS = "2:4";
+            tempRow[0].bassw = tempRow[0].buster;
+            break;
+          case "blues":
+            tempColumns.splice(0, 0, {
+              name: "bluesw1",
+              field: "bluesw1",
+              align: "center",
+              sortable: false,
+            });
+            tempColumns.splice(1, 0, {
+              name: "bluesw2",
+              field: "bluesw2",
+              align: "center",
+              sortable: false,
+            });
+            tempRow[0].bluesw2 = 4;
+            tempRow[0].bluesw1 = tempRow[0].buster;
+            break;
+          case "duo":
+            tempColumns.splice(0, 0, {
+              name: "duoM1",
+              field: "duoM1",
+              align: "center",
+              sortable: false,
+            });
+            tempColumns.splice(1, 0, {
+              name: "duoM2",
+              field: "duoM2",
+              align: "center",
+              sortable: false,
+            });
+            tempColumns.splice(2, 0, {
+              name: "duoM3",
+              field: "duoM3",
+              align: "center",
+              sortable: false,
+            });
+            tempRow[0].bluesw2 = 4;
+            tempRow[0].duoM1 = "8:10";
+            tempRow[0].duoM2 = 4;
+            tempRow[0].duoM3 = "2:6:6";
+            break;
+        }
         break;
       case "MMP2-B":
         tempColumns = [
-          {
-            name: "megaw",
-            field: "megaw",
-            align: "center",
-            sortable: false,
-          },
           {
             name: "cutw",
             field: "cutw",
@@ -4834,7 +5010,7 @@ export function useDamageDataTable() {
           case "cut":
             tempRow = [
               {
-                megaw: "1:4:6:8",
+                buster: "1:4:6:8",
                 cutw: "X",
                 stonew: 6,
                 shadew: "3:6",
@@ -4849,7 +5025,7 @@ export function useDamageDataTable() {
           case "stone":
             tempRow = [
               {
-                megaw: "1:4:6:8",
+                buster: "1:4:6:8",
                 cutw: 3,
                 stonew: "X",
                 shadew: "6:12",
@@ -4864,7 +5040,7 @@ export function useDamageDataTable() {
           case "shade":
             tempRow = [
               {
-                megaw: "1:4:6:8",
+                buster: "1:4:6:8",
                 cutw: 6,
                 stonew: 6,
                 shadew: "X",
@@ -4879,7 +5055,7 @@ export function useDamageDataTable() {
           case "elec":
             tempRow = [
               {
-                megaw: "1:4:6:8",
+                buster: "1:4:6:8",
                 cutw: 3,
                 stonew: 12,
                 shadew: "3:6",
@@ -4894,7 +5070,7 @@ export function useDamageDataTable() {
           case "dive":
             tempRow = [
               {
-                megaw: "1:4:6:8",
+                buster: "1:4:6:8",
                 cutw: 3,
                 stonew: 6,
                 shadew: "3:6",
@@ -4909,7 +5085,7 @@ export function useDamageDataTable() {
           case "slash":
             tempRow = [
               {
-                megaw: "1:4:6:8",
+                buster: "1:4:6:8",
                 cutw: 3,
                 stonew: 6,
                 shadew: "3:6",
@@ -4920,6 +5096,59 @@ export function useDamageDataTable() {
                 weakness: ["divew"],
               },
             ];
+            break;
+        }
+        switch (player) {
+          case "mega":
+            tempColumns.splice(0, 0, {
+              name: "megaw",
+              field: "megaw",
+              align: "center",
+              sortable: false,
+            });
+            tempRow[0].megaw = tempRow[0].buster;
+            break;
+          case "bass":
+            tempColumns.splice(0, 0, {
+              name: "bassw",
+              field: "bassw",
+              align: "center",
+              sortable: false,
+            });
+            tempRow[0].bassw = tempRow[0].buster;
+            break;
+          case "blues":
+            tempColumns.splice(0, 0, {
+              name: "bluesw1",
+              field: "bluesw1",
+              align: "center",
+              sortable: false,
+            });
+            tempRow[0].bluesw1 = tempRow[0].buster;
+            break;
+          case "duo":
+            tempColumns.splice(0, 0, {
+              name: "duoM1",
+              field: "duoM1",
+              align: "center",
+              sortable: false,
+            });
+            tempColumns.splice(1, 0, {
+              name: "duoM2",
+              field: "duoM2",
+              align: "center",
+              sortable: false,
+            });
+            tempColumns.splice(2, 0, {
+              name: "duoM3",
+              field: "duoM3",
+              align: "center",
+              sortable: false,
+            });
+            tempRow[0].bluesw2 = 4;
+            tempRow[0].duoM1 = "8:10";
+            tempRow[0].duoM2 = 4;
+            tempRow[0].duoM3 = "2:6:6";
             break;
         }
         break;
@@ -4972,7 +5201,7 @@ export function useDamageDataTable() {
           case "guts":
             tempRow = [
               {
-                megaw: "1:4:6:8",
+                buster: "1:4:6:8",
                 gutsw: "X",
                 pharaohw2: 4,
                 airw: 3,
@@ -4987,7 +5216,7 @@ export function useDamageDataTable() {
           case "pharaoh":
             tempRow = [
               {
-                megaw: "1:4:6:8",
+                buster: "1:4:6:8",
                 gutsw: 6,
                 pharaohw2: "X",
                 airw: 3,
@@ -5002,7 +5231,7 @@ export function useDamageDataTable() {
           case "air":
             tempRow = [
               {
-                megaw: "1:4:6:8",
+                buster: "1:4:6:8",
                 gutsw: 12,
                 pharaohw2: 4,
                 airw: "X",
@@ -5017,7 +5246,7 @@ export function useDamageDataTable() {
           case "quick":
             tempRow = [
               {
-                megaw: "1:4:6:8",
+                buster: "1:4:6:8",
                 gutsw: 6,
                 pharaohw2: 4,
                 airw: 6,
@@ -5032,7 +5261,7 @@ export function useDamageDataTable() {
           case "gemini":
             tempRow = [
               {
-                megaw: "1:4:6:8",
+                buster: "1:4:6:8",
                 gutsw: 6,
                 pharaohw2: 8,
                 airw: 3,
@@ -5047,7 +5276,7 @@ export function useDamageDataTable() {
           case "napalm":
             tempRow = [
               {
-                megaw: "1:4:6:8",
+                buster: "1:4:6:8",
                 gutsw: 6,
                 pharaohw2: 4,
                 airw: 3,
@@ -5060,15 +5289,62 @@ export function useDamageDataTable() {
             ];
             break;
         }
+        switch (player) {
+          case "mega":
+            tempColumns.splice(0, 0, {
+              name: "megaw",
+              field: "megaw",
+              align: "center",
+              sortable: false,
+            });
+            tempRow[0].megaw = tempRow[0].buster;
+            break;
+          case "bass":
+            tempColumns.splice(0, 0, {
+              name: "bassw",
+              field: "bassw",
+              align: "center",
+              sortable: false,
+            });
+            tempRow[0].bassw = tempRow[0].buster;
+            break;
+          case "blues":
+            tempColumns.splice(0, 0, {
+              name: "bluesw1",
+              field: "bluesw1",
+              align: "center",
+              sortable: false,
+            });
+            tempRow[0].bluesw1 = tempRow[0].buster;
+            break;
+          case "duo":
+            tempColumns.splice(0, 0, {
+              name: "duoM1",
+              field: "duoM1",
+              align: "center",
+              sortable: false,
+            });
+            tempColumns.splice(1, 0, {
+              name: "duoM2",
+              field: "duoM2",
+              align: "center",
+              sortable: false,
+            });
+            tempColumns.splice(2, 0, {
+              name: "duoM3",
+              field: "duoM3",
+              align: "center",
+              sortable: false,
+            });
+            tempRow[0].bluesw2 = 4;
+            tempRow[0].duoM1 = "8:10";
+            tempRow[0].duoM2 = 4;
+            tempRow[0].duoM3 = "2:6:6";
+            break;
+        }
         break;
       case "MM9":
         tempColumns = [
-          {
-            name: "megaw",
-            field: "megaw",
-            align: "center",
-            sortable: false,
-          },
           {
             name: "concretew",
             field: "concretew",
@@ -5123,6 +5399,7 @@ export function useDamageDataTable() {
             tempRow = [
               {
                 megaw: 1,
+                bluesw1: "1:3",
                 concretew: 1,
                 tornadow: 1,
                 splashw: 3,
@@ -5140,6 +5417,7 @@ export function useDamageDataTable() {
             tempRow = [
               {
                 megaw: 1,
+                bluesw1: "1:3",
                 concretew: 1,
                 tornadow: 1,
                 splashw: 1,
@@ -5157,6 +5435,7 @@ export function useDamageDataTable() {
             tempRow = [
               {
                 megaw: 2,
+                bluesw1: "2:4",
                 concretew: 1,
                 tornadow: 1,
                 splashw: 2,
@@ -5174,6 +5453,7 @@ export function useDamageDataTable() {
             tempRow = [
               {
                 megaw: 1,
+                bluesw1: "1:3",
                 concretew: 1,
                 tornadow: 1,
                 splashw: 1,
@@ -5191,6 +5471,7 @@ export function useDamageDataTable() {
             tempRow = [
               {
                 megaw: 1,
+                bluesw1: "1:3",
                 concretew: 1,
                 tornadow: 1,
                 splashw: 1,
@@ -5208,6 +5489,7 @@ export function useDamageDataTable() {
             tempRow = [
               {
                 megaw: 1,
+                bluesw1: "1:3",
                 concretew: 1,
                 tornadow: 1,
                 splashw: 1,
@@ -5225,6 +5507,7 @@ export function useDamageDataTable() {
             tempRow = [
               {
                 megaw: 1,
+                bluesw1: "1:3",
                 concretew: 1,
                 tornadow: 6,
                 splashw: 1,
@@ -5242,6 +5525,7 @@ export function useDamageDataTable() {
             tempRow = [
               {
                 megaw: 1,
+                bluesw1: "1:3",
                 concretew: 4,
                 tornadow: 1,
                 splashw: 1,
@@ -5256,15 +5540,27 @@ export function useDamageDataTable() {
             ];
             break;
         }
+        switch (player) {
+          case "mega":
+            tempColumns.splice(0, 0, {
+              name: "megaw",
+              field: "megaw",
+              align: "center",
+              sortable: false,
+            });
+            break;
+          case "blues":
+            tempColumns.splice(0, 0, {
+              name: "bluesw1",
+              field: "bluesw1",
+              align: "center",
+              sortable: false,
+            });
+            break;
+        }
         break;
       case "MM10":
         tempColumns = [
-          {
-            name: "megaw",
-            field: "megaw",
-            align: "center",
-            sortable: false,
-          },
           {
             name: "bladew",
             field: "bladew",
@@ -5725,7 +6021,33 @@ export function useDamageDataTable() {
         }
         tempRow[0].megaw = 1;
         tempRow[0].bassw = 1;
-        tempRow[0].bluesw = "1:3";
+        tempRow[0].bluesw1 = "1:3";
+        switch (player) {
+          case "mega":
+            tempColumns.splice(0, 0, {
+              name: "megaw",
+              field: "megaw",
+              align: "center",
+              sortable: false,
+            });
+            break;
+          case "bass":
+            tempColumns.splice(0, 0, {
+              name: "bassw",
+              field: "bassw",
+              align: "center",
+              sortable: false,
+            });
+            break;
+          case "blues":
+            tempColumns.splice(0, 0, {
+              name: "bluesw1",
+              field: "bluesw1",
+              align: "center",
+              sortable: false,
+            });
+            break;
+        }
         break;
       case "MM11":
         tempColumns = [
