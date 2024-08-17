@@ -117,8 +117,9 @@
         </template>
       </q-table>
     </q-card>
-    <q-dialog v-model="popupSwitch">
-      <q-card class="text-white tableBodyColor" style="width:400px; height:500px">
+    <q-dialog v-model="popupSwitch" @keyup.left="museSwitch(1)" @keyup.right="museSwitch(2)"
+      @keyup.x="popupSwitch = false">
+      <q-card class="text-white tableBodyColor" style="width:400px">
         <q-card-section>
           <div class="row">
             <div class="col-xs-6 q-px-xs">
@@ -128,12 +129,22 @@
             </div>
             <div class="col-xs-6 q-px-xs">
               <q-select v-model="RMSelected.gameSl" :options="gameFormatName(RMSelected.games, 1)" option-label="title"
-                option-value="code" fill-input input-debounce="0" dark outlined dense emit-value style="width: 100%;" />
+                option-value="code" fill-input input-debounce="0" dark outlined dense emit-value style="width: 100%;" @update:model-value="robotMasterFullInfo(RMSelected)" />
             </div>
           </div>
-          <div class="row q-pa-sm items-center">
+          <div class="row q-pt-sm items-center">
             <div class="col-xs-6 q-px-xs">
-              <div class="q-pb-xs"><b>Weapon:</b></div>
+              <div><b>Designation: </b></div>
+            </div>
+            <div class="col-xs-6 q-px-xs">
+              <div><b>Weapon:</b></div>
+            </div>
+          </div>
+          <div class="row q-pb-md items-center">
+            <div class="col-xs-6 q-px-xs">
+              <span>{{ RMSelected.name }}</span>
+            </div>
+            <div class="col-xs-6 q-px-xs">
               <div style="display: flex; align-items: center; gap: 10px;">
                 <q-avatar rounded size="24px">
                   <img :src="damageDataTable(RMSelected.code, RMSelected.gameSl, playerSwitch, 3).icon" />
@@ -141,14 +152,21 @@
                 <span>{{ damageDataTable(RMSelected.code, RMSelected.gameSl, playerSwitch, 3).name }}</span>
               </div>
             </div>
+
+          </div>
+          <div class="row q-pb-xs items-center"
+            v-if="damageDataTable(RMSelected.code, RMSelected.gameSl, playerSwitch, 4) != ''">
             <div class="col-xs-6 q-px-xs">
-              <div class="text-h6 q-pt-sm q-pl-sm">{{ RMSelected.name }}</div>
+              <div><b>Notes: </b></div>
+            </div>
+            <div class="col-xs-6 q-px-xs">
+              <div>{{ damageDataTable(RMSelected.code, RMSelected.gameSl, playerSwitch, 4) }}</div>
             </div>
           </div>
-          <div class="row q-pa-sm items-center"><b>Damage Chart</b></div>
-          <q-card style="background-color: var(--colorHeaderandButton)">
+          <div class="row q-py-sm items-center"><b>Damage Chart</b></div>
+          <q-card style="background-color: var(--colorTableBody)">
             <div class="row items-center" v-for="weaknesses in wpnColumns" style="line-height: 0">
-              <div class="col-xs-6">
+              <div class="col-xs-6" :class="{ testManualDamageChart: weaknesses.weak == 'YES' }">
                 <div style="display: flex; align-items: center; gap: 10px; border-style: solid; border-width: 1px; ">
                   <div class="q-pa-xs">
                     <q-avatar rounded size="24px">
@@ -161,12 +179,39 @@
               <div class="col-xs-6">
                 <div
                   style="display: flex; align-items: center; gap: 10px; border-style: solid; border-width: 1px; border-color: white; background-color: white; ">
-                  <div class="q-py-md q-px-xs" style="color: black">{{ rbtRow[0][weaknesses.field] }}
-                  </div>
+                  <div class="q-py-md q-px-xs" style="color: black" v-if="weaknesses.weak == 'YES'"><b>{{
+                    rbtRow[0][weaknesses.field] }}</b> </div>
+                  <div class="q-py-md q-px-xs" style="color: black" v-else>{{ rbtRow[0][weaknesses.field] }} </div>
                 </div>
               </div>
             </div>
           </q-card>
+          <div class="row justify-center q-pt-md">
+            <div class="col-xs-4 q-pa-sm">
+              <div class="row flex-center">
+                <q-btn class="actionbtn" flat @click="museSwitch(1)">
+                  <q-icon left size="1rem" name="arrow_back" />
+                  <div>Prev</div>
+                </q-btn>
+              </div>
+            </div>
+            <div class="col-xs-4 q-pa-sm">
+              <div class="row flex-center">
+                <q-btn class="actionbtn" flat @click="popupSwitch = false">
+                  <q-icon left size="1rem" name="close" />
+                  <div>Close</div>
+                </q-btn>
+              </div>
+            </div>
+            <div class="col-xs-4 q-pa-sm">
+              <div class="row flex-center">
+                <q-btn class="actionbtn" flat @click="museSwitch(2)">
+                  <q-icon left size="1rem" name="arrow_forward" />
+                  <div>Next</div>
+                </q-btn>
+              </div>
+            </div>
+          </div>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -563,8 +608,42 @@ function robotMasterFullInfo(character) {
   var tempStorage = damageDataTable(character.code, character.gameSl, playerSwitch.value, 1)
   wpnColumns.value = tempStorage.col
   rbtRow.value = tempStorage.row
+  var tempWeaknesses = damageDataTable(character.code, character.gameSl, playerSwitch.value, 2)
+  for (var i = 0; i < wpnColumns.value.length; i++) {
+    for (var weakness of tempWeaknesses) {
+      if (weakness.code == wpnColumns.value[i].field) {
+        wpnColumns.value[i].weak = "YES"
+      }
+    }
+  }
   popupSwitch.value = true
 }
+function museSwitch(direction) {
+  var newRM = {}
+  for (var i = 0; i < robotMastersFltrdLst.value.length; i++) {
+    if (RMSelected.value.code == robotMastersFltrdLst.value[i].code) {
+      switch (direction) {
+        case 1:
+          if (i = 0) {
+            newRM = robotMastersFltrdLst.value[robotMastersFltrdLst.value.length - 1]
+          } else {
+            newRM = robotMastersFltrdLst.value[i - 1]
+          }
+          break
+        case 2:
+          if (i + 1 > robotMastersFltrdLst.value.length - 1) {
+            newRM = robotMastersFltrdLst.value[0]
+          } else {
+            newRM = robotMastersFltrdLst.value[i + 1]
+          }
+          break
+      }
+
+    }
+  }
+  robotMasterFullInfo(newRM)
+}
+
 watch(game, () => {
   // Cuando count cambie, actualizamos el valor de double
   dataFill();
@@ -579,7 +658,6 @@ watch(playerSwitch, () => {
   }
   changeHeaderColor()
 })
-
 onMounted(async () => {
   dataFill()
   characterFiller()
@@ -588,6 +666,10 @@ onMounted(async () => {
 <style>
 .my-sticky-header-table {
   height: 760px;
+}
+
+.testManualDamageChart {
+  background-color: var(--colorHeaderandButton);
 }
 
 .actionbtn {
