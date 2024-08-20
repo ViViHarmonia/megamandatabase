@@ -129,7 +129,8 @@
             </div>
             <div class="col-xs-6 q-px-xs">
               <q-select v-model="RMSelected.gameSl" :options="gameFormatName(RMSelected.games, 1)" option-label="title"
-                option-value="code" fill-input input-debounce="0" dark outlined dense emit-value style="width: 100%;" @update:model-value="robotMasterFullInfo(RMSelected)" />
+                option-value="code" fill-input input-debounce="0" dark outlined dense emit-value style="width: 100%;"
+                @update:model-value="robotMasterFullInfo(RMSelected)" />
             </div>
           </div>
           <div class="row q-pt-sm items-center">
@@ -624,7 +625,8 @@ function museSwitch(direction) {
     if (RMSelected.value.code == robotMastersFltrdLst.value[i].code) {
       switch (direction) {
         case 1:
-          if (i = 0) {
+          console.log("para atras")
+          if (i == 0) {
             newRM = robotMastersFltrdLst.value[robotMastersFltrdLst.value.length - 1]
           } else {
             newRM = robotMastersFltrdLst.value[i - 1]
