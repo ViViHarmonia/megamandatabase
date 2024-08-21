@@ -8,7 +8,10 @@
             <q-select v-model="game" :options="games" option-label="title" option-value="code" input-debounce="0" dark
               outlined dense emit-value style="margin-right: 5px; width: 120px;" />
             <q-select v-model="playerSwitch" :options="playerCharacters" option-label="name" option-value="code"
-              input-debounce="0" dark outlined dense emit-value map-options style="margin-right: 5px; width: 130px;" />
+              input-debounce="0" dark outlined dense emit-value map-options style="margin-right: 5px; width: 130px;"
+              v-if="playerCharacters.length > 1" />
+            <q-input dark outlined v-model="playerName"
+              style="margin-right: 5px; width: 130px; text-transform: capitalize" dense readonly v-else />
             <q-space />
             <div style="display: flex; align-items: center;  ; gap: 10px;" v-if="!$q.screen.lt.md">
               <span>Detailed/Simple</span>
@@ -22,7 +25,7 @@
           <div class="museScrollArea q-pt-sm">
             <div class="row flex-center">
               <q-btn v-for="(char, c) in robotMastersFltrdLst" square padding="xs" flat
-                @click="robotMasterFullInfo(char)">
+                @click="robotMasterFullInfo(char)" :disabled="buttonDisableGameandPlayer(char.gameSl)">
                 <q-avatar rounded size="60px">
                   <img :src="char.icon">
                 </q-avatar>
@@ -32,14 +35,16 @@
         </q-scroll-area>
       </q-layout>
       <q-table v-else flat bordered dark class="my-sticky-header-table" virtual-scroll auto-width wrap-cells
-        :rows-per-page-options="[0]" :columns="rmTableColumns" :rows="robotMastersFltrdLst" card-class="tableBodyColor">
+        :rows-per-page-options="[0]" :columns="rmTableColumns" :rows="robotMastersFltrdLst"
+        :visible-columns="visibleColumns" card-class="tableBodyColor">
         <template v-slot:top>
           <q-select v-model="game" :options="games" option-label="title" option-value="code" input-debounce="0" dark
-            outlined dense emit-value style="margin-right: 5px; width: 120px;" />
-          <div class="radios">
+            map-options outlined dense emit-value style="margin-right: 5px;" />
+          <div class="radios" v-if="playerCharacters.length > 1">
             <q-radio v-for="robots in playerCharacters" dark color="white" v-model="playerSwitch" :val="robots.code"
               :label="robots.name" />
           </div>
+          <div v-else class="q-pl-lg">Mega Man</div>
           <q-space />
           <span>Detailed/Simple</span>
           <q-toggle v-model="formatSwitch" color="black" />
@@ -56,8 +61,8 @@
           <q-td :props="props">
             <q-select v-model="props.row.gameSl" :options="gameFormatName(props.row.games, 1)" option-label="title"
               option-value="code" fill-input input-debounce="0" dark map-options outlined dense emit-value
-              v-if="props.row.games.length > 1 && game == 'ALL'"></q-select>
-            <div v-else>{{ gameFormatName(props.row.gameSl, 2) }}</div>
+              v-if="props.row.games.length > 1"></q-select>
+            <div v-else class="pseudoinputreadonly">{{ gameFormatName(props.row.gameSl, 2) }}</div>
           </q-td>
         </template>
         <template v-slot:body-cell-weapon="props">
@@ -123,14 +128,19 @@
         <q-card-section>
           <div class="row">
             <div class="col-xs-6 q-px-xs">
-              <q-select v-model="playerSwitch" :options="playerCharacters" option-label="name" option-value="code"
-                input-debounce="0" dark outlined dense emit-value style="width: 100%; text-transform: capitalize" />
+              <q-select v-model="RMSelected.gameSl" :options="gameFormatName(RMSelected.games, 1)" option-label="title"
+                option-value="code" fill-input input-debounce="0" dark outlined dense emit-value style="width: 100%;"
+                @update:model-value="robotMasterFullInfo(RMSelected)" v-if="RMSelected.games.length > 1" />
+              <q-input dark outlined v-model="RMSelected.gameSl" dense readonly v-else />
 
             </div>
             <div class="col-xs-6 q-px-xs">
-              <q-select v-model="RMSelected.gameSl" :options="gameFormatName(RMSelected.games, 1)" option-label="title"
-                option-value="code" fill-input input-debounce="0" dark outlined dense emit-value style="width: 100%;"
-                @update:model-value="robotMasterFullInfo(RMSelected)" />
+              <q-select v-model="playerSwitch" :options="playerCharactersMini" option-label="name" option-value="code"
+                input-debounce="0" dark outlined map-options dense emit-value
+                style="width: 100%; text-transform: capitalize" @update:model-value="robotMasterFullInfo(RMSelected)"
+                v-if="playerCharactersMini.length > 1" />
+              <q-input dark outlined v-model="playerName" style="width: 100%; text-transform: capitalize" dense readonly
+                v-else />
             </div>
           </div>
           <div class="row q-pt-sm items-center">
@@ -221,7 +231,7 @@
 
 </template>
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, toRef, watch } from "vue";
 import { useDamageDataTable } from 'src/composables/useDamageDataTable'
 const { damageDataTable2, specialWeapons } = useDamageDataTable()
 const formatSwitch = ref(false)
@@ -274,6 +284,7 @@ const allPlayers = ref([
 ])
 const RMSelected = ref({})
 const playerCharacters = ref([])
+const playerCharactersMini = ref([])
 const robotMastersFltrdLst = ref([])
 const robotMasters = ref([
   //MM1
@@ -423,6 +434,7 @@ const robotMasters = ref([
   { name: "Compass Man", code: "compass", games: ["MM&B2"], gameSl: "MM&B2", icon: "/robots/R&F2/compass.png" },
 
 ])
+const visibleColumns = ref(['icon', 'name', 'gamelist', 'weapon', 'weakness', 'action', 'notes'])
 const rmTableColumns = ref([
   {
     name: "icon",
@@ -475,7 +487,9 @@ const rmTableColumns = ref([
     sortable: false,
   },
 ])
+
 const playerSwitch = ref("mega")
+const playerName = ref("Mega Man")
 const damageDataTempRobot = ref("")
 const damageDataTempGame = ref("")
 const damageShowSwitch = ref(false)
@@ -488,6 +502,9 @@ function dataFill() {
   robotMastersFltrdLst.value = [];
   if (game.value == "ALL") {
     robotMastersFltrdLst.value = robotMasters.value
+    for (var i = 0; i < robotMastersFltrdLst.value.length; i++) {
+      robotMastersFltrdLst.value[i].gameSl = robotMastersFltrdLst.value[i].games[0]
+    }
   } else {
     var tempArrayChar
     for (var i = 0; i < games.value.length; i++) {
@@ -505,6 +522,7 @@ function dataFill() {
     }
   }
 }
+
 function damageDTIconRetrieve(headerWpnCode) {
   for (var i = 0; i < specialWeapons.value.length; i++) {
     if (specialWeapons.value[i].code == headerWpnCode) {
@@ -543,7 +561,7 @@ function openDamageTable(robot, game) {
   rbtRow.value = tempStorage.row
   damageShowSwitch.value = true
 }
-function changeHeaderColor() {
+function changeThemeColors() {
   var r = document.querySelector(':root');
   switch (playerSwitch.value) {
     case 'mega':
@@ -581,19 +599,20 @@ function buttonDisableGameandPlayer(game) {
   }
   return check
 }
-function characterFiller() {
+function characterFiller(gamelist, gamechosen, number) {
+  var playerlist = []
   var changeCharCheck = true
-  for (var i = 0; i < games.value.length; i++) {
-    if (games.value[i].code == game.value) {
-      for (var robot of games.value[i].man) {
+  for (var i = 0; i < gamelist.length; i++) {
+    if (gamelist[i].code == gamechosen) {
+      for (var robot of gamelist[i].man) {
         for (var j = 0; j < allPlayers.value.length; j++)
           if (allPlayers.value[j].code == robot) {
-            playerCharacters.value.push(allPlayers.value[j])
+            playerlist.push(allPlayers.value[j])
           }
       }
     }
   }
-  for (var robot of playerCharacters.value) {
+  for (var robot of playerlist) {
     if (robot.code == playerSwitch.value) {
       changeCharCheck = false
     }
@@ -601,11 +620,26 @@ function characterFiller() {
   if (changeCharCheck) {
     playerSwitch.value = "mega"
   }
+  if (number == 1) {
+    playerCharacters.value = playerlist
+
+  } else {
+    playerCharactersMini.value = playerlist
+  }
 }
 function robotMasterFullInfo(character) {
   RMSelected.value = character
   wpnColumns.value = []
   rbtRow.value = []
+  var tempGames = []
+  for (var i = 0; i < character.games.length; i++) {
+    for (var j = 0; j < games.value.length; j++) {
+      if (games.value[j].code == character.games[i]) {
+        tempGames.push(games.value[j])
+      }
+    }
+  }
+  characterFiller(tempGames, character.gameSl, 2)
   var tempStorage = damageDataTable(character.code, character.gameSl, playerSwitch.value, 1)
   wpnColumns.value = tempStorage.col
   rbtRow.value = tempStorage.row
@@ -651,18 +685,50 @@ watch(game, () => {
   dataFill();
   damageShowSwitch.value = false
   playerCharacters.value = []
-  characterFiller();
+  characterFiller(games.value, game.value, 1);
+  if (game.value == "ALL") {
+    visibleColumns.value = ['icon', 'name', 'gamelist', 'weapon', 'weakness', 'action', 'notes']
+  } else {
+    visibleColumns.value = ['icon', 'name', 'weapon', 'weakness', 'action', 'notes']
+  }
 
 });
 watch(playerSwitch, () => {
   if (damageShowSwitch.value == true) {
-    openDamageTable(damageDataTempRobot.value, damageDataTempGame.value)
+    var tempCheck = true
+    var tempGameInfo = {}
+    for (var gamechosen of games.value) {
+      if (gamechosen.code == damageDataTempGame.value) {
+        tempGameInfo = gamechosen
+      }
+    }
+    for (var i = 0; i < tempGameInfo.man.length; i++) {
+      if (playerSwitch.value == tempGameInfo.man[i]) {
+        openDamageTable(damageDataTempRobot.value, damageDataTempGame.value)
+        tempCheck = false
+      }
+    }
+    if (tempCheck) {
+      damageShowSwitch.value = false
+    }
   }
-  changeHeaderColor()
+  for (var character in allPlayers.value) {
+    if (character.code == playerSwitch.value) {
+      playerName.value = character.name
+    }
+  }
+  changeThemeColors()
 })
+watch(popupSwitch, () => {
+  if (popupSwitch.value == false) {
+    if (game.value == "ALL") {
+      playerSwitch.value = "mega"
+    }
+  }
+});
 onMounted(async () => {
   dataFill()
-  characterFiller()
+  characterFiller(games.value, game.value, 1)
 })
 </script>
 <style>
@@ -692,6 +758,19 @@ onMounted(async () => {
   margin-top: 60px;
   padding: 0 4%;
   gap: 12px;
+}
+
+.pseudoinputreadonly {
+  height: 40px;
+  border: 1px dashed rgba(255, 255, 255, 0.541);
+  border-radius: 3px;
+  border-color: white;
+  align-items: center;
+  padding: 0 10px;
+  position: relative;
+  font-size: 14px;
+  flex-wrap: none;
+  display: flex;
 }
 
 .scrollAreaColor {

@@ -5106,6 +5106,13 @@ export function useDamageDataTable() {
               align: "center",
               sortable: false,
             });
+            tempColumns.splice(1, 0, {
+              name: "megawS1",
+              field: "megawS1",
+              align: "center",
+              sortable: false,
+            });
+            tempRow[0].megawS1 = "3:6";
             tempRow[0].megaw = tempRow[0].buster;
             break;
           case "bass":
@@ -5115,6 +5122,13 @@ export function useDamageDataTable() {
               align: "center",
               sortable: false,
             });
+            tempColumns.splice(1, 0, {
+              name: "basswS",
+              field: "basswS",
+              align: "center",
+              sortable: false,
+            });
+            tempRow[0].basswS = "2:4";
             tempRow[0].bassw = tempRow[0].buster;
             break;
           case "blues":
@@ -5124,6 +5138,13 @@ export function useDamageDataTable() {
               align: "center",
               sortable: false,
             });
+            tempColumns.splice(1, 0, {
+              name: "bluesw2",
+              field: "bluesw2",
+              align: "center",
+              sortable: false,
+            });
+            tempRow[0].bluesw2 = 4;
             tempRow[0].bluesw1 = tempRow[0].buster;
             break;
           case "duo":
@@ -5154,12 +5175,6 @@ export function useDamageDataTable() {
         break;
       case "MMP2-C":
         tempColumns = [
-          {
-            name: "megaw",
-            field: "megaw",
-            align: "center",
-            sortable: false,
-          },
           {
             name: "gutsw",
             field: "gutsw",
@@ -5297,6 +5312,13 @@ export function useDamageDataTable() {
               align: "center",
               sortable: false,
             });
+            tempColumns.splice(1, 0, {
+              name: "megawS1",
+              field: "megawS1",
+              align: "center",
+              sortable: false,
+            });
+            tempRow[0].megawS1 = "3:6";
             tempRow[0].megaw = tempRow[0].buster;
             break;
           case "bass":
@@ -5306,6 +5328,13 @@ export function useDamageDataTable() {
               align: "center",
               sortable: false,
             });
+            tempColumns.splice(1, 0, {
+              name: "basswS",
+              field: "basswS",
+              align: "center",
+              sortable: false,
+            });
+            tempRow[0].basswS = "2:4";
             tempRow[0].bassw = tempRow[0].buster;
             break;
           case "blues":
@@ -5315,6 +5344,13 @@ export function useDamageDataTable() {
               align: "center",
               sortable: false,
             });
+            tempColumns.splice(1, 0, {
+              name: "bluesw2",
+              field: "bluesw2",
+              align: "center",
+              sortable: false,
+            });
+            tempRow[0].bluesw2 = 4;
             tempRow[0].bluesw1 = tempRow[0].buster;
             break;
           case "duo":
